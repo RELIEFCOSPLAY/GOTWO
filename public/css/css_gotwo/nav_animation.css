@@ -1,0 +1,48 @@
+.nav_animation ul{
+    /* background-color: rgb(177, 155, 230); */
+    display: flex;
+    width: 800px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.nav_animation ul li{
+    text-align: center;
+    list-style: none;
+    z-index: 2;
+}
+
+.unpaid_nav_animation{
+    width: 200px;
+}
+
+.completed_nav_animation{
+    width: 200px;
+}
+/* .completed_nav_animation2{
+    width: 200px;
+} */
+/* .completed_nav_animation3{
+    width: 200px;
+} */
+
+
+.nav_animation ul li a{
+    font-size: 25px;
+    text-decoration: none;
+    color: rgb(26, 28, 67);
+    padding: 15px 0px;
+    display: block;
+}
+
+.slider_nav_animation{
+    position: absolute;
+    width: 0px;
+    bottom: 0px;
+    height: 5px;
+    left: 0px;
+    background-color: rgb(26, 28, 67);
+    border-radius: 5px;
+    z-index: 1;
+    transition: 0.5s ease;
+}
