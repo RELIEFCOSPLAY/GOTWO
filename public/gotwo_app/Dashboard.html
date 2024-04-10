@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+   <title>Dashboard</title>
+   <style>
+      .container {
+         display: flex;
+         justify-content: center;
+         
+      }
+
+      /* Optional: เพิ่มสไตล์ให้ปุ่มดูสวยงาม */
+      button {
+         padding: 20px 30px;
+         background-color: #ffffff;
+         color: black;
+         border: 2px solid #A1A1A1;
+         border-radius: 3px;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         width: 200px;
+         /* กำหนดความกว้างของปุ่ม */
+         height: 150px;
+         /* กำหนดความสูงของปุ่ม */
+         margin: 10px;
+         /* กำหนดระยะห่างระหว่างปุ่ม */
+         margin-top: 30px;
+      }
+
+      button:hover {
+         background-color: #DBE2EF;
+      }
+
+      /* ขนาดไอคอน */
+      button i {
+         font-size: 80px;
+         margin-top: 10px;
+      }
+
+      /* บรรทัดไอคอนกับข้อความ */
+      button span {
+         display: block;
+         margin-top: 10px;
+         margin-bottom: 5px;
+         font-size: 18px;
+      }
+
+      .flexbox {
+         display: flex;
+         box-sizing: border-box;
+         margin-top: 80px;
+         /* จัดให้ flexbox อยู่ด้านขวา */
+         justify-content: flex-end; /
+
+      }
+
+      .item {
+         display: block;
+         box-sizing: border-box;
+         width: 230px;
+         /* กำหนดความกว้างของปุ่ม */
+         height: 130px;
+         /* กำหนดความสูงของปุ่ม */
+         margin: 10px;
+         /* กำหนดระยะห่างระหว่างปุ่ม */
+         background-color: #B7E9B4;
+         color: black;
+         border: 2px solid #A1A1A1;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="container">
+      
+      <div class="column">
+<div class="flexbox ">
+         <div class="item">
+            <h3 style="color: #6E6E6E; margin-left: 10px;">Income money</h3>
+            <h1 style="text-align: center; ">10,602 THB</h1>
+         </div>
+      </div>
+      </div>
+      <div class="row">
+         <div class="col col-sm-12">
+            <button>
+               <i class="bi bi-file-text"></i> <span>
+                  Verifly rider <br>6 </span>
+            </button>
+            <button>
+               <i class="bi bi-list-ul"></i> <span>
+                  Request <br>6 </span>
+            </button>
+            <button>
+               <i class="bi bi-clock-history"></i> <span>
+                  Pending <br>5 </span>
+            </button>
+
+            <br>
+
+            <button>
+               <i class="bi bi-check-circle"></i> <span>
+                  Confirm <br>4 </span>
+            </button>
+            <button>
+               <i class="bi bi-bicycle"></i><span>
+                  To travel <br>3 </span>
+            </button>
+            <button>
+               <i class="bi bi-check-all"></i><span>
+                  Success <br>3 </span>
+            </button><br>
+            <button>
+               <i class="bi bi-x-circle"></i> <span>
+                  Cancel <br>2 </span>
+            </button>
+            <button>
+               <i class="bi bi-credit-card"></i><span>
+                  Payment unpaid <br>5 </span>
+            </button>
+            <button>
+               <i class="bi bi-exclamation-octagon"></i><span>
+                  Report <br>2 </span>
+            </button> <br>
+         </div>
+         <!--  -->
+
+      </div>
+   </div>
+
+
+</body>
+
+</html>
