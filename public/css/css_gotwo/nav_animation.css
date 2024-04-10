@@ -1,3 +1,5 @@
+
+/* ------------nav animation------------ */
 .nav_animation ul{
     /* background-color: rgb(177, 155, 230); */
     display: flex;
@@ -45,4 +47,33 @@
     border-radius: 5px;
     z-index: 1;
     transition: 0.5s ease;
+}
+
+/* ------------search animation------------ */
+.box{
+    width: 400px;
+    height: 30px;
+    display: flex;
+    cursor: pointer;
+    padding: 20px 20px;
+    background-color: #fcfcfc;
+    border-radius: 30px;
+    align-items: center;
+    box-shadow: 0 2px 2px rgb(0, 0, 0, 0.3);
+}
+.box:hover input{
+    width: 400px;
+}
+
+.box input{
+    width: 0;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    transition: 0.8s;
+    background: transparent;
+}
+.box a .fas{
+    color: #7af78a;
+    font-size: 18px;
 }
