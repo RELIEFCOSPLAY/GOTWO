@@ -1,0 +1,74 @@
+
+/* ------------nav animation------------ */
+.nav_animation ul{
+    /* background-color: rgb(177, 155, 230); */
+    display: flex;
+    width: 600px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.nav_animation ul li{
+    text-align: center;
+    list-style: none;
+    z-index: 2;
+}
+
+.report_nav_animation{
+    width: 200px;
+}
+
+.history_nav_animation{
+    width: 200px;
+}
+
+
+.nav_animation ul li a{
+    font-size: 25px;
+    text-decoration: none;
+    color: rgb(26, 28, 67);
+    padding: 15px 0px;
+    display: block;
+}
+
+.slider_nav_animation{
+    position: absolute;
+    width: 0px;
+    bottom: 0px;
+    height: 5px;
+    left: 0px;
+    background-color: rgb(26, 28, 67);
+    border-radius: 5px;
+    z-index: 1;
+    transition: 0.5s ease;
+}
+
+/* ------------search animation------------ */
+.box{
+    width: 400px;
+    height: 30px;
+    display: flex;
+    cursor: pointer;
+    padding: 20px 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+    align-items: center;
+    box-shadow: 0 2px 2px rgb(0, 0, 0, 0.3);
+}
+.box:hover input{
+    width: 400px;
+}
+
+.box input{
+    width: 0;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    transition: 0.8s;
+    background: transparent;
+}
+.box a .fas{
+    color: #ffffff;
+    font-size: 18px;
+}
+
