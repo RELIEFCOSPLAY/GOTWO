@@ -50,7 +50,7 @@
     display: flex;
     cursor: pointer;
     padding: 20px 20px;
-    background-color: #fcfcfc;
+    background-color: rgb(255, 255, 255);
     border-radius: 30px;
     align-items: center;
     box-shadow: 0 2px 2px rgb(0, 0, 0, 0.3);
@@ -68,7 +68,7 @@
     background: transparent;
 }
 .box a .fas{
-    color: #7af78a;
+    color: #ffffff;
     font-size: 18px;
 }
 
