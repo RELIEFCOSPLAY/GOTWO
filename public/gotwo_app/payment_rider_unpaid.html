@@ -44,19 +44,37 @@
                             </a>
                         </li>
 
-                        <li class="nav-item my-1 disabled">
+                        <li class="nav-item my-1 disabled ">
                             <a href="#sidemenu" data-bs-toggle="collapse" class="nav-link text-white"
                                 aria-current="page">
                                 <i class="bi bi-kanban"></i>
                                 <span class="ms-2 d-none d-sm-inline fw-bold">Management</span>
                                 <i class="bi bi-caret-down-fill"></i>
                             </a>
-                            <ul class="nav collapse ms-1 flex-column" id="sidemenu" data-bs-parent="#menu">
+                            <ul class="nav collapse ms-1 flex-column list-unstyled" id="sidemenu"
+                                data-bs-parent="#menu">
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="#" aria-current="page">- Rider</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="#">- Customer</a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <!-- ------------------------------------------------ -->
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                                data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                                <i class="lni lni-protection"></i>
+                                <span>Auth</span>
+                            </a>
+                            <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Login</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Register</a>
                                 </li>
                             </ul>
                         </li>
@@ -139,21 +157,19 @@
                         <ul>
                             <li class="unpaid_nav_animation"><a href="#">Unpaid</a></li>
                             <li class="completed_nav_animation"><a href="#">Completed</a></li>
-                            <!-- <li class="completed_nav_animation2"><a href="#">Completed2</a></li>
-                            <li class="completed_nav_animation3"><a href="#">Completed3</a></li> -->
                             <span class="slider_nav_animation"></span>
                         </ul>
                     </div>
 
                     <div class="box">
-                        
+
                         <input type="text" placeholder="Search">
                         <a href="#">
                             <i class="bi bi-search"></i>
                         </a>
                     </div>
                     <div>
-                        
+
                     </div>
                 </div>
 
