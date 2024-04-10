@@ -12,7 +12,7 @@ let slider_nav_animation =document.querySelector(".slider_nav_animation");
             console.log(index);
             index_value = index;
             get_left_position();
-            slider_nav_animation.style.left = left_position*1.14 + "px";
+            slider_nav_animation.style.left = (left_position+30) + "px";
             left_position = 0;
         }
     });
