@@ -7,14 +7,14 @@ let left_position = 0;
 slider_nav_animation_li.forEach((item, index) => {
   slider_nav_animation.style.width =
     slider_nav_animation_li[0].clientWidth + "px";
-  slider_nav_animation.style.left = left_position + "px";
+  slider_nav_animation.style.left = (left_position+30) + "px";
 
   item.onclick = function () {
     slider_nav_animation.style.width = item.clientWidth + "px";
     console.log(index);
     index_value = index;
     get_left_position();
-    slider_nav_animation.style.left = left_position + 30 + "px";
+    slider_nav_animation.style.left = (left_position+30) + "px";
     left_position = 0;
   };
 });
