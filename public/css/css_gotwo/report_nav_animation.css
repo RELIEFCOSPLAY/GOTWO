@@ -79,7 +79,12 @@
     border-radius: 50%;
     vertical-align: middle;
 }
-
+.img_style2{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
 /* ------------table style------------ */
 #table-posts , #button_style {
     border-collapse: collapse;
@@ -102,3 +107,18 @@
 }
 
 /* ------------popup Modal Box style------------ */
+.text_Description{
+    width: 350px;
+    height: 120px;
+    border: none;
+    border-radius: 10px;
+}
+.popup{
+    width: 400px;
+    height: 450px;
+    border-radius: 10px;
+    background-color: #c0e5f0;
+    box-sizing: border-box;
+    z-index: 2;
+    /* opacity: 0; */
+}
