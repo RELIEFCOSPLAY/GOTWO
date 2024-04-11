@@ -55,7 +55,7 @@ li {
     font-size: 1.5rem;
     color: #FFF;
 }
-
+/* --------------------------------------------------------- */
 a.sidebar-person {
     padding: .625rem 1rem;
     color: #FFF;
@@ -71,6 +71,16 @@ a.sidebar-person {
 }
 
 
+.sidebar-person a {
+    color: #FFF;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+#sidebar:not(.expand) a.sidebar-person span {
+    display: none;
+}
+/* ------------------------------------------------------- */
 .sidebar-logo {
     margin: auto 0;
 }
@@ -80,8 +90,12 @@ a.sidebar-person {
     font-size: 1.15rem;
     font-weight: 600;
 }
+/* ---------------------------------------------------------- */
+#sidebar:not(.expand) .sidebar-logo ,
+#sidebar:not(.expand) a.sidebar-link span {
+    display: none;
+}
 
-#sidebar:not(.expand) .sidebar-logo,
 #sidebar:not(.expand) a.sidebar-link span {
     display: none;
 }
