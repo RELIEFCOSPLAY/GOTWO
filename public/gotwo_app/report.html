@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    
+
     <div class="wrapper">
         <aside id="sidebar">
             <div class="d-flex">
@@ -154,23 +154,24 @@
                                 </thead>
                                 <tbody id="dataTableBody">
                                     <tr>
-                                        <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">Colicchio</td>                           
+                                        <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">Colicchio</td>
+                                                
                                         <td>643150xxxx@lamduan.mfu.ac.th</td>
                                         <td>rider</td>
-                                        <td><button type="button" class="btn btn-success"onclick="View_()" >View</button></td>
+                                        <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_rider">View</button></td>           
                                     </tr>
                                     <tr>
                                         <td scope="row"><img src="/public/img/pngegg.png" class="img_style mx-2">John Bravo</td>
                                         <td>644150xxxx@lamduan.mfu.ac.th</td>
                                         <td>rider</td>
-                                        <td><button type="button" class="btn btn-success"onclick="View_()">View</button></td>
+                                        <td><button type="button" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#exampleModal_rider">View</button></td>
+                                                
                                     </tr>
                                     <tr>
-                                        <td scope="row"><img src="/public/img/pngegg.png" class="img_style mx-2">Popup
-                                        </td>
+                                        <td scope="row"><img src="/public/img/pngegg.png" class="img_style mx-2">Popup</td>
                                         <td>643150xxxx@lamduan.mfu.ac.th</td>
                                         <td>customer</td>
-                                        <td><button type="button" class="btn btn-success"onclick="View_()">View</button>
+                                        <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_cus">View</button>
                                         </td>
                                     </tr>
 
@@ -183,62 +184,89 @@
                             </table>
                         </div>
                     </div>
-                    <!-- <div class="popup center container">
-                        <div class="d-flex flex-row justify-content-center">
-                            <img src="/public/img/pngegg.png" class="img_style2 mt-5 mx-3">
-                            <div class="mt-3">
-                                <h3>Report Details</h3>
-                                <div class="d-flex flex-row">
-                                    <i class="bi bi-person-fill"></i>
-                                    <p class="ms-2 align-content-center">Customer </p>
+                    <!-- --------------------------------------------------------- modal rider --------------------------------------------------------- -->
+                    <div class="modal fade" id="exampleModal_rider" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
-                                <p>643150xxxx@lamduan.mfu.ac.th</p>
-                                <p>012345678</p>
-                                <p>Gender: male</p>
-                                
+                                <div class="modal-body">
+                                    <div class="popup center container">
+                                        <div class="d-flex flex-row justify-content-center">
+                                            <img src="/public/img/pngegg.png" class="img_style2 mt-5 mx-3">
+                                            <div class="mt-3">
+                                                <h3>Report Details</h3>
+                                                <div class="d-flex flex-row">
+                                                    <i class="bi bi-person-fill"></i>
+                                                    <p class="ms-2 align-content-center">Rider</p>
+                                                </div>
+                                                <p>643150xxxx@lamduan.mfu.ac.th</p>
+                                                <p>012345678</p>
+                                                <p>Gender: male</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="d-flex justify-content-center">Description</h4>
+                                            <div class="container d-flex justify-content-center">
+                                                <input type="text" class="text_Description">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Receive</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
-                        <div >
-                            <h4 class="d-flex justify-content-center">Description</h4>
-                            <div class="container d-flex justify-content-center">
-                                <input type="text" class="text_Description">
-                                
+                    </div>
+                    <!-- --------------------------------------------------------- modal cus --------------------------------------------------------- -->
+                    <div class="modal fade" id="exampleModal_cus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="popup center container">
+                                        <div class="d-flex flex-row justify-content-center">
+                                            <img src="/public/img/pngegg.png" class="img_style2 mt-5 mx-3">
+                                            <div class="mt-3">
+                                                <h3>Report Details</h3>
+                                                <div class="d-flex flex-row">
+                                                    <i class="bi bi-person-fill"></i>
+                                                    <p class="ms-2 align-content-center">Customer </p>
+                                                </div>
+                                                <p>643150xxxx@lamduan.mfu.ac.th</p>
+                                                <p>012345678</p>
+                                                <p>Gender: male</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="d-flex justify-content-center">Description</h4>
+                                            <div class="container d-flex justify-content-center">
+                                                <input type="text" class="text_Description">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Receive</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
                             </div>
-                            
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <button class="btn btn-secondary mt-3 " id="close_">close</button>
-                        </div>
-                    </div> -->
+                    </div>
+                    <!-- ---------------------------------------------------------  --------------------------------------------------------- -->
                 </div>
-                </div>             
+            </div>
         </div>
     </div>
     <script src="/public/js/gotwo_js/report_nav_animation.js"></script>
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
-
-    <script>
-        function View_(){
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You want to Receive",
-                
-                showCancelButton: true,
-                confirmButtonColor: "#2EBB45",
-                cancelButtonColor: "#D9D9D9",
-                confirmButtonText: "Receive",
-                cancelButtonText: "Close",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  Swal.fire({
-                    title: "Receive!",
-                    text: "Your has been Receive.",
-                    icon: "success"
-                  });
-                }
-              });
-        }
-    </script>
 
 </body>
 

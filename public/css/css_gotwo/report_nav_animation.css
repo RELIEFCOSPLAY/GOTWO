@@ -109,15 +109,16 @@
 /* ------------popup Modal Box style------------ */
 .text_Description{
     width: 350px;
-    height: 120px;
+    height: 200px;
     border: none;
     border-radius: 10px;
+    background-color: #D9D9D9;
 }
 .popup{
     width: 400px;
     height: 450px;
     border-radius: 10px;
-    background-color: #c0e5f0;
+    /* background-color: #c0e5f0; */
     box-sizing: border-box;
     z-index: 2;
     /* opacity: 0; */
