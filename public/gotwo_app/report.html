@@ -128,7 +128,7 @@
                 <div class="nav_animation">
                     <ul>
                         <li class="report_nav_animation"><a href="#" id="r">Report Request</a></li>
-                        <li class="history_nav_animation"><a href="#" id="h">History</a></li>
+                        <li class="history_nav_animation"><a href="#" id="r">History</a></li>
                         <span class="slider_nav_animation"></span>
                     </ul>
                 </div>
@@ -260,7 +260,7 @@
         let show_data ='';
         for(read of demo_data){
             requests_ = document.getElementById("r").innerHTML;
-            hequests_ = document.getElementById("h").innerHTML;
+            
             console.log(requests_);
 
             if(requests_ == "Report Request"){
@@ -276,7 +276,7 @@
                 }
                 document.querySelector('#dataTableBody').innerHTML = show_data;
             }
-            if(hequests_ == "History"){
+            if(requests_ == "History"){
                 if(read.status == "Receive"){
                     show_data += `
                 <tr>
