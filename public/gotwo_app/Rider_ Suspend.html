@@ -13,37 +13,39 @@
    <link rel="stylesheet" href="/public/css/css_gotwo/management.css">
    <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css">
    <style>
-       
-    /* Apply border-collapse for a cleaner approach */
-    table {
-      border-collapse: collapse;
-      font-family: sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      width: 100%;
-      margin-top: 30px;
-    }
-/* สีบนแทบ */
-    thead,
-    tfoot {
-      background-color: #DBE2EF;
-      text-align: center;
-  color:#383A66 ;
-    }
-/* ความห่าง */
-    th,td {
-      padding: 8px 10px;
-      text-align: center;
-    }
-   
- img{
-   width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
- }
+      /* Apply border-collapse for a cleaner approach */
+      table {
+         border-collapse: collapse;
+         font-family: sans-serif;
+         font-size: 0.8rem;
+         letter-spacing: 1px;
+         width: 100%;
+         margin-top: 30px;
+      }
 
- .styled-select {
+      /* สีบนแทบ */
+      thead,
+      tfoot {
+         background-color: #DBE2EF;
+         text-align: center;
+         color: #383A66;
+      }
+
+      /* ความห่าง */
+      th,
+      td {
+         padding: 8px 10px;
+         text-align: center;
+      }
+
+      img {
+         width: 40px;
+         height: 40px;
+         border-radius: 50%;
+         margin-right: 10px;
+      }
+
+      .styled-select {
          background-color: #DBE2EF;
          /* Background color */
          color: black;
@@ -71,64 +73,64 @@
 
       /* switch */
       .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 32px;
-}
+         position: relative;
+         display: inline-block;
+         width: 60px;
+         height: 32px;
+      }
 
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+      .switch input {
+         opacity: 0;
+         width: 0;
+         height: 0;
+      }
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+      .slider {
+         position: absolute;
+         cursor: pointer;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         background-color: #ccc;
+         -webkit-transition: .4s;
+         transition: .4s;
+      }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 24px;
-  width: 24px;
-  left: 5px;
-  bottom: 5px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+      .slider:before {
+         position: absolute;
+         content: "";
+         height: 24px;
+         width: 24px;
+         left: 5px;
+         bottom: 5px;
+         background-color: white;
+         -webkit-transition: .4s;
+         transition: .4s;
+      }
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
+      input:checked+.slider {
+         background-color: #2196F3;
+      }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
+      input:focus+.slider {
+         box-shadow: 0 0 1px #2196F3;
+      }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(24px);
-  -ms-transform: translateX(24px);
-  transform: translateX(24px);
-}
+      input:checked+.slider:before {
+         -webkit-transform: translateX(24px);
+         -ms-transform: translateX(24px);
+         transform: translateX(24px);
+      }
 
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
+      /* Rounded sliders */
+      .slider.round {
+         border-radius: 34px;
+      }
 
-.slider.round:before {
-  border-radius: 50%;
-}
+      .slider.round:before {
+         border-radius: 50%;
+      }
    </style>
 </head>
 
@@ -264,7 +266,7 @@ input:checked + .slider:before {
             <!-- table -->
             <table>
                <thead>
-                  <tr  >
+                  <tr>
                      <th scope="col">NAME</th>
                      <th scope="col">MAIL</th>
                      <th scope="col">MOBILE</th>
@@ -276,31 +278,31 @@ input:checked + .slider:before {
                      <th scope="row"><img src="/public/img/unnamed.jpg" alt="Names">Tom Colicchio</th>
                      <td>643150xxxx@lamduan.mfu.ac.th</td>
                      <td>0123456789</td>
-                     <td ><label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                      </label></td>
+                     <td><label class="switch">
+                           <input type="checkbox">
+                           <span class="slider round"></span>
+                        </label></td>
                   </tr>
                   <tr>
                      <th scope="row"><img src="/public/img/unnamed.jpg" alt="Names">Tom Colicchio</th>
                      <td>643150xxxx@lamduan.mfu.ac.th</td>
                      <td>0123456789</td>
-                     <td ><label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                      </label></td>
+                     <td><label class="switch">
+                           <input type="checkbox">
+                           <span class="slider round"></span>
+                        </label></td>
                   <tr>
                      <th scope="row"><img src="/public/img/unnamed.jpg" alt="Names">Tom Colicchio</th>
                      <td>643150xxxx@lamduan.mfu.ac.th</td>
                      <td>0123456789</td>
-                     <td ><label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                      </label></td>
-                    
+                     <td><label class="switch">
+                           <input type="checkbox">
+                           <span class="slider round"></span>
+                        </label></td>
+
                   </tr>
                </tbody>
-               
+
             </table>
          </div>
       </div>
