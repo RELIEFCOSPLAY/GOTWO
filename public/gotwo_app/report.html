@@ -127,8 +127,8 @@
                 <h1>Report</h1>
                 <div class="nav_animation">
                     <ul>
-                        <li class="report_nav_animation"><a href="#">Report Request</a></li>
-                        <li class="history_nav_animation"><a href="#">History</a></li>
+                        <li class="report_nav_animation"><a href="#" id="r">Report Request</a></li>
+                        <li class="history_nav_animation"><a href="#" id="h">History</a></li>
                         <span class="slider_nav_animation"></span>
                     </ul>
                 </div>
@@ -153,28 +153,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="dataTableBody">
-                                    <tr>
-                                        <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">Colicchio</td>
-                                                
-                                        <td>643150xxxx@lamduan.mfu.ac.th</td>
-                                        <td>rider</td>
-                                        <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_rider">View</button></td>           
-                                    </tr>
-                                    <tr>
-                                        <td scope="row"><img src="/public/img/pngegg.png" class="img_style mx-2">John Bravo</td>
-                                        <td>644150xxxx@lamduan.mfu.ac.th</td>
-                                        <td>rider</td>
-                                        <td><button type="button" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#exampleModal_rider">View</button></td>
-                                                
-                                    </tr>
-                                    <tr>
-                                        <td scope="row"><img src="/public/img/pngegg.png" class="img_style mx-2">Popup</td>
-                                        <td>643150xxxx@lamduan.mfu.ac.th</td>
-                                        <td>customer</td>
-                                        <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_cus">View</button>
-                                        </td>
-                                    </tr>
-
                                     <!-- <tr>
                                         <th scope="row">ศอ</th>
                                         <td colspan="2">Larry the Bird</td>
@@ -210,7 +188,7 @@
                                         <div>
                                             <h4 class="d-flex justify-content-center">Description</h4>
                                             <div class="container d-flex justify-content-center">
-                                                <input type="text" class="text_Description">
+                                                <p type="text" class="text_Description"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +226,7 @@
                                         <div>
                                             <h4 class="d-flex justify-content-center">Description</h4>
                                             <div class="container d-flex justify-content-center">
-                                                <input type="text" class="text_Description">
+                                                <p type="text" class="text_Description"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -268,6 +246,54 @@
     <script src="/public/js/gotwo_js/report_nav_animation.js"></script>
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
+    <script>
+
+        const demo_data = [
+        {name:"Colicchio" , mail:"643150xxxx@lamduan.mfu.ac.th" , role:"rider", numder:"123456789", gender:"male", status:"unReceive"},
+        {name:"John Bravo" , mail:"643150xxxx@lamduan.mfu.ac.th" , role:"rider", numder:"123456789", gender:"male" , status:"unReceive"},
+        {name:"Popup" , mail:"644150xxxx@lamduan.mfu.ac.th" , role:"customer", numder:"123456789", gender:"female", status:"unReceive"},
+        {name:"jojo" , mail:"644150xxxx@lamduan.mfu.ac.th" , role:"customer", numder:"123456789", gender:"male", status:"Receive"},
+        {name:"momo" , mail:"645150xxxx@lamduan.mfu.ac.th" , role:"rider", numder:"123456789", gender:"female", status:"Receive"}
+        ];
+
+        
+        let show_data ='';
+        for(read of demo_data){
+            requests_ = document.getElementById("r").innerHTML;
+            hequests_ = document.getElementById("h").innerHTML;
+            console.log(requests_);
+
+            if(requests_ == "Report Request"){
+                if(read.status == "unReceive"){
+                    show_data += `
+                <tr>
+                    <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">${read.name}</td>       
+                    <td>${read.mail}</td>
+                    <td>${read.role}</td>
+                    <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_rider">View</button></td>           
+                </tr>
+                `;
+                }
+                document.querySelector('#dataTableBody').innerHTML = show_data;
+            }
+            if(hequests_ == "History"){
+                if(read.status == "Receive"){
+                    show_data += `
+                <tr>
+                    <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">${read.name}</td>       
+                    <td>${read.mail}</td>
+                    <td>${read.role}</td>
+                    <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_rider">View</button></td>           
+                </tr>
+                `;
+                }
+                document.querySelector('#dataTableBody').innerHTML = show_data;
+            }
+              
+        }
+        
+        requests_ = document.getElementById("r").innerHTML;
+    </script>
 </body>
 
 </html>

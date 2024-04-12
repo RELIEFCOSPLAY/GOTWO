@@ -11,7 +11,7 @@ slider_nav_animation_li.forEach((item, index) => {
 
   item.onclick = function () {
     slider_nav_animation.style.width = item.clientWidth + "px";
-    console.log(index);
+    // console.log(index);
     index_value = index;
     get_left_position();
     slider_nav_animation.style.left = (left_position+30) + "px";
@@ -23,7 +23,7 @@ function get_left_position() {
   for (let i = 0; i < index_value; i++) {
     const element = slider_nav_animation_li[i];
     left_position += element.clientWidth;
-    console.log(left_position);
+    // console.log(left_position);
   }
 }
 // ---------sidebar function---------
