@@ -251,6 +251,37 @@
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
     <script>
+        function view_(){
+            alert("ศอ");
+            let show_modal2 ='';
+            show_modal2 += `
+            <div class="popup center container">
+                <div class="d-flex flex-row justify-content-center">
+                    <img src="/public/img/pngegg.png" class="img_style2 mt-5 mx-3">
+                    <div class="mt-3">
+                        <h3>Report Details</h3>
+                        <div class="d-flex flex-row">
+                            <i class="bi bi-person-fill"></i>
+                            <p class="ms-2 align-content-center">Customer </p>
+                        </div>
+                        <p>643150xxxx@lamduan.mfu.ac.th</p>
+                        <p>012345678</p>
+                        <p>Gender: male</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="d-flex justify-content-center">Description</h4>
+                    <div class="container d-flex justify-content-center">
+                        <p type="text" class="text_Description"></p>
+                    </div>
+                </div>
+            </div>
+            `;
+            document.querySelector('#madal_display').innerHTML = show_modal2;
+        }
+    </script>
+    
+    <script>
 
         const demo_data = [
             {id:0,  name: "Colicchio", mail: "643150xxxx@lamduan.mfu.ac.th", role: "rider", numder: "123456789", gender: "male", status: "unReceive" },
@@ -274,7 +305,7 @@
                     <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">${read.name}</td>       
                     <td>${read.mail}</td>
                     <td>${read.role}</td>
-                    <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_rider">View</button></td>           
+                    <td><button type="button" class="btn btn-success" onclick="view_()">Receive</button></td>           
                 </tr>
                 `;
             }

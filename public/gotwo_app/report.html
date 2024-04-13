@@ -198,17 +198,13 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Receive</button>
+                                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" >Receive</button>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    
-                    
-                    <!-- --------------------------------------------------------- modal cus --------------------------------------------------------- -->            
+                        </div>     
                     </div>
-                    <!-- ---------------------------------------------------------  --------------------------------------------------------- -->
                 </div>
             </div>
         </div>
@@ -218,7 +214,7 @@
 
     <script>
         function view_(){
-            alert("tt");
+            alert("ศอ");
             let show_modal2 ='';
             show_modal2 += `
             <div class="popup center container">
@@ -268,11 +264,11 @@
             if(requests_ == "Report Request"){
                 if(read.status == "unReceive"){
                     show_data += `
-                <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider"">
+                <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider">
                     <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">${read.name}</td>       
                     <td>${read.mail}</td>
                     <td>${read.role}</td>
-                    <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_rider">View</button></td>           
+                    <td><button type="button" class="btn btn-success" onclick="view_()">Receive</button></td>           
                 </tr>
                 `;
 
