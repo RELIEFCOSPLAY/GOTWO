@@ -1,21 +1,42 @@
+w
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar3</title>
-
-    
-    
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Tracking Details</title>
     <script src="/public/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/public/css/css_gotwo/nav_animation.css">
-    <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css">
+    <link rel="stylesheet" href="/public/css/css_gotwo/tracking_nav_animation .css" />
+    <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css" />
+
+    <!-- style data table -->
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        th {
+            background-color: #dbe2ef;
+            color: #383a66;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,10 +49,9 @@
                 <div class="sidebar-logo">
                     <a href="#" class="fw-bold">GOTWO</a>
                 </div>
-                
             </div>
             <a href="#" class="sidebar-person">
-                <div class="text-white ">
+                <div class="text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                         class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -111,41 +131,83 @@
                         <span>Profile</span>
                     </a>
                 </li>
-                
             </ul>
             <div class="sidebar-footer">
                 <a href="#" class="sidebar-link">
-                    <i class="lni lni-exit"></i>
+                    <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
             </div>
         </aside>
 
+        <!-- bar status -->
         <div class="main p-3">
-            <div class="ms-4 mt-3">
-                <h1>Payment Rider</h1>
-                <div class="nav_animation">
-                    <ul>
-                        <li class="unpaid_nav_animation"><a href="#">Unpaid</a></li>
-                        <li class="completed_nav_animation"><a href="#">Completed</a></li>
-                        <span class="slider_nav_animation"></span>
-                    </ul>
+            <div class="d-flex flex-column justify-content-between col-auto">
+                <div class="ms-4 mt-3">
+                    <h1>Travel Tracking Details</h1>
+                    <div class="nav_animation">
+                        <ul>
+                            <li class="Pending_nav_animation"><a href="#">Pending</a></li>
+                            <li class="Request_nav_animation"><a href="#">Request</a></li>
+                            <li class="Confirm_nav_animation"><a href="#">Confirm</a></li>
+                            <li class="Totravel_nav_animation"><a href="#">To travel</a></li>
+                            <li class="Success_nav_animation"><a href="#">Success</a></li>
+                            <li class="Cancel_nav_animation"><a href="#">Cancel</a></li>
+                            <span class="slider_nav_animation"></span>
+                        </ul>
+                    </div>
+
+                    <!-- Search/table data -->
+                    <div class="box">
+                        <input type="text" id="searchInput" placeholder="Search" />
+                        <a href="#">
+                            <i class="bi bi-search"></i>
+                        </a>
+                    </div>
                 </div>
 
-                <div class="box">
-                    <input type="text" placeholder="Search">
-                    <a href="#">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </div>
-                <div>
-                    
+                <div class="container-fluid mt-5">
+                    <table>
+                        <thead>
+                            <th>Ridername</th>
+                            <th>Customername</th>
+                            <th>Pick up</th>
+                            <th>Drop</th>
+                        </thead>
+                        <tbody id="dataTableBody">
+                            <tr>
+                                <td>Peter Potter</td>
+                                <td>Griffin lily</td>
+                                <td>FahThai Soi5</td>
+                                <td>M-square</td>
+                            </tr>
+                            <tr>
+                                <td>Lisa Lalisa</td>
+                                <td>Jisoo Kim</td>
+                                <td>D1</td>
+                                <td>M-square</td>
+                            </tr>
+                            <tr>
+                                <td>Rose Salin</td>
+                                <td>Henry Wang</td>
+                                <td>D1</td>
+                                <td>M-square</td>
+                            </tr>
+                            <tr>
+                                <td>Riku Gun</td>
+                                <td>Miyuki</td>
+                                <td>C5</td>
+                                <td>M-square</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="/public/js/gotwo_js/nav_animation.js"></script>
+    <script src="/public/js/gotwo_js/tracking_nav_animation.js"></script>
+    <script src="/public/js/gotwo_js/searchfuction.js"></script>
 </body>
 
 </html>
