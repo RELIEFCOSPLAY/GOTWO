@@ -3,7 +3,7 @@
 .nav_animation ul{
     /* background-color: rgb(177, 155, 230); */
     display: flex;
-    width: 800px;
+    width: 600px;
     border-radius: 5px;
     position: relative;
 }
@@ -14,19 +14,16 @@
     z-index: 2;
 }
 
-.request_nav_animation{
+.report_nav_animation{
     width: 200px;
 }
 
-.history_nav_animatio{
+.history_nav_animation{
     width: 200px;
 }
 
-.suspend_nav_animation{
-    width: 200px;
-}
 
-.nav_animation ul li a{
+.nav_animation ul li a {
     font-size: 25px;
     text-decoration: none;
     color: rgb(26, 28, 67);
@@ -75,3 +72,54 @@
     font-size: 18px;
 }
 
+/* ------------img style------------ */
+.img_style{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.img_style2{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+/* ------------table style------------ */
+#table-posts , #button_style {
+    border-collapse: collapse;
+    margin: 10px auto;
+    width: 100%;
+}
+
+#table-posts thead tr  {
+    color: #FFF;
+    text-align: left;
+    background-color: rgb(26, 28, 67);
+}
+
+#table-posts th, #table-posts td , #button_style{
+    padding: 12px 15px;
+}
+
+#table-posts tbody tr:nth-of-type(2n) {
+    background-color: #f5f5f5;
+}
+
+/* ------------popup Modal Box style------------ */
+.text_Description{
+    width: 350px;
+    height: 200px;
+    border: none;
+    border-radius: 10px;
+    background-color: #D9D9D9;
+}
+.popup{
+    width: 400px;
+    height: 450px;
+    border-radius: 10px;
+    /* background-color: #c0e5f0; */
+    box-sizing: border-box;
+    z-index: 2;
+    /* opacity: 0; */
+}
