@@ -153,7 +153,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="dataTableBody">
-                                    <!-- <tr>
+                                    <!-- <tr onclick="view_()">
                                         <th scope="row">ศอ</th>
                                         <td colspan="2">Larry the Bird</td>
                                         <td>@twitter</td>
@@ -253,6 +253,12 @@
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
     <script>
+        function view_(){
+            alert("lv");
+        }
+    </script>
+
+    <script>
 
         const demo_data = [
         {id:0, name:"Colicchio" , mail:"643150xxxx@lamduan.mfu.ac.th" , role:"rider", numder:"123456789", gender:"male", status:"unReceive"},
@@ -273,7 +279,7 @@
             if(requests_ == "Report Request"){
                 if(read.status == "unReceive"){
                     show_data += `
-                <tr>
+                <tr onclick="view_()">
                     <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">${read.name}</td>       
                     <td>${read.mail}</td>
                     <td>${read.role}</td>
