@@ -16,34 +16,7 @@
    <link rel="stylesheet" href="/public/css/css_gotwo/management.css">
    <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-   <style>
-      .container {
-         flex-wrap: wrap;
-         width: 100%;
-         /* ใช้ flex-wrap สำหรับหน้าจอขนาดเล็ก */
-      }
-
-      .butt {
-         background-color: #DBE2EF;
-         border: 1px solid #6E6E6E;
-         width: 150px;
-         height: 170px;
-         margin-top: 10 px;
-      }
-
-      .btn {
-         display: grid;
-         place-items: center;
-         margin: 20px;
-         float: none;
-      }
-
-      .btn i {
-         grid-area: 1 / 1;
-         margin-bottom: 3px;
-         font-size: 40px;
-      }
-   </style>
+  <link rel="stylesheet" href="/public/css/css_gotwo/dashboard.css">
 </head>
 
 <body>
@@ -151,9 +124,9 @@
       <div class="main p-3">
          <div class="ms-4 mt-3 row">
             <!-- dashboard -->
-            <div class="container col">
+            <div class="container col"id="buttonn">
                <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                  <div class="btn-group" role="group" aria-label="First group">
+                  <div class="btn-group" role="group" aria-label="First group" >
                      <a href="#"><button type="verifly" class="btn butt rounded btn-lg"><i class="bi bi-file-text"
                               style="color: #0C7536;"></i>Verifly rider<br>6</button></a>
                      <a href="#"><button type="request" class="btn butt rounded btn-lg"><i class="bi bi-list-ul"
@@ -163,7 +136,7 @@
                   </div>
 
                </div>
-               <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+               <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" >
                   <div class="btn-group" role="group" aria-label="First group">
                      <a href="#"><button type="confirm" class="btn butt rounded btn-lg"><i class="bi bi-check-circle"
                               style="color: #5C368C;"></i>Confirm<br>4</button></a>
@@ -189,7 +162,7 @@
             </div>
 
             <div class="btn-group col" role="group" aria-label="First group">
-               <div class="col-d-flex justify-content-end">
+               <div class="col-d-flex">
                   
                      <!-- money -->
                      <div class="badge text-wrap"
@@ -204,32 +177,7 @@
                         style="width:90%;max-width:500px; background-color: #DBE2EF; padding: 20px 5px; margin-top: 20px;"
                         class="chart-with-background"></canvas>
 
-                     <script>
-                        const xValues = ["Rider: 42", "Customer:45"];
-                        const yValues = [42, 45];
-                        const barColors = [
-                           "#C34813",
-                           "#35C096"
-                        ];
-
-                        new Chart("myChart", {
-                           type: "doughnut",
-                           data: {
-                              labels: xValues,
-                              datasets: [{
-                                 backgroundColor: barColors,
-                                 data: yValues
-                              }]
-                           },
-                           options: {
-                              title: {
-                                 display: true,
-                                 text: "User use application",
-                                 fontSize: 16
-                              }
-
-                           }
-                        });
+                     <script src="/public/js/gotwo_js/dashboard.js">
                      </script>
                   
                </div>
