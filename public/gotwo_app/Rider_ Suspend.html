@@ -10,7 +10,7 @@
    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-   <link rel="stylesheet" href="/public/css/css_gotwo/management.css">
+   <link rel="stylesheet" href="/public/css/css_gotwo/management_rider.css">
    <link rel="stylesheet" href="/public/css/css_gotwo/sidebar_rider.css">
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -124,8 +124,7 @@
             <h1>Management Rider</h1>
             <div class="nav_animation">
                <ul>
-                  <li class="report_nav_animation"><a href="#" id="Request">Report
-                        Request</a></li>
+                  <li class="report_nav_animation"><a href="#" id="Request">Rider Request</a></li>
                   <li class="history_nav_animation"><a href="#"
                         id="Request">History</a></li>
                   <li class="suspend_nav_animation"><a href="#"
@@ -201,7 +200,7 @@
                     <td scope="row"> <img src="/public/img/unnamed.jpg" class="img_style mx-2">${read.name}</td>       
                     <td>${read.mail}</td>
                     <td>${read.numder}</td>
-                    <td><label class="switch">
+                    <td><label class="switch" onclick="view_ ()">
                            <input type="checkbox">
                            <span class="slider round"></span>
                         </label></td>
@@ -210,7 +209,17 @@
           
          
          document.querySelector('#dataTableBody').innerHTML = show_data;
-
+         function view_() {
+         Swal.fire({
+            title: "Do you want to suspend this account?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No"
+         })
+      }
 
       }
 
