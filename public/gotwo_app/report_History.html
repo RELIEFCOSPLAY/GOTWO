@@ -162,85 +162,24 @@
                             </table>
                         </div>
                     </div>
-                    <!-- --------------------------------------------------------- modal rider --------------------------------------------------------- -->
-                    <div class="modal fade" id="exampleModal_rider" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    
-                                </div>
-                                <div class="modal-body">
-                                    <div class="popup center container">
-                                        <div class="d-flex flex-row justify-content-center">
-                                            <img src="/public/img/pngegg.png" class="img_style2 mt-5 mx-3">
-                                            <div class="mt-3">
-                                                <h3>Report Details</h3>
-                                                <div class="d-flex flex-row">
-                                                    <i class="bi bi-person-fill"></i>
-                                                    <p class="ms-2 align-content-center">Rider</p>
-                                                </div>
-                                                <p>643150xxxx@lamduan.mfu.ac.th</p>
-                                                <p>012345678</p>
-                                                <p>Gender: male</p>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h4 class="d-flex justify-content-center">Description</h4>
-                                            <div class="container d-flex justify-content-center">
-                                                <p type="text" class="text_Description"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <!-- --------------------------------------------------------- modal cus --------------------------------------------------------- -->
-                    <div class="modal fade" id="exampleModal_cus" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="exampleModal_rider" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                    
                                 </div>
-                                <div class="modal-body">
-                                    <div class="popup center container">
-                                        <div class="d-flex flex-row justify-content-center">
-                                            <img src="/public/img/pngegg.png" class="img_style2 mt-5 mx-3">
-                                            <div class="mt-3">
-                                                <h3>Report Details</h3>
-                                                <div class="d-flex flex-row">
-                                                    <i class="bi bi-person-fill"></i>
-                                                    <p class="ms-2 align-content-center">Customer </p>
-                                                </div>
-                                                <p>643150xxxx@lamduan.mfu.ac.th</p>
-                                                <p>012345678</p>
-                                                <p>Gender: male</p>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h4 class="d-flex justify-content-center">Description</h4>
-                                            <div class="container d-flex justify-content-center">
-                                                <p type="text" class="text_Description"></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="modal-body" id="madal_display">
+                                    
                                 </div>
                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
                                     
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <!-- ---------------------------------------------------------  --------------------------------------------------------- -->
                 </div>
             </div>
@@ -249,11 +188,48 @@
     <script src="/public/js/gotwo_js/report_nav_animation_History.js"></script>
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
+    
     <script>
-        function view_(){
-            alert("ศอ");
-            let show_modal2 ='';
-            show_modal2 += `
+
+        const demo_data = [
+        {id:0, name:"Colicchio" , mail:"643150xxxx@lamduan.mfu.ac.th" , role:"rider", numder:"123456789", gender:"male", status:"unReceive"},
+        {id:1, name:"John Bravo" , mail:"643150xxxx@lamduan.mfu.ac.th" , role:"rider", numder:"123456789", gender:"male" , status:"unReceive"},
+        {id:2, name:"Popup" , mail:"644150xxxx@lamduan.mfu.ac.th" , role:"customer", numder:"123456789", gender:"female", status:"unReceive"},
+        {id:3, name:"jojo" , mail:"644150xxxx@lamduan.mfu.ac.th" , role:"customer", numder:"123456789", gender:"male", status:"Receive"},
+        {id:4, name:"momo" , mail:"645150xxxx@lamduan.mfu.ac.th" , role:"rider", numder:"123456789", gender:"female", status:"Receive"},
+        {id:5, name:"John Bravo" , mail:"643150xxxx@lamduan.mfu.ac.th" , role:"rider", numder:"123456789", gender:"male" , status:"Receive"},
+        ];
+
+        <!-- .............................................................. -->
+        requests_ = document.getElementById("Request").innerHTML;
+        
+        
+        let show_modal ='';
+        let show_data ='';
+        for(read of demo_data){
+            if(requests_ == "Report Request"){
+                if(read.status == "unReceive"){
+                    show_data += `
+                <tr ">
+                    <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">${read.name}</td>       
+                    <td>${read.mail}</td>
+                    <td>${read.role}</td>
+                    <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_rider">View</button></td>           
+                </tr>
+                `;
+
+                }
+                
+                document.querySelector('#dataTableBody').innerHTML = show_data;
+                view_modal()
+            }
+              
+        }
+
+        function view_modal(){
+            
+            let show_modal ='';
+            show_modal += `
             <div class="popup center container">
                 <div class="d-flex flex-row justify-content-center">
                     <img src="/public/img/pngegg.png" class="img_style2 mt-5 mx-3">
@@ -276,44 +252,9 @@
                 </div>
             </div>
             `;
-            document.querySelector('#madal_display').innerHTML = show_modal2;
-        }
-    </script>
-    
-    <script>
-
-        const demo_data = [
-            {id:0,  name: "Colicchio", mail: "643150xxxx@lamduan.mfu.ac.th", role: "rider", numder: "123456789", gender: "male", status: "unReceive" },
-            {id:1,  name: "John Bravo", mail: "643150xxxx@lamduan.mfu.ac.th", role: "rider", numder: "123456789", gender: "male", status: "unReceive" },
-            {id:2,  name: "Popup", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "123456789", gender: "female", status: "unReceive" },
-            {id:3,  name: "jojo", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "123456789", gender: "male", status: "Receive" },
-            {id:4,  name: "momo", mail: "645150xxxx@lamduan.mfu.ac.th", role: "rider", numder: "123456789", gender: "female", status: "Receive" },
-            {id:5,  name:"John Totop" , mail:"643150xxxx@lamduan.mfu.ac.th" , role:"rider", numder:"123456789", gender:"male" , status:"Receive"},
-
-        ];
-
-        requests_ = document.getElementById("Request").innerHTML;
-        
-
-        let show_data = '';
-        console.log("");
-        for (read of demo_data) {
-            if (read.status == "Receive") {
-                show_data += `
-                <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider">
-                    <td scope="row"> <img src="/public/img/pngegg.png" class="img_style mx-2">${read.name}</td>       
-                    <td>${read.mail}</td>
-                    <td>${read.role}</td>
-                    <td><button type="button" class="btn btn-success" onclick="view_()">Receive</button></td>           
-                </tr>
-                `;
-            }
-            document.querySelector('#dataTableBody').innerHTML = show_data;
-
-
+            document.querySelector('#madal_display').innerHTML = show_modal;
         }
 
-        
     </script>
 </body>
 
