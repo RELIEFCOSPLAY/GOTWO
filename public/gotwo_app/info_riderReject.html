@@ -15,187 +15,214 @@
     <link rel="stylesheet" href="/public/css/css_gotwo/nav_animation.css">
     <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css">
     <link rel="stylesheet" href="/public/css/css_gotwo/info_rider.css">
+    <link rel="stylesheet" href="/public/css/css_gotwo/info_cus.css">
 </head>
 
 <body>
-    <div class="wrapper">
-        <aside id="sidebar">
-            <div class="d-flex">
-                <button class="toggle-btn" type="button">
-                    <i class="lni lni-grid-alt"></i>
-                </button>
-                <div class="sidebar-logo">
-                    <a href="#" class="fw-bold" style="font-size: 40px;">GOTWO</a>
-                </div>
-
-            </div>
-            <a href="#" class="sidebar-person">
-                <div class="text-white ">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                        <path fill-rule="evenodd"
-                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                    </svg>
-                    <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
-                </div>
-            </a>
-
-            <p class="text-white mt-4 ms-2 fw-bold">MEUN</p>
-            <hr class="text-white d-none d-sm-block" />
-
-            <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-speedometer2"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#Management" aria-expanded="false" aria-controls="Management">
-                        <i class="bi bi-kanban"></i>
-                        <span>Management</span>
-                    </a>
-                    <ul id="Management" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Rider</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Customer</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-pin-map-fill"></i>
-                        <span>Travel Tracking</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#Payment" aria-expanded="false" aria-controls="Payment">
-                        <i class="bi bi-credit-card-fill"></i>
-                        <span>Payment</span>
-                    </a>
-                    <ul id="Payment" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Rider</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Refund</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#Report" aria-expanded="false" aria-controls="Report">
-                        <i class="bi bi-flag-fill"></i>
-                        <span>Report</span>
-                    </a>
-                    <ul id="Report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Rider</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Customer</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-person-circle"></i>
-                        <span>Profile</span>
-                    </a>
-                </li>
-
-            </ul>
-            <div class="sidebar-footer">
-                <a href="#" class="sidebar-link">
-                    <i class="lni lni-exit"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
-        </aside>
-
-        <div class="main p-3">
-            <div class="ms-4 mt-3">
-                <h1>Information Rider</h1>
-                <div class="row">
-                    
-                    <!-- First col -->
-                    <div class="col-6"><h1><i class="bi bi-person-circle ms-5"></i></h1>
-                    <h3>WINGMAN THRASH</h3>
-                    <h7>Rating<i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></h5>
-                    <h4><i class="bi bi-envelope"></i>643150***@lamduan.mfu.ac.th</h4>
-                    <h4><i class="bi bi-calendar"></i>20 March 2021</h4>
-                    <h4><i class="bi bi-telephone"></i>0123456789</h4>
-                    <h4><i class="bi bi-gender-ambiguous"></i>Male</h4>
-                    <h4><i class="bi bi-car-front-fill"></i>Car registration</h4>
-                    <h4><i class="bi bi-bicycle"></i>Car brand</h4>
-                    <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Reject
-                      </button>
-                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              Reason for reject.
-                              <br><input type="text" name="" id="">
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                          </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="d-flex flex-column justify-content-between col-auto min-vh-100"
+                style="background-color: rgb(26, 28, 67);">
+                <div class="mt-5">
+                    <a class="text-white d-none d-sm-inline text-decoration-none d-flex align-items-center "
+                        role="button">
+                        <div class="mx-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                                class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                <path fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                            </svg>
+                            <span class="mx-2"> Name Last-name</span>
                         </div>
-                      </div>
-                </div>
-                
-                    <!-- Second col -->
-                    <div class="col-6">
-                        <h1>Document</h1>
-                        <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <p class="card-text">Driver's license</p>
-                            </div>
-                          </div>
-                          <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <p class="card-text">ID Card</p>
-                            </div>
-                          </div>
-                          <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <p class="card-text">ACT</p>
-                            </div>
-                          </div>
-                          <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <p class="card-text">Car picture</p>
-                            </div>
-                          </div>
-                          <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <p class="card-text">Car registration</p>
-                            </div>
-                          </div>
-                    </div>
-                    
-                </div>
+                    </a>
+                    <p class="text-white mt-5 ms-3 fw-bold">MEUN</p>
+                    <hr class="text-white d-none d-sm-block" />
+                    <ul class="nav nav-pills flex-column mt-2 mt-sm-2" id="menu">
+                        <li class="nav-item my-1">
+                            <a href="#" class="nav-link text-white" aria-current="page">
+                                <i class="bi bi-speedometer2"></i>
+                                <span class="ms-2 d-none d-sm-inline fw-bold">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item my-1 disabled">
+                            <a href="#sidemenu" data-bs-toggle="collapse" class="nav-link text-white"
+                                aria-current="page">
+                                <i class="bi bi-kanban"></i>
+                                <span class="ms-2 d-none d-sm-inline fw-bold">Management</span>
+                                <i class="bi bi-caret-down-fill"></i>
+                            </a>
+                            <ul class="nav collapse ms-1 flex-column" id="sidemenu" data-bs-parent="#menu">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#" aria-current="page">- Rider</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#">- Customer</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item my-1">
+                            <a href="#" class="nav-link text-white" aria-current="page">
+                                <i class="bi bi-pin-map-fill"></i>
+                                <span class="ms-2 d-none d-sm-inline fw-bold">Travel Tracking</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item my-1 disabled">
+                            <a href="#sidemenu2" data-bs-toggle="collapse" class="nav-link text-white"
+                                aria-current="page">
+                                <i class="bi bi-credit-card-fill"></i>
+                                <span class="ms-2 d-none d-sm-inline fw-bold">Payment</span>
+                                <i class="bi bi-caret-down-fill"></i>
+                            </a>
+                            <ul class="nav collapse ms-1 flex-column" id="sidemenu2" data-bs-parent="#menu">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#" aria-current="page">- Rider</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#">- Customer</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item my-1 disabled">
+                            <a href="#sidemenu3" data-bs-toggle="collapse" class="nav-link text-white"
+                                aria-current="page">
+                                <i class="bi bi-flag-fill"></i>
+                                <span class="ms-2 d-none d-sm-inline fw-bold">Report</span>
+                                <i class="bi bi-caret-down-fill"></i>
+                            </a>
+                            <ul class="nav collapse ms-1 flex-column" id="sidemenu3" data-bs-parent="#menu">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#" aria-current="page">- Rider</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#">- Customer</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item my-1">
+                            <a href="#" class="nav-link text-white" aria-current="page">
+                                <i class="bi bi-person-circle"></i>
+                                <span class="ms-2 d-none d-sm-inline fw-bold">Profile</span>
+                            </a>
+                        </li>
+                    </ul>
 
                 </div>
+                <div class="mb-4 mx-3">
+                    <a class="text-white d-none d-sm-inline text-decoration-none d-flex align-items-center "
+                        role="button">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                                class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                <path fill-rule="evenodd"
+                                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                            </svg>
+                            <span class="mx-2">LOG OUT</span>
+                        </div>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- พื้นที่ใช้สอย !คำเตือน! ถ้ามันเกินเขตแนวนอน ข้างมันจะเด้งลงข้างล่าง ถ้าไม่เชื่อลองใส่ t ดูตัวหนึ่ง-->
+            <div class="d-flex flex-column justify-content-between col-auto min-vh-100">
+                <div class="main p-3">
+                    <div class="ms-4 mt-3">
+                        <h1>Information Rider</h1>
+                        <div class="row">
+
+                            <!-- First col -->
+                            <div class="col-6">
+                                <h1><i class="bi bi-person-circle ms-5"></i></h1>
+                                <h3>WINGMAN THRASH</h3>
+                                <h7>Rating<i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                        class="bi bi-star-fill"></i></h5>
+                                    <h6><i class="bi bi-envelope"></i>643150***@lamduan.mfu.ac.th</h6>
+                                    <h4><i class="bi bi-calendar"></i>20 March 2021</h4>
+                                    <h4><i class="bi bi-telephone"></i>0123456789</h4>
+                                    <h4><i class="bi bi-gender-ambiguous"></i>Male</h4>
+                                    <h4><i class="bi bi-car-front-fill"></i>Car registration</h4>
+                                    <h4><i class="bi bi-bicycle"></i>Car brand</h4>
+                                    <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
+                                        Reject
+                                    </button>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Reason for reject.
+                                                    <br><input type="text" name="" id="">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <!-- Second col -->
+                            <div class="col-6">
+                                <h1>Document</h1>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="..." class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text">Driver's license</p>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="..." class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text">ID Card</p>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="..." class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text">ACT</p>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="..." class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text">Car picture</p>
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="..." class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text">Car registration</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                </p>
+                <div></div>
+
             </div>
         </div>
+    </div>
+
     </div>
 
     <script src="/public/js/gotwo_js/nav_animation.js"></script>

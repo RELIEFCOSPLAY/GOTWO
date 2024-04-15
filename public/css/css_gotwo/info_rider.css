@@ -1,5 +1,6 @@
-h4,h3 {
-  border: 2px solid darkblue;
+h4,
+h3 {
+  border: 2px solid #1A1C43;
   border-radius: 7px;
+  padding-right: 30px;
 }
-
