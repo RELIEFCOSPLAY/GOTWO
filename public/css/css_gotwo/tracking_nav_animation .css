@@ -85,4 +85,24 @@
     font-size: 18px;
 }
 
+/*  style data table  */
 
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #fff;
+}
+
+th {
+    background-color: #dbe2ef;
+    color: #383a66;
+}
