@@ -16,7 +16,7 @@
    <link rel="stylesheet" href="/public/css/css_gotwo/management.css">
    <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-  <link rel="stylesheet" href="/public/css/css_gotwo/dashboard.css">
+   <link rel="stylesheet" href="/public/css/css_gotwo/dashboard.css">
 </head>
 
 <body>
@@ -91,7 +91,7 @@
                   </li>
                </ul>
             </li>
-            <li class="sidebar-item">
+            <!-- <li class="sidebar-item">
                <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                   data-bs-target="#Report" aria-expanded="false" aria-controls="Report">
                   <i class="bi bi-flag-fill"></i>
@@ -105,7 +105,7 @@
                      <a href="#" class="sidebar-link">Customer</a>
                   </li>
                </ul>
-            </li>
+            </li> -->
             <li class="sidebar-item">
                <a href="#" class="sidebar-link">
                   <i class="bi bi-person-circle"></i>
@@ -124,9 +124,9 @@
       <div class="main p-3">
          <div class="ms-4 mt-3 row">
             <!-- dashboard -->
-            <div class="container col"id="buttonn">
+            <div class="container col" id="buttonn">
                <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                  <div class="btn-group" role="group" aria-label="First group" >
+                  <div class="btn-group" role="group" aria-label="First group">
                      <a href="#"><button type="verifly" class="btn butt rounded btn-lg"><i class="bi bi-file-text"
                               style="color: #0C7536;"></i>Verifly rider<br>6</button></a>
                      <a href="#"><button type="request" class="btn butt rounded btn-lg"><i class="bi bi-list-ul"
@@ -136,7 +136,7 @@
                   </div>
 
                </div>
-               <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" >
+               <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="btn-group" role="group" aria-label="First group">
                      <a href="#"><button type="confirm" class="btn butt rounded btn-lg"><i class="bi bi-check-circle"
                               style="color: #5C368C;"></i>Confirm<br>4</button></a>
@@ -158,34 +158,34 @@
                   </div>
                </div>
 
-               
+
             </div>
 
             <div class="btn-group col" role="group" aria-label="First group">
                <div class="col-d-flex">
-                  
-                     <!-- money -->
-                     <div class="badge text-wrap"
-                        style="background-color: #B7E9B4;border: 2px solid #A1A1A1; padding: 20px;">
-                        <h4 style="color: #6E6E6E; font-size: 15px; text-align: start;">Income money</h4>
-                        <hr style="color: #6E6E6E;">
-                        <h2 style="color: black; text-align: center; ">10,602 THB</h2>
-                     </div>
 
-                     <!-- กราฟ -->
-                     <canvas id="myChart"
-                        style="width:90%;max-width:500px; background-color: #DBE2EF; padding: 20px 5px; margin-top: 20px;"
-                        class="chart-with-background"></canvas>
+                  <!-- money -->
+                  <div class="badge text-wrap"
+                     style="background-color: #B7E9B4;border: 2px solid #A1A1A1; padding: 20px;">
+                     <h4 style="color: #6E6E6E; font-size: 15px; text-align: start;">Income money</h4>
+                     <hr style="color: #6E6E6E;">
+                     <h2 style="color: black; text-align: center; ">10,602 THB</h2>
+                  </div>
 
-                     <script src="/public/js/gotwo_js/dashboard.js">
-                     </script>
-                  
+                  <!-- กราฟ -->
+                  <canvas id="myChart"
+                     style="width:100%;max-width:500px; background-color: #DBE2EF; padding:50px 100px; margin-top: 50px;"
+                     class="chart-with-background"></canvas>
+
+                  <script src="/public/js/gotwo_js/dashboard.js">
+                  </script>
+
                </div>
             </div>
 
-            
-            
-            
+
+
+
          </div>
       </div>
    </div>
