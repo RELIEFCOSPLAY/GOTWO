@@ -176,3 +176,8 @@
      .slider.round:before {
         border-radius: 50%;
      }
+
+     tr:hover {
+        cursor: pointer;
+        background-color: #DBE2EF;
+    }

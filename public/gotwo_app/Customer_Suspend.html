@@ -192,7 +192,7 @@
 
 
          show_data += `
-                <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider">
+                <tr onclick="redirectToPage('${read.url}');">
                     <td scope="row"> <img src="/public/img/unnamed.jpg" class="img_style mx-2">${read.name}</td>       
                     <td>${read.mail}</td>
                     <td>${read.numder}</td>

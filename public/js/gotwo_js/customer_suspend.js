@@ -32,3 +32,6 @@ const hamBurger = document.querySelector(".toggle-btn");
 hamBurger.addEventListener("click", function () {
   document.querySelector("#sidebar").classList.toggle("expand");
 });
+function redirectToPage(url) {
+  window.location.href = "/public/gotwo_app/info_cusUnSus.html";
+}

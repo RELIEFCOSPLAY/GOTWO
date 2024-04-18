@@ -34,5 +34,5 @@ hamBurger.addEventListener("click", function () {
 });
 
 function redirectToPage(url) {
-  window.location.href = url;
+  window.location.href = "/public/gotwo_app/info_riderReject.html";
 }
