@@ -1,0 +1,45 @@
+.container {
+   flex-wrap: wrap;
+   width: 100%;
+
+   /* จัดให้อยู่ตรงกลางตามแนวนอน */
+
+   /* ใช้ flex-wrap สำหรับหน้าจอขนาดเล็ก */
+}
+
+
+.butt {
+   background-color: #DBE2EF;
+   border: 1px solid #6E6E6E;
+   width: 150px;
+   height: 170px;
+   margin-top: 10 px;
+
+}
+
+.btn {
+   display: grid;
+   place-items: center;
+   margin: 20px;
+   float: none;
+
+}
+
+.btn i {
+   grid-area: 1 / 1;
+   margin-bottom: 3px;
+   font-size: 40px;
+}
+
+#buttonn {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.col-d-flex {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-top: 90px;
+}
