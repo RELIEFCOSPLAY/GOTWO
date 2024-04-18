@@ -99,6 +99,7 @@
     color: #FFF;
     text-align: left;
     background-color: rgb(26, 28, 67);
+    pointer-events: none;
 }
 
 #table-posts th, #table-posts td , #button_style{
@@ -184,3 +185,7 @@
      .slider.round:before {
         border-radius: 50%;
      }
+     tr:hover {
+        cursor: pointer;
+        background-color: #DBE2EF;
+    }
