@@ -17,6 +17,10 @@
 
 }
 
+.butt:hover{
+   background-color: #a0e3d7;
+}
+
 .btn {
    display: grid;
    place-items: center;
