@@ -1,4 +1,4 @@
-const xValues = ["Rider: 42", "Customer:45"];
+const xValues = ["Rider: ", "Customer:"];
 const yValues = [42, 45];
 const barColors = [
    "#C34813",
