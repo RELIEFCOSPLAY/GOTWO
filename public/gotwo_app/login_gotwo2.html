@@ -7,37 +7,57 @@
     <script src="/public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
     <link rel="stylesheet" href="/public/css/css_gotwo/login_gotwo_test2.css">
-    <title>login</title>
+    <title>Login</title>
 </head>
 <body>
     <div class="container">
         <span></span>
         <span></span>
         <span></span>
-        <form action="login.php" method="post" id="login_form">
+        <form onsubmit="validateLogin(); return false;">
             <img src="/public/img/pngegg.png" class="img_">
             <h1>GOTWO</h1>
             <div class="input-box">
-                <input type="text" placeholder="Username" required>
+                <input type="text" id="username" placeholder="Username" required>
                 <i class="bi bi-person-fill"></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
-                <i class="bi bi-key-fill"></i>
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="bi bi-key-fill" id="togglePassword" onclick="togglePasswordVisibility()"></i>   
             </div>
-            <div class="remember-forgot">
-                <label><input type="checkbox">Remember me</label>
-                <a href="#">Forgot password</a>
-            </div>
-
-            <button type="submit" class="btn" href="/public/gotwo_app/Dashboard.html">LOGIN</button>
-
-            <!-- <div class="register-link">
-                <p>Don't have an account? <a href="#">Register</a></p>
-            </div> -->
+            <button type="submit" class="btn">LOGIN</button>
         </form>
     </div>
+
+    <script>
+        function validateLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if ((username === "admineiei" && password === "1234eiei") || (username === "adminkuku" && password === "1234kuku")) {
+                alert("Login successful! Redirecting to the Dashboard.");
+                window.location.href = "/public/gotwo_app/Dashboard.html";
+            } else {
+                alert("Username or Password is incorrect.");
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById("password");
+            const toggleIcon = document.getElementById("togglePassword");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove("bi-key-fill");
+                toggleIcon.classList.add("bi-eye-fill");  // Change icon to eye icon when visible
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.classList.remove("bi-eye-fill");
+                toggleIcon.classList.add("bi-key-fill");  // Change icon back to key icon when hidden
+            }
+        }
+    </script>
+
 </body>
 </html>
