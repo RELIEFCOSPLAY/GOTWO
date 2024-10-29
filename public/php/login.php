@@ -1,31 +1,30 @@
 <?php
 session_start();
-include('db.php');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+// Set the fixed username and password
+$fixed_username = "admin";
+$fixed_password = "admin1234
+";
 
-    // ตรวจสอบข้อมูลจากฐานข้อมูล
-    $sql = "SELECT * FROM users WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
+// Get the submitted form data
+$username = $_POST['username'];
+$password = $_POST['password'];
+$remember = isset($_POST['remember']);
 
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
+// Check if the entered username and password match the fixed values
+if ($username === $fixed_username && $password === $fixed_password) {
+    // Login successful
+    $_SESSION['username'] = $username;
 
-        // ตรวจสอบรหัสผ่าน
-        if (password_verify($password, $row['password'])) {
-            $_SESSION['username'] = $username;
-            header("Location: Dashboard.php"); // เปลี่ยนไปยังหน้า Dashboard
-            exit();
-        } else {
-            echo "Incorrect password!";
-        }
-    } else {
-        echo "No such user found!";
+    // Handle "Remember Me" checkbox
+    if ($remember) {
+        setcookie("username", $username, time() + (86400 * 30), "/"); // Set a 30-day cookie
     }
+
+    echo "Login successful! Welcome, " . htmlspecialchars($username) . ".";
+} else {
+    // Login failed
+    echo "Invalid username or password.";
 }
 ?>
+
