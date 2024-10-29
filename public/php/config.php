@@ -1,14 +1,17 @@
 <?php
-$servername = "localhost";
-$username = "root"; 
-$password = ""; 
-$dbname = "admin_db";
+// การเชื่อมต่อกับฐานข้อมูล
+$db_name = "webgotwo";  // ชื่อฐานข้อมูล
+$db_user = "root";   // ชื่อผู้ใช้ของฐานข้อมูล
+$db_pass = "";       // รหัสผ่าน (ว่างเปล่าในกรณีนี้)
+$db_host = "localhost"; // ที่อยู่ของเซิร์ฟเวอร์
 
-// สร้างการเชื่อมต่อ
-$conn = new mysqli($servername, $username, $password, $dbname);
+// สร้างการเชื่อมต่อกับฐานข้อมูล
+$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
 
-// ตรวจสอบการเชื่อมต่อ
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// ตั้งค่าชุดอักขระให้รองรับภาษาไทย
+mysqli_set_charset($conn, "utf8");
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+} 
 ?>
