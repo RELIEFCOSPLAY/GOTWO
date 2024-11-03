@@ -1,19 +1,16 @@
-<!-- <?php
+<?php
 
-$severname = "localhost";  
-$username = "root";   
-$password = "root";       
-$databasename = "gotwo"; 
+$severname = "localhost";
+$username = "root";
+$password = "";
+$dbname = "gotwo";
 
 try {
-    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username,$password);
+    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfullt!";
-} catch(PDOException $e){
-echo "Connection failed: " .$e->getMessage();
+} catch (PDOException $e) {
 }
-?> -->
-
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -143,13 +140,46 @@ echo "Connection failed: " .$e->getMessage();
                         <div class="btn-group" role="group" aria-label="First group">
                             <a href="/public/gotwo_app/Rider_Request.html"><button type="verifly"
                                     class="btn butt rounded btn-lg"><i class="bi bi-file-text"
-                                        style="color: #0C7536;"></i>Verifly rider<br><p>9</p></button></a>
+                                        style="color: #0C7536;"></i>Verifly rider<br>
+                                    <!-- ------------------------------------------------- -->
+                                    <?php
+                                    $sql = "SELECT COUNT(*) as status_rider FROM table_rider WHERE status_rider = 0";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status_rider = $fetch['status_rider'] ?? 0;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status_rider ?></p>
+                                </button></a>
                             <a href="/public/gotwo_app/pending_tracking.html"><button type="pending"
                                     class="btn butt rounded btn-lg"><i class="bi bi-clock-history"
-                                        style="color: #B65252;"></i>Pending<br><p>1</p></button></a>
+                                        style="color: #B65252;"></i>Pending<br>
+                                    <!-- ------------------------------------------------- -->
+                                    <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 1";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 1;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
+                                </button></a>
                             <a href="/public/gotwo_app/req_tracking.html"><button type="request"
                                     class="btn butt rounded btn-lg"><i class="bi bi-list-ul"
-                                        style="color: #F0A007;"></i>Request<br><p>6</p></button></a>
+                                        style="color: #F0A007;"></i>Request<br>
+                                    <!-- ------------------------------------------------- -->
+                                    <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 0";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 0;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
+                                </button></a>
                         </div>
 
                     </div>
@@ -158,13 +188,47 @@ echo "Connection failed: " .$e->getMessage();
                         <div class="btn-group" role="group" aria-label="First group">
                             <a href="/public/gotwo_app/confirm_tracking.html"><button type="confirm"
                                     class="btn butt rounded btn-lg"><i class="bi bi-check-circle"
-                                        style="color: #5C368C;"></i>Confirm<br><p>6</p></button></a>
+                                        style="color: #5C368C;"></i>Confirm<br>
+                                    <!-- ------------------------------------------------- -->
+                                    <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 2";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 2;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
+                                </button></a>
                             <a href="/public/gotwo_app/totravel_tracking.html"><button type="travel"
                                     class="btn butt rounded btn-lg"><i class="bi bi-bicycle"
-                                        style="color: #405189;"></i>To travel<br><p>4</p></button></a>
+                                        style="color: #405189;"></i>To travel<br>
+                                    <!-- ------------------------------------------------- -->
+                                    <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 3";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 3;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
+                                </button></a>
                             <a href="/public/gotwo_app/success_tracking.html"><button type="success"
                                     class="btn butt rounded btn-lg"><i class="bi bi-check-all"
-                                        style="color: #009C3E;"></i>Success<br><p>8</p></button></a>
+                                        style="color: #009C3E;"></i>Success<br>
+                                    <!-- ------------------------------------------------- -->
+                                    <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 4";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 4;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
+
+                                </button></a>
 
                         </div>
                     </div>
@@ -175,13 +239,28 @@ echo "Connection failed: " .$e->getMessage();
 
                             <a href="/public/gotwo_app/cancel_tracking.html"><button type="cancel"
                                     class="btn butt rounded btn-lg"><i class="bi bi-x-circle"
-                                        style="color: #E51A1A;"></i>Cancel<br><p>5</p></button></a>
+                                        style="color: #E51A1A;"></i>Cancel<br>
+                                    <!-- ------------------------------------------------- -->
+                                    <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 5";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 5;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
+                                </button></a>
                             <a href="/public/gotwo_app/payment_ride.html"><button type="payment"
                                     class="btn butt rounded btn-lg"><i class="bi bi-credit-card"
-                                        style="color: #D6A3DA;"></i>Payment unpaid<br><p>6</p></button></a>
+                                        style="color: #D6A3DA;"></i>Payment unpaid<br>
+                                    <p>6</p>
+                                </button></a>
                             <a href="/public/gotwo_app/report.html"><button type="report"
                                     class="btn butt rounded btn-lg"><i class="bi bi-exclamation-octagon"
-                                        style="color: #D6C211;"></i>Report<br><p>7</p></button></a>
+                                        style="color: #D6C211;"></i>Report<br>
+                                    <p>7</p>
+                                </button></a>
 
                         </div>
                     </div>
