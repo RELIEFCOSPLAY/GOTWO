@@ -141,17 +141,44 @@ try {
                             <a href="/public/gotwo_app/Rider_Request.html"><button type="verifly"
                                     class="btn butt rounded btn-lg"><i class="bi bi-file-text"
                                         style="color: #0C7536;"></i>Verifly rider<br>
-                                    <p>9</p>
+                                      <!-- ------------------------------------------------- -->
+                                      <?php
+                                    $sql = "SELECT COUNT(*) as status_rider FROM table_rider WHERE status_rider = 0";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status_rider = $fetch['status_rider'] ?? 0;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
                                 </button></a>
                             <a href="/public/gotwo_app/pending_tracking.html"><button type="pending"
                                     class="btn butt rounded btn-lg"><i class="bi bi-clock-history"
                                         style="color: #B65252;"></i>Pending<br>
-                                    <p>1</p>
+                                      <!-- ------------------------------------------------- -->
+                                      <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 1";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 1;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
                                 </button></a>
                             <a href="/public/gotwo_app/req_tracking.html"><button type="request"
                                     class="btn butt rounded btn-lg"><i class="bi bi-list-ul"
                                         style="color: #F0A007;"></i>Request<br>
-                                    <p>6</p>
+                                      <!-- ------------------------------------------------- -->
+                                      <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 0";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 0;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
                                 </button></a>
                         </div>
 
@@ -162,12 +189,30 @@ try {
                             <a href="/public/gotwo_app/confirm_tracking.html"><button type="confirm"
                                     class="btn butt rounded btn-lg"><i class="bi bi-check-circle"
                                         style="color: #5C368C;"></i>Confirm<br>
-                                    <p>6</p>
+                                      <!-- ------------------------------------------------- -->
+                                      <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 2";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 2;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
                                 </button></a>
                             <a href="/public/gotwo_app/totravel_tracking.html"><button type="travel"
                                     class="btn butt rounded btn-lg"><i class="bi bi-bicycle"
                                         style="color: #405189;"></i>To travel<br>
-                                    <p>4</p>
+                                      <!-- ------------------------------------------------- -->
+                                      <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 3";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 3;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
                                 </button></a>
                             <a href="/public/gotwo_app/success_tracking.html"><button type="success"
                                     class="btn butt rounded btn-lg"><i class="bi bi-check-all"
@@ -195,7 +240,16 @@ try {
                             <a href="/public/gotwo_app/cancel_tracking.html"><button type="cancel"
                                     class="btn butt rounded btn-lg"><i class="bi bi-x-circle"
                                         style="color: #E51A1A;"></i>Cancel<br>
-                                    <p>5</p>
+                                      <!-- ------------------------------------------------- -->
+                                      <?php
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 5";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $status = $fetch['status'] ?? 5;
+                                    ?>
+                                    <!-- ------------------------------------------------- -->
+                                    <p><?= $status ?></p>
                                 </button></a>
                             <a href="/public/gotwo_app/payment_ride.html"><button type="payment"
                                     class="btn butt rounded btn-lg"><i class="bi bi-credit-card"
