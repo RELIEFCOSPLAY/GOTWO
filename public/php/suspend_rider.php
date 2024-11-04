@@ -4,6 +4,7 @@ include("config.php"); // รวมไฟล์ config.php เพื่อเช
 
 $sql = "
     SELECT 
+        status_post.status_post_id,
         status_post.status, 
         status_post.reason, 
         status_post.pay, 
@@ -11,8 +12,7 @@ $sql = "
         status_post.comment,  
         post.post_id AS post_id, 
         table_customer.regis_customer_id AS customer_id, 
-        table_rider.regis_rider_id  AS rider_id, 
-        table_rider.name AS rider_name, 
+        table_rider.name AS rider_id, 
         table_rider.gender AS rider_gender,
         table_rider.tel AS rider_tel,
         post.pick_up AS pick_up, 
@@ -35,6 +35,7 @@ $response = array();
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $tb_sta = array();
+        $tb_sta["status_post_id"] = $row['status_post_id'];
         $tb_sta["status"] = $row['status'];
         $tb_sta["reason"] = $row['reason'];
         $tb_sta["post_id"] = $row['post_id']; 
@@ -42,8 +43,7 @@ if (mysqli_num_rows($result) > 0) {
         $tb_sta["pay"] = $row['pay'];
         $tb_sta["review"] = $row['review'];
         $tb_sta["comment"] = $row['comment'];
-        $tb_sta["rider_id"] = $row['rider_id'];
-        $tb_sta["rider_name"] = $row['rider_name']; 
+        $tb_sta["rider_id"] = $row['rider_id']; 
         $tb_sta["rider_gender"] = $row['rider_gender'];
         $tb_sta["rider_tel"] = $row['rider_tel'];
         $tb_sta["pick_up"] = $row['pick_up']; 
@@ -59,10 +59,31 @@ if (mysqli_num_rows($result) > 0) {
     }
 } else {
     $tb_sta = array(); 
-    $response["error"] = "No data found.";
+    $tb_sta["status_post_id"] = '';
+    $tb_sta["status"] = '';
+    $tb_sta["reason"] = '';
+    $tb_sta["post_id"] = ''; 
+    $tb_sta["customer_id"] = '';
+    $tb_sta["pay"] = '';
+    $tb_sta["review"] = '';
+    $tb_sta["comment"] = '';
+    $tb_sta["rider_id"] = ''; 
+    $tb_sta["rider_gender"] = '';
+    $tb_sta["rider_tel"] = '';
+    $tb_sta["pick_up"] = ''; 
+    $tb_sta["comment_pick"] = ''; 
+    $tb_sta["at_drop"] = ''; 
+    $tb_sta["comment_drop"] = ''; 
+    $tb_sta["date"] = ''; 
+    $tb_sta["time"] = ''; 
+    $tb_sta["status_helmet"] = '';
+    $tb_sta["price"] = '';
+
     array_push($response, $tb_sta); 
 }
 
 echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT); 
 mysqli_close($conn);
+
+
 ?>
