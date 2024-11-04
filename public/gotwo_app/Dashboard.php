@@ -292,28 +292,13 @@ try {
                 </div>
 
 
+
+
             </div>
         </div>
     </div>
 
-    <script src="/public/js/gotwo_js/nav_animation.js">
-       
-        // Function to fetch income data from PHP script
-        function fetchIncome() {
-            fetch('fetch_data.php')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('income-amount').textContent = data.total_income + ' THB';
-                })
-                .catch(error => {
-                    console.error('Error fetching income data:', error);
-                });
-        }
-
-        // Call the function when the page loads
-        document.addEventListener('DOMContentLoaded', fetchIncome);
-    
-    </script>
+    <script src="/public/js/gotwo_js/nav_animation.js"></script>
 </body>
 
 </html>
