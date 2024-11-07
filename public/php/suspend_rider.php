@@ -58,27 +58,6 @@ if (mysqli_num_rows($result) > 0) {
         array_push($response, $tb_sta);
     }
 } else {
-    $tb_sta = array(); 
-    $tb_sta["status_post_id"] = '';
-    $tb_sta["status"] = '';
-    $tb_sta["reason"] = '';
-    $tb_sta["post_id"] = ''; 
-    $tb_sta["customer_id"] = '';
-    $tb_sta["pay"] = '';
-    $tb_sta["review"] = '';
-    $tb_sta["comment"] = '';
-    $tb_sta["rider_id"] = ''; 
-    $tb_sta["rider_gender"] = '';
-    $tb_sta["rider_tel"] = '';
-    $tb_sta["pick_up"] = ''; 
-    $tb_sta["comment_pick"] = ''; 
-    $tb_sta["at_drop"] = ''; 
-    $tb_sta["comment_drop"] = ''; 
-    $tb_sta["date"] = ''; 
-    $tb_sta["time"] = ''; 
-    $tb_sta["status_helmet"] = '';
-    $tb_sta["price"] = '';
-
     array_push($response, $tb_sta); 
 }
 
