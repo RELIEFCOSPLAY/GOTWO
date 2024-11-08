@@ -61,7 +61,7 @@ try {
 
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="/public/gotwo_app/Dashboard.html" class="sidebar-link">
+                    <a href="/public/gotwo_app/Dashboard.php" class="sidebar-link">
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>

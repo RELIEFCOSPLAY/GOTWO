@@ -1,5 +1,21 @@
+<?php
+
+$severname = "localhost";
+$username = "root";
+$password = "";
+$dbname = "gotwo";
+
+try {
+    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,6 +28,7 @@
     <link rel="stylesheet" href="/public/css/css_gotwo/tracking_nav_animation .css" />
     <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css" />
 </head>
+
 <body>
     <div class="wrapper">
         <aside id="sidebar">
@@ -41,7 +58,7 @@
 
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="/public/gotwo_app/Dashboard.html" class="sidebar-link">
+                    <a href="/public/gotwo_app/Dashboard.php" class="sidebar-link">
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>
@@ -63,7 +80,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="/public/gotwo_app/pending_tracking.html" class="sidebar-link">
+                    <a href="/public/gotwo_app/pending_tracking.php" class="sidebar-link">
                         <i class="bi bi-pin-map-fill"></i>
                         <span>Travel Tracking</span>
                     </a>
@@ -123,15 +140,15 @@
                     <div class="nav_animation">
                         <ul>
                             <li class="Pending_nav_animation"><a
-                                    href="/public/gotwo_app/pending_tracking.html">Pending</a></li>
-                            <li class="Request_nav_animation"><a href="/public/gotwo_app/req_tracking.html">Request</a>
+                                    href="/public/gotwo_app/pending_tracking.php">Pending</a></li>
+                            <li class="Request_nav_animation"><a href="/public/gotwo_app/req_tracking.php">Request</a>
                             </li>
                             <li class="Confirm_nav_animation"><a
-                                    href="/public/gotwo_app/confirm_tracking.html">Confirm</a></li>
-                            <li class="Totravel_nav_animation"><a href="/public/gotwo_app/totravel_tracking.html">To travel</a></li>
+                                    href="/public/gotwo_app/confirm_tracking.php">Confirm</a></li>
+                            <li class="Totravel_nav_animation"><a href="/public/gotwo_app/totravel_tracking.php">To travel</a></li>
                             <li class="Success_nav_animation"><a
-                                    href="/public/gotwo_app/success_tracking.html">Success</a></li>
-                            <li class="Cancel_nav_animation"><a href="/public/gotwo_app/cancel_tracking.html">Cancel</a>
+                                    href="/public/gotwo_app/success_tracking.php">Success</a></li>
+                            <li class="Cancel_nav_animation"><a href="/public/gotwo_app/cancel_tracking.php">Cancel</a>
                             </li>
                             <span class="slider_nav_animation"></span>
                         </ul>
@@ -193,7 +210,7 @@
                                 <h5 class="modal-title" id="exampleModalLabel">Details</h5>
                             </div>
                             <div class="modal-body" id="madal_display">
-                                
+
                             </div>
                             <div class="modal-footer">
 
@@ -207,42 +224,113 @@
         <script src="/public/js/gotwo_js/tracking_nav_animation.js"></script>
         <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
+        <?php
+        // ดึงข้อมูลจากฐานข้อมูล Rider
+        $sql = "SELECT name FROM table_rider";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $name = $fetch['name'];
+        // ----------------------------
+        $sql = "SELECT email FROM table_rider";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $email = $fetch['email'];
+        // ----------------------------
+        $sql = "SELECT tel FROM table_rider";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $tel = $fetch['tel'];
+        // ----------------------------
+        $sql = "SELECT gender FROM table_rider";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $gender = $fetch['gender'];
+
+        // ดึงข้อมูลจากฐานข้อมูล Cus
+        $sql = "SELECT name FROM table_customer";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $nameCus = $fetch['name'];
+        // ----------------------------
+        $sql = "SELECT email FROM table_Customer";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $emailCus = $fetch['email'];
+        // ----------------------------
+        $sql = "SELECT tel FROM table_Customer";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $telCus = $fetch['tel'];
+        // ----------------------------
+        $sql = "SELECT gender FROM table_Customer";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $genderCus = $fetch['gender'];
+        //////////////////////////////////////
+        $sql = "SELECT pick_up FROM post";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $pick_up = $fetch['pick_up'];
+
+        $sql = "SELECT at_drop FROM post";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $at_drop = $fetch['at_drop'];
+
+        $sql = "SELECT img_profile FROM table_rider";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $img_profile_rider = $fetch['img_profile'];
+
+        $sql = "SELECT img_profile FROM table_customer";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $img_profile_Cus = $fetch['img_profile'];
+        ?>
+
         <script>
-            const demo_data = [
-            {id:0,  name: "Colicchio", cus: "John Doe", pickup: "FahThai Soi 5", drop: "M-square"},
-            {id:1,  name: "John Bravo", cus: "Eve Sharon", pickup: "FahThai Market", drop: "Sak Thong 1 Dormitory"},
-            {id:2,  name: "Popup", cus: "Ruby Jane", pickup: "M-square", drop: "Ban Soi 5"},
-            {id:3,  name: "Peter Potter", cus: "Lucy Chloe", pickup: "D1", drop: "FahThai Market"},
-            {id:4,  name: "momo", cus: "Cara Olivia", pickup: "Sak Thong 1 Dormitory", drop: "M-square"},
-            {id:5,  name:"Ginny potter" , cus:"Sophia Grace" , pickup:"Sak Thong 3 Dormitory", drop:"Stadium"},
+            const demo_data = [{
+                id: 0,
+                name: <?= json_encode($name) ?>,
+                cus: <?= json_encode($nameCus) ?>,
+                pickup: <?= json_encode($pick_up) ?>,
+                drop: <?= json_encode($at_drop) ?>,
+                rider_img: <?= json_encode($img_profile_rider) ?>,
+                customer_img: <?= json_encode($img_profile_Cus) ?>
+            }];
 
-        ];
-        <!-- .............................................................. -->
-        
-        let show_modal ='';
-        let show_data ='';
-        for(read of demo_data){
-               
-                    show_data += `
-                <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider">
-                    <td><div><img src="/public/img/prodiss.jpg" class="rounded-circle mx-3" width="50" height="50">${read.name}</div></td>      
-                    <td><div><img src="/public/img/prodiss.jpg" class="rounded-circle mx-3" width="50" height="50">${read.cus}</td>
-                    <td>${read.pickup}</td>
-                    <td>${read.drop}</td>
-                             
-                </tr>
-                `;
+            let show_data = '';
+            for (let read of demo_data) {
+                show_data += `
+            <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider">
+                <td><div><img src="${read.rider_img}" class="rounded-circle mx-3" width="50" height="50">${read.name}</div></td>
+                <td><div><img src="${read.customer_img}" class="rounded-circle mx-3" width="50" height="50">${read.cus}</div></td>
+                <td>${read.pickup}</td>
+                <td>${read.drop}</td>
+            </tr>
+        `;
+            }
 
-                }
-                
-                document.querySelector('#dataTableBody').innerHTML = show_data;
-                view_modal()
-          
+            document.querySelector('#dataTableBody').innerHTML = show_data;
+            view_modal()
 
-        function view_modal(){
-            
-            let show_modal ='';
-            show_modal += `
+
+            function view_modal() {
+
+                let show_modal = '';
+                show_modal += `
             <div class="popup center container">
                                     <div class="d-flex flex-row justify-content-center">
                                         <img src="/public/img/prodiss.jpg" class="rounded-circle" width="150" height="150">
@@ -251,10 +339,10 @@
                                                 <i class="bi bi-person-fill"></i>
                                                 <p class="ms-2 align-content-center">Rider</p>
                                             </div>
-                                            <p>Colicchio</p>
-                                            <p>643150xxxx@lamduan.mfu.ac.th</p>
-                                            <p>012345678</p>
-                                            <p>Gender: male</p>
+                                            <p><?= json_encode($name) ?></p>
+                                            <p><?= json_encode($email) ?></p>
+                                            <p><?= json_encode($tel) ?></p>
+                                            <p>Gender:<?= json_encode($gender) ?></p>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row justify-content-center">
@@ -264,31 +352,29 @@
                                                 <i class="bi bi-person-fill"></i>
                                                 <p class="ms-2 align-content-center">Customer</p>
                                             </div>
-                                            <p>John Doe</p>
-                                            <p>643150xxxx@lamduan.mfu.ac.th</p>
-                                            <p>012345678</p>
-                                            <p>Gender: female</p>
+                                            <p><?= json_encode($nameCus) ?></p>
+                                            <p><?= json_encode($emailCus) ?></p>
+                                            <p><?= json_encode($telCus) ?></p>
+                                            <p>Gender:<?= json_encode($genderCus) ?></p>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row justify-content-center">
                                         <div class="d-flex flex-row">
                                             <i class="bi bi-geo-alt-fill"></i>
-                                            <p class="ms-2 align-content-center">Pick up</p>
-                                            <p>FahThai Soi 5</p>
+                                            <p class="ms-2 align-content-center"><?= json_encode($pick_up) ?></p>
+                                           
                                             
                                             <i class="bi bi-arrow-right ms-2 me-2"></i>
-
                                             <i class="bi bi-geo-alt-fill"></i>
-                                            <p class="ms-2 align-content-center">Drop</p>
-                                            <p>M-square</p>
+                                            <p class="ms-2 align-content-center"><?= json_encode($at_drop) ?></p>
+                                           
                                         </div>
                                     </div>
                                 </div>
             `;
-            document.querySelector('#madal_display').innerHTML = show_modal;
-        }
-
-    </script>
+                document.querySelector('#madal_display').innerHTML = show_modal;
+            }
+        </script>
 </body>
 
 </html>
