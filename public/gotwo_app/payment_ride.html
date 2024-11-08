@@ -126,8 +126,8 @@
 
                 <div class="mt">
                     <nav class="side_drawer rounded-top-4 ">
-                        <div class="container-fluid d-flex flex-row justify-content-between "
-                            data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent">
+                        <div class="container-fluid d-flex flex-row justify-content-between " data-bs-toggle="collapse"
+                            data-bs-target="#navbarToggleExternalContent">
                             <!-- Container where demo data will be displayed -->
                             <div id="paymentContainer" class="mt-1"></div>
 
@@ -138,31 +138,40 @@
         </div>
     </div>
     <script>
-        // Function to fetch data from PHP and display it
+        let allPayments = []; // Store fetched payments here
+        let currentFilter = 0; // 0 for Unpaid, 1 for Completed
+
+        // Fetch data from PHP and display it
         async function fetchPayments() {
             try {
                 const response = await fetch('get_payments.php');
                 const payments = await response.json();
 
-                // Check if there's an error in the response
                 if (payments.error) {
                     console.error(payments.error);
                     document.getElementById('paymentContainer').innerHTML = "<p>Failed to load data.</p>";
                     return;
                 }
 
-                // Display the payments
-                displayPayments(payments);
+                allPayments = payments; // Store fetched data
+                filterPayments(currentFilter); // Show initial filter
 
             } catch (error) {
                 console.error("Error fetching payments:", error);
             }
         }
 
-        // Function to dynamically display payments
+        // Function to filter and display payments based on status
+        function filterPayments(status) {
+            currentFilter = status;
+            const filteredPayments = allPayments.filter(payment => payment.pay == status);
+            displayPayments(filteredPayments);
+        }
+
+        // Display payments based on filtered data
         function displayPayments(data) {
             const container = document.getElementById('paymentContainer');
-            container.innerHTML = ""; // Clear any existing content
+            container.innerHTML = ""; // Clear previous content
 
             data.forEach((item, index) => {
                 const paymentHTML = `
@@ -174,19 +183,17 @@
                                     <div class="d-flex flex-row ms-5 align-items-center">
                                         <img src="/public/img/pngegg.png" class="mx-3">
                                         <div class="mt-3 fw-bold">
-                                            <p>${item.time}</p>
                                             <p>${item.rider_name}</p>
-                                            <p>From:</p>
+                                            <p>From: ${item.pick_up}</p>
                                             <p>Role: Rider</p>
                                         </div>
                                     </div>
                                     <h1 class="d-flex flex-row align-items-center mx-5">----------------></h1>
                                     <div class="d-flex flex-row align-items-center">
                                         <img src="/public/img/pngegg.png" class="mx-3">
-                                        <div class="mt-3 fw-bold">
-                                            <p>${item.time}</p>
+                                        <div class="mt-3 fw-bold">    
                                             <p>${item.customer_name}</p>
-                                            <p>To:</p>
+                                            <p>To: ${item.at_drop}</p>
                                             <p>Role: Customer</p>
                                         </div>
                                     </div>
@@ -194,7 +201,9 @@
                                 <div class="d-flex flex-row align-items-center baht_M">
                                     <div class="text-center">
                                         <h2>${item.price} THB</h2>
-                                        <h1 class="${item.pay == 0 ? 'text-danger': 'text-success'}">${item.pay == 0 ? 'Unpaid' : 'paid'}</h1>
+                                        <h1 class="${item.pay == 0 ? 'text-danger' : 'text-success'}">
+                                            ${item.pay == 0 ? 'Unpaid' : 'Paid'}
+                                        </h1>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                         class="bi bi-caret-down-fill mx-4" viewBox="0 0 16 16">
@@ -223,11 +232,6 @@
                                     </div>
                                     <div class="container QR_Box">
                                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${item.post_id}" class="mx-5">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
-                                            class="bi bi-file-earmark-arrow-up mx-5" viewBox="0 0 16 16">
-                                            <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z" />
-                                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
-                                        </svg>
                                     </div>
                                     <button class="btn btn-success OK_Btn">OK</button>
                                 </div>
@@ -237,6 +241,16 @@
                 `;
                 container.insertAdjacentHTML('beforeend', paymentHTML);
             });
+        }
+
+        // Optional: Filter displayed payments by search input
+        function filterResults() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredData = allPayments.filter(payment =>
+                (payment.rider_name && payment.rider_name.toLowerCase().includes(query)) ||
+                (payment.customer_name && payment.customer_name.toLowerCase().includes(query))
+            ).filter(payment => payment.pay == currentFilter); // Match current filter (Unpaid or Completed)
+            displayPayments(filteredData);
         }
 
         // Fetch data when page loads
