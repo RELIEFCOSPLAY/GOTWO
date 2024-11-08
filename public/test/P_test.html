@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>payment_ride</title>
+
+    <script src="/public/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/public/css/css_gotwo/payment_ride_nav_animation.css">
+    <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css">
+
+    <style>
+        /* Additional styling for better spacing and separation */
+        .payment-item {
+            background-color: rgb(219, 226, 239);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .details-container {
+            padding: 10px 15px;
+            border-radius: 10px;
+            background-color: rgb(219, 226, 239);
+            margin-top: 10px;
+        }
+
+        .payment-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .payment-header img {
+            width: 60px;
+        }
+
+        .payment-header .arrow {
+            font-size: 24px;
+            margin: 0 20px;
+        }
+
+        .baht_M {
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .amount {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .status-paid {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-unpaid {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <!-- Sidebar code here -->
+        </aside>
+
+        <div class="main p-3">
+            <div class="ms-4 mt-3">
+                <h1>Payment Rider</h1>
+                <div class="nav_animation">
+                    <ul>
+                        <li class="unpaid_nav_animation"><a href="/public/gotwo_app/payment_ride.html">Unpaid</a></li>
+                        <li class="completed_nav_animation"><a href="/public/gotwo_app/payment_ride_completed.html">Completed</a></li>
+                        <span class="slider_nav_animation"></span>
+                    </ul>
+                </div>
+
+                <div class="box mt-3">
+                    <input type="text" placeholder="Search">
+                    <a href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </div>
+
+                <!-- Container where demo data will be displayed -->
+                <div id="paymentContainer" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo data
+        const demoData = [
+            {
+                time: "10:30 AM",
+                riderName: "Waraphorn Yuuuuuu",
+                amount: "30 THB",
+                status: "Paid",
+                commission: "10 THB",
+                paid: "20 THB"
+            },
+            {
+                time: "11:00 AM",
+                riderName: "Somchai Lee",
+                amount: "50 THB",
+                status: "Paid",
+                commission: "15 THB",
+                paid: "35 THB"
+            },
+            // More data can be added here
+        ];
+
+        // Function to dynamically display demo data
+        function displayDemoData(data) {
+            const container = document.getElementById('paymentContainer');
+
+            data.forEach((item, index) => {
+                const paymentHTML = `
+                    <div class="payment-item">
+                        <div class="payment-header">
+                            <div class="d-flex align-items-center">
+                                <img src="/public/img/pngegg.png" alt="icon">
+                                <div class="ms-3">
+                                    <p class="mb-1">${item.time}</p>
+                                    <p class="mb-1 fw-bold">${item.riderName}</p>
+                                    <p class="mb-1">From:</p>
+                                    <p class="mb-1">Role: Rider</p>
+                                </div>
+                            </div>
+                            <div class="arrow">----------------></div>
+                            <div class="d-flex align-items-center">
+                                <img src="/public/img/pngegg.png" alt="icon">
+                                <div class="ms-3">
+                                    <p class="mb-1">${item.time}</p>
+                                    <p class="mb-1 fw-bold">${item.riderName}</p>
+                                    <p class="mb-1">To:</p>
+                                    <p class="mb-1">Role: Rider</p>
+                                </div>
+                            </div>
+                            <div class="baht_M">
+                                <div>
+                                    <h2 class="amount">${item.amount}</h2>
+                                    <h3 class="${item.status === 'Paid' ? 'status-paid' : 'status-unpaid'}">${item.status}</h3>
+                                </div>
+                                <i class="bi bi-caret-down-fill mx-4"></i>
+                            </div>
+                        </div>
+                        <div class="collapse details-container" id="navbarToggleExternalContent${index}">
+                            <hr>
+                            <div class="d-flex justify-content-center">
+                                <div class="container details_paid">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="text-dark">Customer pays</h5>
+                                        <h5 class="text-dark">${item.amount}</h5>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="text-dark">Commission</h5>
+                                        <h5 class="text-dark">${item.commission}</h5>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="text-dark">Paid</h5>
+                                        <h5 class="text-dark">${item.paid}</h5>
+                                    </div>
+                                </div>
+
+                                <div class="container QR_Box">
+                                    <div>
+                                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example" class="mx-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+                                            class="bi bi-file-earmark-arrow-up mx-5" viewBox="0 0 16 16">
+                                            <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z" />
+                                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                                        </svg>
+                                    </div>
+                                    <button class="btn btn-success OK_Btn">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', paymentHTML);
+            });
+        }
+
+        // Load demo data on page load
+        document.addEventListener('DOMContentLoaded', () => displayDemoData(demoData));
+    </script>
+</body>
+
+</html>

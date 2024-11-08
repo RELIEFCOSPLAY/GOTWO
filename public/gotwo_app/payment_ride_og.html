@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +47,7 @@
 
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="/public/gotwo_app/Dashboard.php" class="sidebar-link">
+                    <a href="/public/gotwo_app/Dashboard.html" class="sidebar-link">
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>
@@ -89,6 +90,21 @@
                         </li>
                     </ul>
                 </li>
+                <!-- <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#Report" aria-expanded="false" aria-controls="Report">
+                        <i class="bi bi-flag-fill"></i>
+                        <span>Report</span>
+                    </a>
+                    <ul id="Report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">Rider</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">Customer</a>
+                        </li>
+                    </ul>
+                </li> -->
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
@@ -138,31 +154,30 @@
         </div>
     </div>
     <script>
-        // Function to fetch data from PHP and display it
-        async function fetchPayments() {
-            try {
-                const response = await fetch('get_payments.php');
-                const payments = await response.json();
+        // Demo data
+        const demoData = [
+            {
+                time: "10:30 AM",
+                riderName: "Waraphorn Yuuuuuu",
+                amount: "40 THB",
+                status: "Unpaid",
+                commission: "10 THB",
+                paid: "30 THB"
+            },
+            {
+                time: "11:00 AM",
+                riderName: "Somchai Lee",
+                amount: "50 THB",
+                status: "Unpaid",
+                commission: "15 THB",
+                paid: "35 THB"
+            },
+            // More data can be added here
+        ];
 
-                // Check if there's an error in the response
-                if (payments.error) {
-                    console.error(payments.error);
-                    document.getElementById('paymentContainer').innerHTML = "<p>Failed to load data.</p>";
-                    return;
-                }
-
-                // Display the payments
-                displayPayments(payments);
-
-            } catch (error) {
-                console.error("Error fetching payments:", error);
-            }
-        }
-
-        // Function to dynamically display payments
-        function displayPayments(data) {
+        // Function to dynamically display demo data
+        function displayDemoData(data) {
             const container = document.getElementById('paymentContainer');
-            container.innerHTML = ""; // Clear any existing content
 
             data.forEach((item, index) => {
                 const paymentHTML = `
@@ -175,26 +190,29 @@
                                         <img src="/public/img/pngegg.png" class="mx-3">
                                         <div class="mt-3 fw-bold">
                                             <p>${item.time}</p>
-                                            <p>${item.rider_name}</p>
+                                            <p>${item.riderName}</p>
                                             <p>From:</p>
                                             <p>Role: Rider</p>
                                         </div>
                                     </div>
+
                                     <h1 class="d-flex flex-row align-items-center mx-5">----------------></h1>
+
                                     <div class="d-flex flex-row align-items-center">
                                         <img src="/public/img/pngegg.png" class="mx-3">
                                         <div class="mt-3 fw-bold">
                                             <p>${item.time}</p>
-                                            <p>${item.customer_name}</p>
+                                            <p>${item.riderName}</p>
                                             <p>To:</p>
-                                            <p>Role: Customer</p>
+                                            <p>Role: Rider</p>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="d-flex flex-row align-items-center baht_M">
-                                    <div class="text-center">
-                                        <h2>${item.price} THB</h2>
-                                        <h1 class="${item.pay == 0 ? 'text-danger': 'text-success'}">${item.pay == 0 ? 'Unpaid' : 'paid'}</h1>
+                                    <div class="text-center ">
+                                        <h2>${item.amount}</h2>
+                                        <h1 class="text-danger">${item.status}</h1>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                         class="bi bi-caret-down-fill mx-4" viewBox="0 0 16 16">
@@ -209,27 +227,30 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="container details_paid">
                                         <div class="d-flex justify-content-between">
-                                            <h5 class="text-dark">Pickup Location</h5>
-                                            <h5 class="text-dark">${item.pick_up}</h5>
+                                            <h5 class="text-dark">Customer pays</h5>
+                                            <h5 class="text-dark">${item.amount}</h5>
                                         </div>
                                         <div class="d-flex justify-content-between">
-                                            <h5 class="text-dark">Drop-off Location</h5>
-                                            <h5 class="text-dark">${item.at_drop}</h5>
+                                            <h5 class="text-dark">Commission</h5>
+                                            <h5 class="text-dark">${item.commission}</h5>
                                         </div>
                                         <div class="d-flex justify-content-between">
-                                            <h5 class="text-dark">Price</h5>
-                                            <h5 class="text-dark">${item.price} THB</h5>
+                                            <h5 class="text-dark">Paid</h5>
+                                            <h5 class="text-dark">${item.paid}</h5>
                                         </div>
                                     </div>
+
                                     <div class="container QR_Box">
-                                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${item.post_id}" class="mx-5">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
-                                            class="bi bi-file-earmark-arrow-up mx-5" viewBox="0 0 16 16">
-                                            <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z" />
-                                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
-                                        </svg>
+                                        <div>
+                                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example" class="mx-5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+                                                class="bi bi-file-earmark-arrow-up mx-5" viewBox="0 0 16 16">
+                                                <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z" />
+                                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                                            </svg>
+                                        </div>
+                                        <button class="btn btn-success OK_Btn">OK</button>
                                     </div>
-                                    <button class="btn btn-success OK_Btn">OK</button>
                                 </div>
                             </div>
                         </div>
@@ -239,8 +260,8 @@
             });
         }
 
-        // Fetch data when page loads
-        document.addEventListener('DOMContentLoaded', fetchPayments);
+        // Load demo data on page load
+        document.addEventListener('DOMContentLoaded', () => displayDemoData(demoData));
     </script>
 
     <script src="/public/js/gotwo_js/payment_ride_nav_animation.js"></script>
