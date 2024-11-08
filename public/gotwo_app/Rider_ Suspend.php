@@ -1,8 +1,6 @@
-<?php
-    require_once('php/config.php');
-    $query = "select * from table_rider";
-    $result = mysqli_query($con,$query);
-?>
+<!-- <?php
+include ("cinfig.php");
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -156,7 +154,40 @@
                         <option value="male">Male</option>
                     </select>
                 </form>
-
+ <!-- ------------------------------------------------- -->
+                    <?php
+        // ดึงข้อมูลจากฐานข้อมูล Rider
+        $sql = "SELECT name FROM table_rider";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $name = $fetch['name'];
+        // ----------------------------
+        $sql = "SELECT email FROM table_rider";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $email = $fetch['email'];
+        // ----------------------------
+        $sql = "SELECT tel FROM table_rider";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $tel = $fetch['tel'];
+        // ----------------------------
+        // $sql = "SELECT gender FROM table_rider";
+        // $query = $conn->prepare($sql);
+        // $query->execute();
+        // $fetch = $query->fetch();
+        // $gender = $fetch['gender'];
+        // ----------------------------
+        $sql = "SELECT img_profile FROM table_rider";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetch();
+        $img_profile_rider = $fetch['img_profile'];
+    ?>
+ <!-- ------------------------------------------------- -->
                 <div class="mt-3">
                     <div class="row">
                         <div class="col-12">
@@ -169,7 +200,6 @@
                                         <th scope="col">MOBILE</th>
                                         <th scope="col">ACTIONS</th>
                                     </tr>
-                                    
                                 </thead>
                                 <tbody id="dataTableBody">
 
@@ -177,8 +207,6 @@
                             </table>
                         </div>
                     </div>
-
-
                     <!-- ---------------------------------------------------------  --------------------------------------------------------- -->
                 </div>
             </div>
@@ -186,29 +214,27 @@
     </div>
     <script src="/public/js/gotwo_js/management_suspend.js"></script>
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
-
+   
     <script>
+        const demo_data = [{
+                id: 0,
+                name: <?= json_encode($name) ?>,
+                email: <?= json_encode($email) ?>,
+                tel: <?= json_encode($tel) ?>,
+                gender: <?= json_encode($gender) ?>,
+                rider_img: <?= json_encode($img_profile) ?>,
+                
+        }];
 
-        const demo_data = [
-            { id: 0, name: "Popup", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "0123456789", gender: "female", status: "Reject" },
-            { id: 1, name: "jojo", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "0123456789", gender: "male", status: "Confirm" },
-            { id: 2, name: "momo", mail: "645150xxxx@lamduan.mfu.ac.th", role: "rider", numder: "0123456789", gender: "female", status: "Confirm" },
-
-        ];
-
-        requests_ = document.getElementById("Request").innerHTML;
-
-
+        // requests_ = document.getElementById("Request").innerHTML;
         let show_data = '';
         console.log("");
         for (read of demo_data) {
-
-
             show_data += `
             <tr >
-                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="/public/img/unnamed.jpg" class="img_style mx-2">${read.name}</td>       
-                <td onclick="redirectToPage('${read.url}');">${read.mail}</td>
-                <td onclick="redirectToPage('${read.url}');">${read.numder}</td>
+                <td scope="row" onclick="redirectToPage('<?= json_encode($url) ?>');"><img src="<?= json_encode($img_profile) ?>"img_style mx-2"><?= json_encode($name) ?></td>       
+                <td onclick="redirectToPage(href="/public/gotwo_app/info_rider.html");"><?= json_encode($email) ?></td>
+                <td onclick="redirectToPage(href="/public/gotwo_app/info_rider.html");"><?= json_encode($number) ?></td>
                 <td><label class="switch" onclick="view_ ()">
                        <input type="checkbox">
                        <span class="slider round"></span>
