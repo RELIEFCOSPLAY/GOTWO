@@ -139,7 +139,7 @@
     </div>
     <script>
         let allPayments = []; // Store fetched payments here
-        let currentFilter = 0; // 0 for Unpaid, 1 for Completed
+        let currentFilter = 3; // 0 for Unpaid, 1 for Completed
 
         // Fetch data from PHP and display it
         async function fetchPayments() {
@@ -183,16 +183,18 @@
                                     <div class="d-flex flex-row ms-5 align-items-center">
                                         <img src="/public/img/pngegg.png" class="mx-3">
                                         <div class="mt-3 fw-bold">
-                                            <p>${item.rider_name}</p>
+                                            <p>Time: ${item.time}</p>
+                                            <p>Name: ${item.rider_name}</p>
                                             <p>From: ${item.pick_up}</p>
                                             <p>Role: Rider</p>
                                         </div>
                                     </div>
-                                    <h1 class="d-flex flex-row align-items-center mx-5">----------------></h1>
+                                    <h1 class="d-flex flex-row align-items-center mx-5">-------></h1>
                                     <div class="d-flex flex-row align-items-center">
                                         <img src="/public/img/pngegg.png" class="mx-3">
-                                        <div class="mt-3 fw-bold">    
-                                            <p>${item.customer_name}</p>
+                                        <div class="mt-3 fw-bold"> 
+                                            <p>Time: ${item.time}</p>   
+                                            <p>Name: ${item.customer_name}</p>
                                             <p>To: ${item.at_drop}</p>
                                             <p>Role: Customer</p>
                                         </div>
@@ -201,8 +203,8 @@
                                 <div class="d-flex flex-row align-items-center baht_M">
                                     <div class="text-center">
                                         <h2>${item.price} THB</h2>
-                                        <h1 class="${item.pay == 0 ? 'text-danger' : 'text-success'}">
-                                            ${item.pay == 0 ? 'Unpaid' : 'Paid'}
+                                        <h1 class="${item.pay != 0 || item.pay == 3 ? 'text-info' : 'text-danger'}">
+                                            ${item.pay != 0 || item.pay == 3 ? 'padding' : 'Unpaid' }
                                         </h1>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
