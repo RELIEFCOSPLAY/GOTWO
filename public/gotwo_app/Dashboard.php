@@ -1,7 +1,17 @@
-<!-- <?php
-include ("cinfig.php");
-?> -->
+<?php
 
+$severname = "localhost";
+$username = "root";
+$password = "";
+$dbname = "gotwo";
+
+try {
+    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -143,6 +153,7 @@ include ("cinfig.php");
                                     <!-- ------------------------------------------------- -->
                                     <p><?= $status_rider ?></p>
                                 </button></a>
+
                             <a href="/public/gotwo_app/pending_tracking.html"><button type="pending"
                                     class="btn butt rounded btn-lg"><i class="bi bi-clock-history"
                                         style="color: #B65252;"></i>Pending<br>
@@ -157,6 +168,7 @@ include ("cinfig.php");
                                     <!-- ------------------------------------------------- -->
                                     <p><?= $status ?></p>
                                 </button></a>
+
                             <a href="/public/gotwo_app/req_tracking.html"><button type="request"
                                     class="btn butt rounded btn-lg"><i class="bi bi-list-ul"
                                         style="color: #F0A007;"></i>Request<br>
@@ -172,8 +184,8 @@ include ("cinfig.php");
                                     <p><?= $status ?></p>
                                 </button></a>
                         </div>
-
                     </div>
+
                     <div class="btn-toolbar justify-content-between" role="toolbar"
                         aria-label="Toolbar with button groups">
                         <div class="btn-group" role="group" aria-label="First group">
@@ -191,6 +203,7 @@ include ("cinfig.php");
                                     <!-- ------------------------------------------------- -->
                                     <p><?= $status ?></p>
                                 </button></a>
+
                             <a href="/public/gotwo_app/totravel_tracking.html"><button type="travel"
                                     class="btn butt rounded btn-lg"><i class="bi bi-bicycle"
                                         style="color: #405189;"></i>To travel<br>
@@ -218,9 +231,7 @@ include ("cinfig.php");
                                     ?>
                                     <!-- ------------------------------------------------- -->
                                     <p><?= $status ?></p>
-
                                 </button></a>
-
                         </div>
                     </div>
 

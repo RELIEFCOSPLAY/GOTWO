@@ -224,157 +224,117 @@ try {
         <script src="/public/js/gotwo_js/tracking_nav_animation.js"></script>
         <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
+
         <?php
-        // ดึงข้อมูลจากฐานข้อมูล Rider
-        $sql = "SELECT name FROM table_rider";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $name = $fetch['name'];
-        // ----------------------------
-        $sql = "SELECT email FROM table_rider";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $email = $fetch['email'];
-        // ----------------------------
-        $sql = "SELECT tel FROM table_rider";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $tel = $fetch['tel'];
-        // ----------------------------
-        $sql = "SELECT gender FROM table_rider";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $gender = $fetch['gender'];
+// ดึงข้อมูลจากฐานข้อมูล Rider และ Customer ที่ status_post = 1
+$sql = "
+    SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
+           r.gender AS rider_gender, r.img_profile AS rider_img_profile,
+           c.name AS customer_name, c.email AS customer_email, c.tel AS customer_tel, 
+           c.gender AS customer_gender, c.img_profile AS customer_img_profile,
+           p.pick_up, p.at_drop
+    FROM status_post s
+    JOIN table_rider r ON s.rider_id = r.regis_rider_id
+    JOIN table_customer c ON s.customer_id = c.regis_customer_id
+    JOIN post p ON s.post_id = p.post_id
+    WHERE s.status = 1
+";
+$query = $conn->prepare($sql);
+$query->execute();
+$fetch = $query->fetch(PDO::FETCH_ASSOC);
 
-        // ดึงข้อมูลจากฐานข้อมูล Cus
-        $sql = "SELECT name FROM table_customer";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $nameCus = $fetch['name'];
-        // ----------------------------
-        $sql = "SELECT email FROM table_Customer";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $emailCus = $fetch['email'];
-        // ----------------------------
-        $sql = "SELECT tel FROM table_Customer";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $telCus = $fetch['tel'];
-        // ----------------------------
-        $sql = "SELECT gender FROM table_Customer";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $genderCus = $fetch['gender'];
-        //////////////////////////////////////
-        $sql = "SELECT pick_up FROM post";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $pick_up = $fetch['pick_up'];
+// ตรวจสอบว่ามีข้อมูลหรือไม่
+if ($fetch) {
+    // Rider Information
+    $rider_name = $fetch['rider_name'];
+    $rider_email = $fetch['rider_email'];
+    $rider_tel = $fetch['rider_tel'];
+    $rider_gender = $fetch['rider_gender'];
+    $rider_img_profile = $fetch['rider_img_profile'];
 
-        $sql = "SELECT at_drop FROM post";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $at_drop = $fetch['at_drop'];
+    // Customer Information
+    $customer_name = $fetch['customer_name'];
+    $customer_email = $fetch['customer_email'];
+    $customer_tel = $fetch['customer_tel'];
+    $customer_gender = $fetch['customer_gender'];
+    $customer_img_profile = $fetch['customer_img_profile'];
 
-        $sql = "SELECT img_profile FROM table_rider";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $img_profile_rider = $fetch['img_profile'];
+    // Post Information
+    $pick_up = $fetch['pick_up'];
+    $at_drop = $fetch['at_drop'];
+}
+?>
 
-        $sql = "SELECT img_profile FROM table_customer";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $img_profile_Cus = $fetch['img_profile'];
-        ?>
+<script>
+    const demo_data = [{
+        name: <?= json_encode($rider_name) ?>,
+        cus: <?= json_encode($customer_name) ?>,
+        pickup: <?= json_encode($pick_up) ?>,
+        drop: <?= json_encode($at_drop) ?>,
+        rider_img: <?= json_encode($rider_img_profile) ?>,
+        customer_img: <?= json_encode($customer_img_profile) ?>
+    }];
 
-        <script>
-            const demo_data = [{
-                id: 0,
-                name: <?= json_encode($name) ?>,
-                cus: <?= json_encode($nameCus) ?>,
-                pickup: <?= json_encode($pick_up) ?>,
-                drop: <?= json_encode($at_drop) ?>,
-                rider_img: <?= json_encode($img_profile_rider) ?>,
-                customer_img: <?= json_encode($img_profile_Cus) ?>
-            }];
-
-            let show_data = '';
-            for (let read of demo_data) {
-                show_data += `
-            <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider">
-                <td><div><img src="${read.rider_img}" class="rounded-circle mx-3" width="50" height="50">${read.name}</div></td>
-                <td><div><img src="${read.customer_img}" class="rounded-circle mx-3" width="50" height="50">${read.cus}</div></td>
-                <td>${read.pickup}</td>
-                <td>${read.drop}</td>
-            </tr>
+    let show_data = '';
+    for (let read of demo_data) {
+        show_data += `
+        <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider">
+            <td><div><img src="${read.rider_img}" class="rounded-circle mx-3" width="50" height="50">${read.name}</div></td>
+            <td><div><img src="${read.customer_img}" class="rounded-circle mx-3" width="50" height="50">${read.cus}</div></td>
+            <td>${read.pickup}</td>
+            <td>${read.drop}</td>
+        </tr>
         `;
-            }
+    }
 
-            document.querySelector('#dataTableBody').innerHTML = show_data;
-            view_modal()
+    document.querySelector('#dataTableBody').innerHTML = show_data;
+    view_modal();
 
+    function view_modal() {
+        let show_modal = '';
+        show_modal += `
+        <div class="popup center container">
+            <div class="d-flex flex-row justify-content-center">
+                <img src="${demo_data[0].rider_img}" class="rounded-circle" width="150" height="150">
+                <div class="mt-3 ms-2">
+                    <div class="d-flex flex-row">
+                        <i class="bi bi-person-fill"></i>
+                        <p class="ms-2 align-content-center">Rider</p>
+                    </div>
+                    <p>${demo_data[0].name}</p>
+                    <p><?= json_encode($rider_email) ?></p>
+                    <p><?= json_encode($rider_tel) ?></p>
+                    <p>Gender: <?= json_encode($rider_gender) ?></p>
+                </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <img src="${demo_data[0].customer_img}" class="rounded-circle" width="150" height="150">
+                <div class="mt-3 ms-2">
+                    <div class="d-flex flex-row">
+                        <i class="bi bi-person-fill"></i>
+                        <p class="ms-2 align-content-center">Customer</p>
+                    </div>
+                    <p>${demo_data[0].cus}</p>
+                    <p><?= json_encode($customer_email) ?></p>
+                    <p><?= json_encode($customer_tel) ?></p>
+                    <p>Gender: <?= json_encode($customer_gender) ?></p>
+                </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <div class="d-flex flex-row">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <p class="ms-2 align-content-center">${demo_data[0].pickup}</p>
+                    <i class="bi bi-arrow-right ms-2 me-2"></i>
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <p class="ms-2 align-content-center">${demo_data[0].drop}</p>
+                </div>
+            </div>
+        </div>
+        `;
+        document.querySelector('#madal_display').innerHTML = show_modal;
+    }
+</script>
 
-            function view_modal() {
-
-                let show_modal = '';
-                show_modal += `
-            <div class="popup center container">
-                                    <div class="d-flex flex-row justify-content-center">
-                                        <img src="/public/img/prodiss.jpg" class="rounded-circle" width="150" height="150">
-                                        <div class="mt-3 ms-2">
-                                            <div class="d-flex flex-row">
-                                                <i class="bi bi-person-fill"></i>
-                                                <p class="ms-2 align-content-center">Rider</p>
-                                            </div>
-                                            <p><?= json_encode($name) ?></p>
-                                            <p><?= json_encode($email) ?></p>
-                                            <p><?= json_encode($tel) ?></p>
-                                            <p>Gender:<?= json_encode($gender) ?></p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row justify-content-center">
-                                        <img src="/public/img/prodiss.jpg" class="rounded-circle" width="150" height="150">
-                                        <div class="mt-3 ms-2">
-                                             <div class="d-flex flex-row">
-                                                <i class="bi bi-person-fill"></i>
-                                                <p class="ms-2 align-content-center">Customer</p>
-                                            </div>
-                                            <p><?= json_encode($nameCus) ?></p>
-                                            <p><?= json_encode($emailCus) ?></p>
-                                            <p><?= json_encode($telCus) ?></p>
-                                            <p>Gender:<?= json_encode($genderCus) ?></p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row justify-content-center">
-                                        <div class="d-flex flex-row">
-                                            <i class="bi bi-geo-alt-fill"></i>
-                                            <p class="ms-2 align-content-center"><?= json_encode($pick_up) ?></p>
-                                           
-                                            
-                                            <i class="bi bi-arrow-right ms-2 me-2"></i>
-                                            <i class="bi bi-geo-alt-fill"></i>
-                                            <p class="ms-2 align-content-center"><?= json_encode($at_drop) ?></p>
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-            `;
-                document.querySelector('#madal_display').innerHTML = show_modal;
-            }
-        </script>
 </body>
 
 </html>
