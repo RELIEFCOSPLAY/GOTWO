@@ -1,6 +1,17 @@
-<!-- <?php
-include ("cinfig.php");
-?> -->
+<?php
+
+$severname = "localhost";
+$username = "root";
+$password = "";
+$dbname = "gotwo";
+
+try {
+    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -154,8 +165,35 @@ include ("cinfig.php");
                         <option value="male">Male</option>
                     </select>
                 </form>
- <!-- ------------------------------------------------- -->
-                    <?php
+ 
+                <div class="mt-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- class="table table-striped" -->
+                            <table id="table-posts">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">NAME</th>
+                                        <th scope="col">MAIL</th>
+                                        <th scope="col">MOBILE</th>
+                                        <th scope="col">ACTIONS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataTableBody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- ---------------------------------------------------------  --------------------------------------------------------- -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/public/js/gotwo_js/management_suspend.js"></script>
+    <script src="/public/js/gotwo_js/searchfuction.js"></script>
+    <!-- ------------------------------------------------- -->
+    <?php
         // ดึงข้อมูลจากฐานข้อมูล Rider
         $sql = "SELECT name FROM table_rider";
         $query = $conn->prepare($sql);
@@ -188,32 +226,6 @@ include ("cinfig.php");
         $img_profile_rider = $fetch['img_profile'];
     ?>
  <!-- ------------------------------------------------- -->
-                <div class="mt-3">
-                    <div class="row">
-                        <div class="col-12">
-                            <!-- class="table table-striped" -->
-                            <table id="table-posts">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">NAME</th>
-                                        <th scope="col">MAIL</th>
-                                        <th scope="col">MOBILE</th>
-                                        <th scope="col">ACTIONS</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dataTableBody">
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- ---------------------------------------------------------  --------------------------------------------------------- -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="/public/js/gotwo_js/management_suspend.js"></script>
-    <script src="/public/js/gotwo_js/searchfuction.js"></script>
    
     <script>
         const demo_data = [{
@@ -231,10 +243,10 @@ include ("cinfig.php");
         console.log("");
         for (read of demo_data) {
             show_data += `
-            <tr >
-                <td scope="row" onclick="redirectToPage('<?= json_encode($url) ?>');"><img src="<?= json_encode($img_profile) ?>"img_style mx-2"><?= json_encode($name) ?></td>       
-                <td onclick="redirectToPage(href="/public/gotwo_app/info_rider.html");"><?= json_encode($email) ?></td>
-                <td onclick="redirectToPage(href="/public/gotwo_app/info_rider.html");"><?= json_encode($number) ?></td>
+           <tr >
+                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="/public/img/unnamed.jpg" class="img_style mx-2">${read.name}</td>       
+                <td onclick="redirectToPage('${read.url}');">${read.mail}</td>
+                <td onclick="redirectToPage('${read.url}');">${read.numder}</td>
                 <td><label class="switch" onclick="view_ ()">
                        <input type="checkbox">
                        <span class="slider round"></span>
