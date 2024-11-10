@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "data_test";
+$dbname = "gotwo";
 
 try {
     // Connect to the database
