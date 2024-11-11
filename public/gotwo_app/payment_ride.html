@@ -236,7 +236,7 @@
                                         </div>
                                     </div>
                                     <div class="container QR_Box">
-                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrModal${index}">
+                                         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#qrModal${index}">
                                               Show QR Code
                                          </button>
                                     </div>
@@ -249,17 +249,17 @@
                     <div class="modal fade" id="qrModal${index}" tabindex="-1" aria-labelledby="qrModalLabel${index}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="qrModalLabel${index}">QR Code</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
+                                <div class="modal-body text-center">
+                                    <img id="qrCodeImage" src="" alt="QR Code" style="display: none;">
+                                    <p id="errorText" class="text-danger" style="display: none;">Error generating QR code.</p>
+                               </div>
                                 <div class="modal-body text-center">
                                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${item.post_id}">
                                     <h5 class="text-dark mt-4"> Paid ${item.price - Commission} THB</h5>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    
+                                    <button type="button" class="btn_addPhoto btn btn-success" data-bs-dismiss="modal">Add Photo</button>
+                                    <button type="button" class="btn_close btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -282,6 +282,53 @@
 
         // Fetch data when page loads
         document.addEventListener('DOMContentLoaded', fetchPayments);
+    </script>
+
+    <script>
+        async function showQrCode(price, promptPay) {
+            const url_qr = `/php/gotwo/qr_gre.php`;
+
+            try {
+                const response = await fetch(url_qr, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        "action": "PAY",
+                        "price": price,
+                        "promptPay": promptPay,
+                    })
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    if (responseData.status === 'success') {
+                        const qrCodeImage = document.getElementById("qrCodeImage");
+                        qrCodeImage.src = `data:image/png;base64,${responseData.qr_code}`;
+                        qrCodeImage.style.display = 'block';
+                        document.getElementById("errorText").style.display = 'none';
+                    } else {
+                        showError("Error: " + responseData.message);
+                    }
+                } else {
+                    showError("Error: " + response.status);
+                }
+            } catch (e) {
+                showError("Error: " + e.message);
+            }
+
+            // Show modal with QR code or error
+            const qrModal = new bootstrap.Modal(document.getElementById('qrModal'));
+            qrModal.show();
+        }
+
+        function showError(message) {
+            document.getElementById("qrCodeImage").style.display = 'none';
+            const errorText = document.getElementById("errorText");
+            errorText.textContent = message;
+            errorText.style.display = 'block';
+        }
     </script>
 
     <script src="/public/js/gotwo_js/payment_ride_nav_animation.js"></script>
