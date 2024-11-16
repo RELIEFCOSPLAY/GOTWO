@@ -363,53 +363,11 @@
       }
 
       //////////////////////////////////////
-//       function handleAddPhoto(status_post_id) {
-//   const fileInput = document.createElement("input");
-//   fileInput.type = "file";
-//   fileInput.accept = "image/*";
-
-//   fileInput.click();
-
-//   fileInput.onchange = (event) => {
-//     const file = event.target.files[0];
-//     if (file) {
-//       const formData = new FormData();
-//       formData.append("image", file);
-//       formData.append("status_post_id", status_post_id);
-
-//       fetch("upload_image.php", {
-//         method: "POST",
-//         body: formData,
-//       })
-//         .then((response) => {
-//           if (!response.ok) {
-//             throw new Error(`HTTP error! status: ${response.status}`);
-//           }
-//           return response.json();
-//         })
-//         .then((data) => {
-//           console.log("Response from server:", data); // ดูข้อมูลที่ได้จาก PHP
-//           if (data.success) {
-//             alert("Upload successful!");
-//             // อาจต้องอัปเดต UI เพื่อแสดงภาพที่อัปโหลด
-//           } else {
-//             alert(`Upload failed: ${data.message}`);
-//           }
-//         })
-//         .catch((error) => {
-//           console.error("Error occurred:", error);
-//         });
-//     }
-//   };
-// }
-
-function handleAddPhoto(index) {
-  // สร้าง input สำหรับอัปโหลดไฟล์
+      function handleAddPhoto(status_post_id) {
   const fileInput = document.createElement("input");
   fileInput.type = "file";
   fileInput.accept = "image/*";
 
-  // เปิดหน้าต่างเลือกไฟล์
   fileInput.click();
 
   fileInput.onchange = (event) => {
@@ -417,7 +375,7 @@ function handleAddPhoto(index) {
     if (file) {
       const formData = new FormData();
       formData.append("image", file);
-      formData.append("status_post_id", index); // ส่ง index เป็น status_post_id
+      formData.append("status_post_id", status_post_id);
 
       fetch("upload_image.php", {
         method: "POST",
@@ -430,9 +388,10 @@ function handleAddPhoto(index) {
           return response.json();
         })
         .then((data) => {
-          console.log("Response from server:", data);
+          console.log("Response from server:", data); // ดูข้อมูลที่ได้จาก PHP
           if (data.success) {
             alert("Upload successful!");
+            // อาจต้องอัปเดต UI เพื่อแสดงภาพที่อัปโหลด
           } else {
             alert(`Upload failed: ${data.message}`);
           }
@@ -443,6 +402,47 @@ function handleAddPhoto(index) {
     }
   };
 }
+
+// function handleAddPhoto(index) {
+//   // สร้าง input สำหรับอัปโหลดไฟล์
+//   const fileInput = document.createElement("input");
+//   fileInput.type = "file";
+//   fileInput.accept = "image/*";
+
+//   // เปิดหน้าต่างเลือกไฟล์
+//   fileInput.click();
+
+//   fileInput.onchange = (event) => {
+//     const file = event.target.files[0];
+//     if (file) {
+//       const formData = new FormData();
+//       formData.append("image", file);
+//       formData.append("status_post_id", index); // ส่ง index เป็น status_post_id
+
+//       fetch("upload_image.php", {
+//         method: "POST",
+//         body: formData,
+//       })
+//         .then((response) => {
+//           if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//           }
+//           return response.json();
+//         })
+//         .then((data) => {
+//           console.log("Response from server:", data);
+//           if (data.success) {
+//             alert("Upload successful!");
+//           } else {
+//             alert(`Upload failed: ${data.message}`);
+//           }
+//         })
+//         .catch((error) => {
+//           console.error("Error occurred:", error);
+//         });
+//     }
+//   };
+// }
 
 
 
