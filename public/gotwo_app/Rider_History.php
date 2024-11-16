@@ -1,3 +1,18 @@
+<?php
+
+$severname = "localhost";
+$username = "root";
+$password = "";
+$dbname = "gotwo";
+
+try {
+    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -123,10 +138,10 @@
             <h1>Management Rider</h1>
             <div class="nav_animation">
                <ul>
-                  <li class="report_nav_animation"><a href="/public/gotwo_app/Rider_Request.html" id="Request">Rider Request</a></li>
-                  <li class="history_nav_animation"><a href="/public/gotwo_app/Rider_History.html"
+                  <li class="report_nav_animation"><a href="/public/gotwo_app/Rider_Request.php" id="Request">Rider Request</a></li>
+                  <li class="history_nav_animation"><a href="/public/gotwo_app/Rider_History.php"
                         id="Request">History</a></li>
-                  <li class="suspend_nav_animation"><a href="/public/gotwo_app/Rider_ Suspend.html"
+                  <li class="suspend_nav_animation"><a href="/public/gotwo_app/Rider_ Suspend.php"
                         id="Request">Suspend</a></li>
                   <span class="slider_nav_animation"></span>
                </ul>
@@ -179,51 +194,67 @@
    <script src="/public/js/gotwo_js/management_history.js"></script>
    <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
-   <script>
 
-      const demo_data = [
-         { id: 0, name: "Popup", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "0123456789", gender: "female", status: "Reject" },
-         { id: 1, name: "jojo", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "0123456789", gender: "male", status: "Confirm" },
-         { id: 2, name: "momo", mail: "645150xxxx@lamduan.mfu.ac.th", role: "rider", numder: "0123456789", gender: "female", status: "Confirm" },
+     <!-- ------------------------------------------------- -->
+     <?php
+    // ดึงข้อมูลจากฐานข้อมูล Rider ที่ status_rider = 1 และ 0
+    $sql = "SELECT name, email, tel, img_profile, status_rider FROM table_rider WHERE status_rider IN (0, 1)";
+    $query = $conn->prepare($sql);
+    $query->execute();
+    $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
 
-      ];
+    // แปลงข้อมูลเป็น JSON เพื่อส่งไปยัง JavaScript
+    $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+?>
 
-      requests_ = document.getElementById("Request").innerHTML;
+ <!-- ------------------------------------------------- -->
+ <script>
+    // รับข้อมูล JSON จาก PHP
+    const demo_data = <?= $riderDataJSON ?>;
 
+    let show_data = '';
 
-      let show_data = '';
-      console.log("");
-      for (read of demo_data) {
-         
-         if (read.status == "Confirm") {
-           
+    // วนลูปข้อมูลจาก demo_data
+    demo_data.forEach((read) => {
+        if (read.status_rider == 1) {
+            // สถานะ Confirm
             show_data += `
-            <tr onclick="redirectToPage('${read.url}');">
-                <td scope="row"> <img src="/public/img/unnamed.jpg" class="img_style mx-2">${read.name}</td>       
-                <td>${read.mail}</td>
-                <td>${read.numder}</td>
-                <td class="text-success">${read.status}</td>
-            </tr>
-                `;
-          }
-          if (read.status == "Reject") {
-           
-           show_data += `
-           <tr onclick="redirectToPage('${read.url}');">
-            <td scope="row"> <img src="/public/img/unnamed.jpg" class="img_style mx-2">${read.name}</td>       
-            <td>${read.mail}</td>
-            <td>${read.numder}</td>
-            <td class="text-danger">${read.status}</td>
-        </tr>
-               `;
-         }
-         document.querySelector('#dataTableBody').innerHTML = show_data;
+            <tr onclick="redirectToPage('${read.url || '#'}');">
+                <td scope="row">
+                    <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
+                    ${read.name || 'Unknown Name'}
+                </td>
+                <td>${read.email || 'No Email'}</td>
+                <td>${read.tel || 'No Tel'}</td>
+                <td class="text-success">Confirm</td>
+            </tr>`;
+        } else if (read.status_rider == 0) {
+            // สถานะ Reject
+            show_data += `
+            <tr onclick="redirectToPage('${read.url || '#'}');">
+                <td scope="row">
+                    <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
+                    ${read.name || 'Unknown Name'}
+                </td>
+                <td>${read.email || 'No Email'}</td>
+                <td>${read.tel || 'No Tel'}</td>
+                <td class="text-danger">Reject</td>
+            </tr>`;
+        }
+    });
 
+    // แสดงข้อมูลในตาราง
+    document.querySelector('#dataTableBody').innerHTML = show_data;
 
-      }
-
-
-   </script>
+    // ฟังก์ชันเปลี่ยนหน้า
+    function redirectToPage(url) {
+        if (url && url !== '#') {
+            window.location.href = url;
+        } else {
+            console.log("No URL specified.");
+        }
+    }
+</script>
 </body>
 
 </html>

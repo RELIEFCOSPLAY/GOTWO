@@ -1,7 +1,16 @@
 <?php
-include('../connection/suspend_rider.php');
-$sql = "SELECT * FROM table_rider";
-$query = mysqli_query($connection,$sql);
+
+$severname = "localhost";
+$username = "root";
+$password = "";
+$dbname = "gotwo";
+
+try {
+    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,12 +20,12 @@ $query = mysqli_query($connection,$sql);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rider_ Suspend</title>
+    <title>Customer_Suspend</title>
     <script src="/public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/public/css/css_gotwo/management_rider.css">
+    <link rel="stylesheet" href="/public/css/css_gotwo/management_customer.css">
     <link rel="stylesheet" href="/public/css/css_gotwo/sidebar_rider.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -127,15 +136,10 @@ $query = mysqli_query($connection,$sql);
 
         <div class="main p-3">
             <div class="ms-4 mt-3">
-                <h1>Management Rider</h1>
+                <h1>Management Customer</h1>
                 <div class="nav_animation">
                     <ul>
-                        <li class="report_nav_animation"><a href="/public/gotwo_app/Rider_Request.html"
-                                id="Request">Rider Request</a></li>
-                        <li class="history_nav_animation"><a href="/public/gotwo_app/Rider_History.html"
-                                id="Request">History</a></li>
-                        <li class="suspend_nav_animation"><a href="/public/gotwo_app/Rider_ Suspend.html"
-                                id="Request">Suspend</a></li>
+                        <li class="report_nav_animation"><a href="#" id="Request">Customer Suspend</a></li>
                         <span class="slider_nav_animation"></span>
                     </ul>
 
@@ -171,43 +175,64 @@ $query = mysqli_query($connection,$sql);
                                     </tr>
                                 </thead>
                                 <tbody id="dataTableBody">
-
+                                    
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
 
                     <!-- ---------------------------------------------------------  --------------------------------------------------------- -->
                 </div>
             </div>
         </div>
     </div>
-    <script src="/public/js/gotwo_js/management_suspend.js"></script>
+    <script src="/public/js/gotwo_js/customer_suspend.js"></script>
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
+  <!-- ------------------------------------------------- -->
+  <?php
+        // ดึงข้อมูลจากฐานข้อมูล Customer
+        $sql = "SELECT name, email, tel, img_profile FROM table_customer WHERE status_customer = 1";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+        // ----------------------------
+        // $sql = "SELECT gender FROM table_customer";
+        // $query = $conn->prepare($sql);
+        // $query->execute();
+        // $fetch = $query->fetch();
+        // $gender = $fetch['gender'];
+        $customerDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
 
-    <script>
+        if (!empty($fetch)) {
+            foreach ($fetch as $customer) {
+                $name = $customer['name'];
+                $email = $customer['email'];
+                $tel = $customer['tel'];
+                $img_profile_customer = $customer['img_profile'];
+    
+                // ตัวอย่าง: แสดงข้อมูล
+                echo "Name: $name<br>";
+                echo "Email: $email<br>";
+                echo "Tel: $tel<br>";
+                echo "Image Profile: $img_profile_customer<br><hr>";
+            }
+        } 
+    ?>
+ <!-- ------------------------------------------------- -->
+   
+ <script>
+    // รับข้อมูล JSON จาก PHP
+    const demo_data = <?= $customerDataJSON ?>;
 
-        const demo_data = [
-            { id: 0, name: "Popup", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "0123456789", gender: "female", status: "Reject" },
-            { id: 1, name: "jojo", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "0123456789", gender: "male", status: "Confirm" },
-            { id: 2, name: "momo", mail: "645150xxxx@lamduan.mfu.ac.th", role: "rider", numder: "0123456789", gender: "female", status: "Confirm" },
-
-        ];
-
-        requests_ = document.getElementById("Request").innerHTML;
-
-
+        // requests_ = document.getElementById("Request").innerHTML;
         let show_data = '';
         console.log("");
         for (read of demo_data) {
-
-
             show_data += `
-            <tr >
-                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="/public/img/unnamed.jpg" class="img_style mx-2">${read.name}</td>       
-                <td onclick="redirectToPage('${read.url}');">${read.mail}</td>
-                <td onclick="redirectToPage('${read.url}');">${read.numder}</td>
+           <tr >
+                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="${read.img_profile_customer}" class="img_style mx-2">${read.name}</td>       
+                <td onclick="redirectToPage('${read.url}');">${read.email}</td>
+                <td onclick="redirectToPage('${read.url}');">${read.tel}</td>
                 <td><label class="switch" onclick="view_ ()">
                        <input type="checkbox">
                        <span class="slider round"></span>

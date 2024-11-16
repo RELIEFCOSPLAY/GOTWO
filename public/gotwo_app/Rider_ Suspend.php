@@ -139,11 +139,11 @@ try {
                 <h1>Management Rider</h1>
                 <div class="nav_animation">
                     <ul>
-                        <li class="report_nav_animation"><a href="/public/gotwo_app/Rider_Request.html"
+                        <li class="report_nav_animation"><a href="/public/gotwo_app/Rider_Request.php"
                                 id="Request">Rider Request</a></li>
-                        <li class="history_nav_animation"><a href="/public/gotwo_app/Rider_History.html"
+                        <li class="history_nav_animation"><a href="/public/gotwo_app/Rider_History.php"
                                 id="Request">History</a></li>
-                        <li class="suspend_nav_animation"><a href="/public/gotwo_app/Rider_ Suspend.html"
+                        <li class="suspend_nav_animation"><a href="/public/gotwo_app/Rider_ Suspend.php"
                                 id="Request">Suspend</a></li>
                         <span class="slider_nav_animation"></span>
                     </ul>
@@ -195,48 +195,24 @@ try {
     <!-- ------------------------------------------------- -->
     <?php
         // ดึงข้อมูลจากฐานข้อมูล Rider
-        $sql = "SELECT name FROM table_rider";
+        $sql = "SELECT name, email, tel, img_profile FROM table_rider WHERE status_rider = 1";
         $query = $conn->prepare($sql);
         $query->execute();
-        $fetch = $query->fetch();
-        $name = $fetch['name'];
-        // ----------------------------
-        $sql = "SELECT email FROM table_rider";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $email = $fetch['email'];
-        // ----------------------------
-        $sql = "SELECT tel FROM table_rider";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $tel = $fetch['tel'];
+        $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
         // ----------------------------
         // $sql = "SELECT gender FROM table_rider";
         // $query = $conn->prepare($sql);
         // $query->execute();
         // $fetch = $query->fetch();
         // $gender = $fetch['gender'];
-        // ----------------------------
-        $sql = "SELECT img_profile FROM table_rider";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch();
-        $img_profile_rider = $fetch['img_profile'];
+        $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+
     ?>
  <!-- ------------------------------------------------- -->
    
-    <script>
-        const demo_data = [{
-                id: 0,
-                name: <?= json_encode($name) ?>,
-                email: <?= json_encode($email) ?>,
-                tel: <?= json_encode($tel) ?>,
-                gender: <?= json_encode($gender) ?>,
-                rider_img: <?= json_encode($img_profile) ?>,
-                
-        }];
+ <script>
+    // รับข้อมูล JSON จาก PHP
+    const demo_data = <?= $riderDataJSON ?>;
 
         // requests_ = document.getElementById("Request").innerHTML;
         let show_data = '';
@@ -244,9 +220,9 @@ try {
         for (read of demo_data) {
             show_data += `
            <tr >
-                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="/public/img/unnamed.jpg" class="img_style mx-2">${read.name}</td>       
-                <td onclick="redirectToPage('${read.url}');">${read.mail}</td>
-                <td onclick="redirectToPage('${read.url}');">${read.numder}</td>
+                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="${read.img_profile_rider}" class="img_style mx-2">${read.name}</td>       
+                <td onclick="redirectToPage('${read.url}');">${read.email}</td>
+                <td onclick="redirectToPage('${read.url}');">${read.tel}</td>
                 <td><label class="switch" onclick="view_ ()">
                        <input type="checkbox">
                        <span class="slider round"></span>
