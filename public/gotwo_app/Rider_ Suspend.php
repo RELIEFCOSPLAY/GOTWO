@@ -207,20 +207,6 @@ try {
         // $gender = $fetch['gender'];
         $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
 
-        if (!empty($fetch)) {
-            foreach ($fetch as $rider) {
-                $name = $rider['name'];
-                $email = $rider['email'];
-                $tel = $rider['tel'];
-                $img_profile_rider = $rider['img_profile'];
-    
-                // ตัวอย่าง: แสดงข้อมูล
-                echo "Name: $name<br>";
-                echo "Email: $email<br>";
-                echo "Tel: $tel<br>";
-                echo "Image Profile: $img_profile_rider<br><hr>";
-            }
-        } 
     ?>
  <!-- ------------------------------------------------- -->
    
