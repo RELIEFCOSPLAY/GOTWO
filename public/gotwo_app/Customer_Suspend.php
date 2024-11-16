@@ -3,7 +3,7 @@
 $severname = "localhost";
 $username = "root";
 $password = "";
-$dbname = "gotwo";
+$dbname = "data_test";
 
 try {
     $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
@@ -253,9 +253,9 @@ try {
                     cancelButtonText: "No"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        alert("jj");
+                        alert("suspend");
                     } else if(result.dismiss === Swal.DismissReason.cancel){
-                        alert("ppppp");
+                        alert("un suspend");
                     }
                 });
             }
