@@ -157,9 +157,15 @@
                     return;
                 }
 
-                allPayments = payments; // Store fetched data
-                filterPayments(currentFilter); // Show initial filter
-
+                // Check if the data has changed before re-rendering
+                if (JSON.stringify(allPayments) !== JSON.stringify(payments)) {
+                    console.log("Data updated, re-rendering...");
+                    allPayments = payments; // Update the stored data
+                    filterPayments(currentFilter); // Update the display
+                }
+                else {
+                    console.log("No changes in data.");
+                }
             } catch (error) {
                 console.error("Error fetching payments:", error);
             }
@@ -172,12 +178,20 @@
             displayPayments(filteredPayments);
         }
 
+        // Call fetchPayments every 3 seconds for real-time updates
+        setInterval(fetchPayments, 3000);
+
+        // Fetch data when page loads
+        document.addEventListener('DOMContentLoaded', fetchPayments);
+
         // Display payments based on filtered data
         function displayPayments(data) {
             const container = document.getElementById('paymentContainer');
-            container.innerHTML = ""; // Clear previous content
+            container.innerHTML = ""; // ล้างเนื้อหาก่อน
 
             data.forEach((item, index) => {
+                const timeOnly = item.time.includes(' ') ? item.time.split(' ')[1].substring(0, 5) : item.time.substring(0, 5);
+                const Commission = 10;
                 const paymentHTML = `
                     <div class="mt-4">
                         <nav class="side_drawer rounded-top-4" style="background-color: rgb(219, 226, 239)">
@@ -187,7 +201,7 @@
                                     <div class="d-flex flex-row ms-5 align-items-center">
                                         <img src="/public/img/pngegg.png" class="mx-3">
                                         <div class="mt-3 fw-bold">
-                                            <p>Time: ${item.time}</p>
+                                            <p>Time: ${timeOnly}</p>
                                             <p>Name: ${item.rider_name}</p>
                                             <p>From: ${item.pick_up}</p>
                                             <p>Role: Rider</p>
@@ -197,18 +211,18 @@
                                     <div class="d-flex flex-row align-items-center">
                                         <img src="/public/img/pngegg.png" class="mx-3">
                                         <div class="mt-3 fw-bold">    
-                                            <p>Time: ${item.time}</p>
+                                            <p>Time: ${timeOnly}</p>
                                             <p>Name: ${item.customer_name}</p>
                                             <p>To: ${item.at_drop}</p>
                                             <p>Role: Customer</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-row align-items-center baht_M">
+                                <div class="d-flex flex-row align-items-center baht_M ms-5">
                                     <div class="text-center">
                                         <h2>${item.price} THB</h2>
                                         <h1 class="${item.pay != 0 || item.pay == 4 ? 'text-success' : 'text-danger'}">
-                                            ${item.pay != 0 || item.pay == 4 ? 'Compled' : 'Unpaid'}
+                                            ${item.pay != 0 || item.pay == 4 ? 'Compled' : 'Not compled'}
                                         </h1>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -224,22 +238,42 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="container details_paid">
                                         <div class="d-flex justify-content-between">
-                                            <h5 class="text-dark">Pickup Location</h5>
-                                            <h5 class="text-dark">${item.pick_up}</h5>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <h5 class="text-dark">Drop-off Location</h5>
-                                            <h5 class="text-dark">${item.at_drop}</h5>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <h5 class="text-dark">Price</h5>
+                                            <h5 class="text-dark">Customer pays</h5>
                                             <h5 class="text-dark">${item.price} THB</h5>
                                         </div>
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="text-dark">Commission</h5>
+                                            <h5 class="text-dark">${Commission} THB</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="text-dark">Paid</h5>
+                                            <h5 class="text-dark">${item.price - Commission} THB</h5>
+                                        </div>
                                     </div>
-                                    <div class="container QR_Box">
-                                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${item.post_id}" class="mx-5">
+                                    <div class="container QR_Box d-flex justify-content-center my-5">
+                                         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#qrModal${index}" id="showQrCodeButton" onclick="">Show Pay Slip</button>
                                     </div>
-                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                     <!-- Modal Popup สำหรับ Show Pay Slip -->
+                    <div class="modal fade" id="qrModal${index}" tabindex="-1" aria-labelledby="qrModalLabel${index}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="qrModalLabel${index}">Show Pay Slip</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img id="" src="" alt="Pay Slip" style="display: none;">
+                                    <h5 class="text-dark mt-4"> Paid ${item.price - Commission} THB</h5>
+                                    <p id="errorText${index}" class="text-danger" style="display: none;">Error generating Show Pay Slip.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn_addPhoto btn btn-success" data-bs-dismiss="modal">Add Photo</button>
+                                    <button type="button" class="btn_close btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -248,6 +282,7 @@
                 container.insertAdjacentHTML('beforeend', paymentHTML);
             });
         }
+
 
         // Optional: Filter displayed payments by search input
         function filterResults() {
