@@ -1,3 +1,18 @@
+<?php
+
+$severname = "localhost";
+$username = "root";
+$password = "";
+$dbname = "gotwo";
+
+try {
+    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -173,41 +188,60 @@
     </div>
     <script src="/public/js/gotwo_js/customer_suspend.js"></script>
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
+  <!-- ------------------------------------------------- -->
+  <?php
+        // ดึงข้อมูลจากฐานข้อมูล Customer
+        $sql = "SELECT name, email, tel, img_profile FROM table_customer WHERE status_customer = 1";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+        // ----------------------------
+        // $sql = "SELECT gender FROM table_customer";
+        // $query = $conn->prepare($sql);
+        // $query->execute();
+        // $fetch = $query->fetch();
+        // $gender = $fetch['gender'];
+        $customerDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
 
-    <script>
+        if (!empty($fetch)) {
+            foreach ($fetch as $customer) {
+                $name = $customer['name'];
+                $email = $customer['email'];
+                $tel = $customer['tel'];
+                $img_profile_customer = $customer['img_profile'];
+    
+                // ตัวอย่าง: แสดงข้อมูล
+                echo "Name: $name<br>";
+                echo "Email: $email<br>";
+                echo "Tel: $tel<br>";
+                echo "Image Profile: $img_profile_customer<br><hr>";
+            }
+        } 
+    ?>
+ <!-- ------------------------------------------------- -->
+   
+ <script>
+    // รับข้อมูล JSON จาก PHP
+    const demo_data = <?= $customerDataJSON ?>;
 
-        const demo_data = [
-            { id: 0, name: "Popup", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "0123456789", gender: "female", status: "Reject" },
-            { id: 1, name: "jojo", mail: "644150xxxx@lamduan.mfu.ac.th", role: "customer", numder: "0123456789", gender: "male", status: "Confirm" },
-            { id: 2, name: "momo", mail: "645150xxxx@lamduan.mfu.ac.th", role: "rider", numder: "0123456789", gender: "female", status: "Confirm" },
-
-        ];
-
-        requests_ = document.getElementById("Request").innerHTML;
-
-
+        // requests_ = document.getElementById("Request").innerHTML;
         let show_data = '';
         console.log("");
         for (read of demo_data) {
-
-
             show_data += `
-            <tr >
-                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="/public/img/unnamed.jpg"
-                        class="img_style mx-2">${read.name}</td>
-                <td onclick="redirectToPage('${read.url}');">${read.mail}</td>
-                <td onclick="redirectToPage('${read.url}');">${read.numder}</td>
+           <tr >
+                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="${read.img_profile_customer}" class="img_style mx-2">${read.name}</td>       
+                <td onclick="redirectToPage('${read.url}');">${read.email}</td>
+                <td onclick="redirectToPage('${read.url}');">${read.tel}</td>
                 <td><label class="switch" onclick="view_ ()">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                </td>
+                       <input type="checkbox">
+                       <span class="slider round"></span>
+                </label></td>
             </tr>
                 `;
 
 
             document.querySelector('#dataTableBody').innerHTML = show_data;
-         }
             function view_() {
                 Swal.fire({
                     title: "Do you want to suspend this account?",
@@ -217,8 +251,17 @@
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Yes",
                     cancelButtonText: "No"
-                })
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        alert("jj");
+                    } else if(result.dismiss === Swal.DismissReason.cancel){
+                        alert("ppppp");
+                    }
+                });
             }
+
+        }
+
 
     </script>
 </body>
