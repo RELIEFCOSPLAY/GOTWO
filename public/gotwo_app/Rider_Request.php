@@ -1,5 +1,4 @@
 <?php
-
 $severname = "localhost";
 $username = "root";
 $password = "";
@@ -12,7 +11,6 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -196,11 +194,10 @@ try {
      <!-- ------------------------------------------------- -->
      <?php
     // ดึงข้อมูลจากฐานข้อมูล Rider ที่ status_rider = 0
-    $sql = "SELECT name, email, tel, img_profile, status_rider FROM table_rider WHERE status_rider = 0";
+    $sql = "SELECT name, email, tel, img_profile, status FROM table_rider WHERE status = 0";
     $query = $conn->prepare($sql);
     $query->execute();
     $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
-
     // แปลงข้อมูลเป็น JSON เพื่อส่งไปยัง JavaScript
     $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
 ?>
@@ -232,7 +229,5 @@ try {
     // แสดงข้อมูลในตาราง
     document.querySelector('#dataTableBody').innerHTML = show_data;
 </script>
-
 </body>
-
 </html>

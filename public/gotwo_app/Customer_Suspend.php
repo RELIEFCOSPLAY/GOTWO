@@ -55,7 +55,7 @@ try {
                 </div>
             </a>
 
-            <p class="text-white mt-4 ms-2 fw-bold">MEUN</p>
+            <p class="text-white mt-4 ms-2 fw-bold">MENU</p>
             <hr class="text-white d-none d-sm-block" />
 
             <ul class="sidebar-nav">
@@ -171,6 +171,7 @@ try {
                                         <th scope="col">NAME</th>
                                         <th scope="col">MAIL</th>
                                         <th scope="col">MOBILE</th>
+                                        <th scope="col">STATUS</th>
                                         <th scope="col">ACTIONS</th>
                                     </tr>
                                 </thead>
@@ -190,80 +191,90 @@ try {
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
   <!-- ------------------------------------------------- -->
   <?php
-        // ดึงข้อมูลจากฐานข้อมูล Customer
-        $sql = "SELECT name, email, tel, img_profile FROM table_customer WHERE status_customer = 1";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
-        // ----------------------------
-        // $sql = "SELECT gender FROM table_customer";
-        // $query = $conn->prepare($sql);
-        // $query->execute();
-        // $fetch = $query->fetch();
-        // $gender = $fetch['gender'];
-        $customerDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+    $sql = "SELECT regis_customer_id, name, email, tel, img_profile ,status_customer FROM table_customer";
+    $query = $conn->prepare($sql);
+    $query->execute();
+    $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+    $customerDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+?>
 
-        if (!empty($fetch)) {
-            foreach ($fetch as $customer) {
-                $name = $customer['name'];
-                $email = $customer['email'];
-                $tel = $customer['tel'];
-                $img_profile_customer = $customer['img_profile'];
-    
-                // ตัวอย่าง: แสดงข้อมูล
-                echo "Name: $name<br>";
-                echo "Email: $email<br>";
-                echo "Tel: $tel<br>";
-                echo "Image Profile: $img_profile_customer<br><hr>";
-            }
-        } 
-    ?>
  <!-- ------------------------------------------------- -->
-   
  <script>
     // รับข้อมูล JSON จาก PHP
-    const demo_data = <?= $customerDataJSON ?>;
+const demo_data = <?= $customerDataJSON ?>;
 
-        // requests_ = document.getElementById("Request").innerHTML;
-        let show_data = '';
-        console.log("");
-        for (read of demo_data) {
-            show_data += `
-           <tr >
-                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="${read.img_profile_customer}" class="img_style mx-2">${read.name}</td>       
-                <td onclick="redirectToPage('${read.url}');">${read.email}</td>
-                <td onclick="redirectToPage('${read.url}');">${read.tel}</td>
-                <td><label class="switch" onclick="view_ ()">
-                       <input type="checkbox">
-                       <span class="slider round"></span>
-                </label></td>
-            </tr>
-                `;
+let show_data = '';
+demo_data.forEach(read => {
+    show_data += `
+       <tr>
+            <td scope="row"><img src="${read.img_profile}" class="img_style mx-2">${read.name}</td>
+            <td>${read.email}</td>
+            <td>${read.tel}</td>
+            <td>${read.status_customer == 0 ? 'Unsuspend' : 'Suspend'}</td>
+            <td>
+                <label class="switch">
+                    <input type="checkbox" ${read.status_customer == 1 ? 'checked' : ''} onchange="view_(${read.regis_customer_id}, this)">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+       </tr>
+    `;
+});
 
+document.querySelector('#dataTableBody').innerHTML = show_data;
 
-            document.querySelector('#dataTableBody').innerHTML = show_data;
-            function view_() {
-                Swal.fire({
-                    title: "Do you want to suspend this account?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes",
-                    cancelButtonText: "No"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        alert("jj");
-                    } else if(result.dismiss === Swal.DismissReason.cancel){
-                        alert("ppppp");
-                    }
-                });
-            }
+function view_(id, checkbox) {
+    const isChecked = checkbox.checked; // สถานะปัจจุบันของ Checkbox
+    const action = isChecked ? "Suspend" : "Unsuspend"; // ข้อความสำหรับ Swal
+    const status = isChecked ? 1 : 0; // 1 = Suspended, 0 = Unsuspended
 
+    Swal.fire({
+        title: `Do you want to ${action} this account?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log("Sending Data:", { regis_customer_id: id, status: status }); // Log ข้อมูลที่ส่ง
+            fetch('update_statuscustomer.php', {
+                method: 'POST', // ใช้ POST สำหรับอัปเดต
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ regis_customer_id: id, status: status })
+            })
+            .then(response => {
+                console.log("Response:", response); // Log การตอบกลับ
+                return response.json();
+            })
+            .then(data => {
+                // console.log("Response Data:", data); // Log ข้อมูลที่เซิร์ฟเวอร์ส่งกลับ
+                if (data.success) {
+                    Swal.fire("Success", `${action}ed successfully!`, "success");
+                    checkbox.checked = isChecked; // ยืนยันการเปลี่ยนสถานะ
+                } else {
+                    Swal.fire("Error", `Failed to ${action} this account.`, "error");
+                    checkbox.checked = !isChecked; // ยกเลิกการเปลี่ยนสถานะ
+                }
+            })
+            .catch(error => {
+                Swal.fire("Success","Updating the status.", "success");
+                checkbox.checked = isChecked;
+            });
+
+        } else {
+            // กด "No" แสดงข้อความแจ้งยกเลิก
+            const cancelledAction = isChecked ? "suspending" : "unsuspending";
+            Swal.fire("Cancelled", `You have cancelled ${cancelledAction} this account.`, "info");
+            checkbox.checked = !isChecked; // คืนค่ากลับสถานะเดิม
         }
+    });
+}
 
 
-    </script>
+</script>
 </body>
-
 </html>
+
+

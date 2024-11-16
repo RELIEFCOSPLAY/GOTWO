@@ -209,51 +209,77 @@ try {
 
     ?>
  <!-- ------------------------------------------------- -->
-   
+ <?php
+$sql = "SELECT regis_customer_id, name, email, tel, img_profile FROM table_rider WHERE status_rider = 1";
+$query = $conn->prepare($sql);
+$query->execute();
+$fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+$riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+?>
+
+ <!-- ------------------------------------------------- -->
  <script>
-    // รับข้อมูล JSON จาก PHP
-    const demo_data = <?= $riderDataJSON ?>;
+// รับข้อมูล JSON จาก PHP
+const demo_data = <?= $riderDataJSON ?>;
+let show_data = '';
 
-        // requests_ = document.getElementById("Request").innerHTML;
-        let show_data = '';
-        console.log("");
-        for (read of demo_data) {
-            show_data += `
-           <tr >
-                <td scope="row" onclick="redirectToPage('${read.url}');"> <img src="${read.img_profile_rider}" class="img_style mx-2">${read.name}</td>       
-                <td onclick="redirectToPage('${read.url}');">${read.email}</td>
-                <td onclick="redirectToPage('${read.url}');">${read.tel}</td>
-                <td><label class="switch" onclick="view_ ()">
-                       <input type="checkbox">
-                       <span class="slider round"></span>
-                </label></td>
-            </tr>
-                `;
+for (let read of demo_data) {
+    show_data += `
+        <tr>
+            <td scope="row" onclick="redirectToPage('${read.url}');">
+                <img src="${read.img_profile}" class="img_style mx-2">${read.name}
+            </td>       
+            <td onclick="redirectToPage('${read.url}');">${read.email}</td>
+            <td onclick="redirectToPage('${read.url}');">${read.tel}</td>
+            <td>
+                <label class="switch">
+                   <input type="checkbox" onclick="view_(${read.id}, this.checked)">
+                   <span class="slider round"></span>
+                </label>
+            </td>
+        </tr>`;
+}
 
+document.querySelector('#dataTableBody').innerHTML = show_data;
 
-            document.querySelector('#dataTableBody').innerHTML = show_data;
-            function view_() {
-                Swal.fire({
-                    title: "Do you want to suspend this account?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes",
-                    cancelButtonText: "No"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        alert("jj");
-                    } else if(result.dismiss === Swal.DismissReason.cancel){
-                        alert("ppppp");
-                    }
-                });
-            }
+function view_(id, isChecked) {
+    const status = isChecked ? "Unsuspended" : "Suspended";
 
+    Swal.fire({
+        title: `Do you want to ${status} this account?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // ใช้ AJAX อัปเดตสถานะ
+            fetch('update_status.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, status: isChecked ? 0 : 1 }) // 0 = Unsuspended , 1 = Suspended 
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire("Success", "Status updated successfully!", "success");
+                } else {
+                    Swal.fire("Error", "Failed to update status.", "error");
+                }
+            })
+            .catch(error => {
+                Swal.fire("Error", "An error occurred.", "error");
+            });
+        } else {
+            // ถ้าไม่ยืนยัน ให้ยกเลิกการเปลี่ยนสถานะ
+            document.querySelector(`input[type="checkbox"][onclick="view_(${regis_customer_id}, this.checked)"]`).checked = !isChecked;
         }
+    });
+}
+</script>
 
-
-    </script>
 </body>
 
 </html>
