@@ -1,5 +1,4 @@
 <?php
-
 $severname = "localhost";
 $username = "root";
 $password = "";
@@ -173,9 +172,10 @@ try {
                             <table id="table-posts">
                                 <thead>
                                     <tr>
-                                        <th scope="col">NAME</th>
+                                    <th scope="col">NAME</th>
                                         <th scope="col">MAIL</th>
                                         <th scope="col">MOBILE</th>
+                                        <th scope="col">STATUS</th>
                                         <th scope="col">ACTIONS</th>
                                     </tr>
                                 </thead>
@@ -194,59 +194,45 @@ try {
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
     <!-- ------------------------------------------------- -->
     <?php
-        // ดึงข้อมูลจากฐานข้อมูล Rider
-        $sql = "SELECT name, email, tel, img_profile FROM table_rider WHERE status_rider = 1";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
-        // ----------------------------
-        // $sql = "SELECT gender FROM table_rider";
-        // $query = $conn->prepare($sql);
-        // $query->execute();
-        // $fetch = $query->fetch();
-        // $gender = $fetch['gender'];
-        $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
-
-    ?>
- <!-- ------------------------------------------------- -->
- <?php
-$sql = "SELECT regis_customer_id, name, email, tel, img_profile FROM table_rider WHERE status_rider = 1";
-$query = $conn->prepare($sql);
-$query->execute();
-$fetch = $query->fetchAll(PDO::FETCH_ASSOC);
-$riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+ $sql = "SELECT regis_rider_id, name, email, tel, img_profile ,status_rider FROM table_rider";
+ $query = $conn->prepare($sql);
+ $query->execute();
+ $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+ $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
 ?>
 
  <!-- ------------------------------------------------- -->
  <script>
-// รับข้อมูล JSON จาก PHP
+    // รับข้อมูล JSON จาก PHP
 const demo_data = <?= $riderDataJSON ?>;
-let show_data = '';
 
-for (let read of demo_data) {
+let show_data = '';
+demo_data.forEach(read => {
     show_data += `
-        <tr>
-            <td scope="row" onclick="redirectToPage('${read.url}');">
-                <img src="${read.img_profile}" class="img_style mx-2">${read.name}
-            </td>       
-            <td onclick="redirectToPage('${read.url}');">${read.email}</td>
-            <td onclick="redirectToPage('${read.url}');">${read.tel}</td>
+       <tr>
+            <td scope="row"><img src="${read.img_profile}" class="img_style mx-2">${read.name}</td>
+            <td>${read.email}</td>
+            <td>${read.tel}</td>
+            <td>${read.status_rider == 0 ? 'Unsuspend' : 'Suspend'}</td>
             <td>
                 <label class="switch">
-                   <input type="checkbox" onclick="view_(${read.id}, this.checked)">
-                   <span class="slider round"></span>
+                    <input type="checkbox" ${read.status_rider == 1 ? 'checked' : ''} onchange="view_(${read.regis_rider_id}, this)">
+                    <span class="slider round"></span>
                 </label>
             </td>
-        </tr>`;
-}
+       </tr>
+    `;
+});
 
 document.querySelector('#dataTableBody').innerHTML = show_data;
 
-function view_(id, isChecked) {
-    const status = isChecked ? "Unsuspended" : "Suspended";
+function view_(id, checkbox) {
+    const isChecked = checkbox.checked; // สถานะปัจจุบันของ Checkbox
+    const action = isChecked ? "Suspend" : "Unsuspend"; // ข้อความสำหรับ Swal
+    const status = isChecked ? 1 : 0; // 1 = Suspended, 0 = Unsuspended
 
     Swal.fire({
-        title: `Do you want to ${status} this account?`,
+        title: `Do you want to ${action} this account?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -255,31 +241,41 @@ function view_(id, isChecked) {
         cancelButtonText: "No"
     }).then((result) => {
         if (result.isConfirmed) {
-            // ใช้ AJAX อัปเดตสถานะ
-            fetch('update_status.php', {
-                method: 'POST',
+            console.log("Sending Data:", { regis_rider_id: id, status_rider: status }); // Log ข้อมูลที่ส่ง
+            fetch('update_statusrider.php', {
+                method: 'POST', // ใช้ POST สำหรับอัปเดต
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: id, status: isChecked ? 0 : 1 }) // 0 = Unsuspended , 1 = Suspended 
+                body: JSON.stringify({ regis_rider_id: id, status: status })
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log("Response:", response); // Log การตอบกลับ
+                return response.json();
+            })
             .then(data => {
+                // console.log("Response Data:", data); // Log ข้อมูลที่เซิร์ฟเวอร์ส่งกลับ
                 if (data.success) {
-                    Swal.fire("Success", "Status updated successfully!", "success");
+                    Swal.fire("Success", `${action}ed successfully!`, "success");
+                    checkbox.checked = isChecked; // ยืนยันการเปลี่ยนสถานะ
                 } else {
-                    Swal.fire("Error", "Failed to update status.", "error");
+                    Swal.fire("Error", `Failed to ${action} this account.`, "error");
+                    checkbox.checked = !isChecked; // ยกเลิกการเปลี่ยนสถานะ
                 }
             })
             .catch(error => {
-                Swal.fire("Error", "An error occurred.", "error");
+                Swal.fire("Success","Updating the status.", "success");
+                checkbox.checked = isChecked;
             });
+
         } else {
-            // ถ้าไม่ยืนยัน ให้ยกเลิกการเปลี่ยนสถานะ
-            document.querySelector(`input[type="checkbox"][onclick="view_(${regis_customer_id}, this.checked)"]`).checked = !isChecked;
+            // กด "No" แสดงข้อความแจ้งยกเลิก
+            const cancelledAction = isChecked ? "suspending" : "unsuspending";
+            Swal.fire("Cancelled", `You have cancelled ${cancelledAction} this account.`, "info");
+            checkbox.checked = !isChecked; // คืนค่ากลับสถานะเดิม
         }
     });
 }
-</script>
 
+</script>
 </body>
 
 </html>

@@ -15,7 +15,6 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -191,11 +190,11 @@ try {
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
   <!-- ------------------------------------------------- -->
   <?php
-    $sql = "SELECT regis_customer_id, name, email, tel, img_profile ,status_customer FROM table_customer";
-    $query = $conn->prepare($sql);
-    $query->execute();
-    $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
-    $customerDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+ $sql = "SELECT regis_customer_id, name, email, tel, img_profile ,status_customer FROM table_customer";
+ $query = $conn->prepare($sql);
+ $query->execute();
+ $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+ $customerDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
 ?>
 
  <!-- ------------------------------------------------- -->
@@ -238,7 +237,7 @@ function view_(id, checkbox) {
         cancelButtonText: "No"
     }).then((result) => {
         if (result.isConfirmed) {
-            console.log("Sending Data:", { regis_customer_id: id, status: status }); // Log ข้อมูลที่ส่ง
+            console.log("Sending Data:", { regis_customer_id: id, status_customer: status }); // Log ข้อมูลที่ส่ง
             fetch('update_statuscustomer.php', {
                 method: 'POST', // ใช้ POST สำหรับอัปเดต
                 headers: { 'Content-Type': 'application/json' },
@@ -271,7 +270,6 @@ function view_(id, checkbox) {
         }
     });
 }
-
 
 </script>
 </body>
