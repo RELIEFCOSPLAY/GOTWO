@@ -1,22 +1,12 @@
 <?php
-// Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "data_test";
+header('Content-Type: application/json');
 
 try {
-    // เชื่อมต่อฐานข้อมูล
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // ตรวจสอบว่าได้รับไฟล์หรือไม่
+    // ตรวจสอบว่าไฟล์และ `status_post_id` ถูกส่งมา
     if (!isset($_FILES['image']) || !isset($_POST['status_post_id'])) {
         echo json_encode([
             "success" => false,
-            "message" => "Invalid input data.",
-            "files" => $_FILES,
-            "post" => $_POST
+            "message" => "Invalid input data."
         ]);
         exit;
     }
@@ -26,7 +16,10 @@ try {
 
     // ตรวจสอบข้อผิดพลาดของไฟล์
     if ($image['error'] !== UPLOAD_ERR_OK) {
-        echo json_encode(["success" => false, "message" => "File upload error: " . $image['error']]);
+        echo json_encode([
+            "success" => false,
+            "message" => "File upload error: " . $image['error']
+        ]);
         exit;
     }
 
@@ -34,58 +27,75 @@ try {
     $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
     $fileType = mime_content_type($image['tmp_name']);
     if (!in_array($fileType, $allowedTypes)) {
-        echo json_encode(["success" => false, "message" => "Invalid file type: " . $fileType]);
+        echo json_encode([
+            "success" => false,
+            "message" => "Invalid file type: " . $fileType
+        ]);
+        exit;
+    }
+
+    // ตรวจสอบและสร้างโฟลเดอร์ถ้าไม่มี
+    $uploadDir = "uploads/";
+    if (!is_dir($uploadDir) && !mkdir($uploadDir, 0777, true)) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Failed to create upload directory."
+        ]);
         exit;
     }
 
     // สร้างชื่อไฟล์แบบสุ่ม
     $fileName = uniqid() . "." . pathinfo($image['name'], PATHINFO_EXTENSION);
-    $filePath = "uploads/" . $fileName;
+    $filePath = $uploadDir . $fileName;
 
     // ย้ายไฟล์ไปยังโฟลเดอร์
     if (!move_uploaded_file($image['tmp_name'], $filePath)) {
         echo json_encode([
             "success" => false,
-            "message" => "Failed to save the file.",
-            "debug" => error_get_last()
+            "message" => "Failed to save the file."
         ]);
         exit;
     }
 
-    // อัปเดต path ของรูปในฐานข้อมูล
-    $sql = "UPDATE status_post SET image = :image WHERE status_post_id = :status_post_id";
-    $stmt = $conn->prepare($sql);
+    // เชื่อมต่อฐานข้อมูล
+    $pdo = new PDO('mysql:host=localhost;dbname=data_test', 'root', '');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // เริ่มต้น Transaction
+    $pdo->beginTransaction();
+
+    // อัปเดตรูปภาพและสถานะในฐานข้อมูล
+    $sqlUpdate = "
+        UPDATE status_post 
+        SET image = :image, status = 6, pay = 4 
+        WHERE status_post_id = :status_post_id
+    ";
+    $stmt = $pdo->prepare($sqlUpdate);
     $stmt->bindParam(':image', $filePath);
     $stmt->bindParam(':status_post_id', $status_post_id);
 
-    if ($stmt->execute()) {
-        // ดึงข้อมูลชื่อรูปภาพจากฐานข้อมูล
-        $sqlFetch = "SELECT image FROM status_post WHERE status_post_id = :status_post_id";
-        $stmtFetch = $conn->prepare($sqlFetch);
-        $stmtFetch->bindParam(':status_post_id', $status_post_id);
-        $stmtFetch->execute();
-        $result = $stmtFetch->fetch(PDO::FETCH_ASSOC);
-
-        if ($result) {
-            echo json_encode([
-                "success" => true,
-                "message" => "Database updated and fetched successfully.",
-                "image" => $result['image'] // ส่งชื่อรูปกลับไป
-            ]);
-        } else {
-            echo json_encode([
-                "success" => false,
-                "message" => "Failed to fetch image name."
-            ]);
-        }
-    } else {
-        echo json_encode([
-            "success" => false,
-            "message" => "Failed to update database.",
-            "debug" => $stmt->errorInfo()
-        ]);
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to update database.");
     }
-} catch (PDOException $e) {
-    echo json_encode(["success" => false, "message" => $e->getMessage()]);
+
+    // Commit Transaction
+    $pdo->commit();
+
+    // ส่งผลลัพธ์กลับไป
+    echo json_encode([
+        "success" => true,
+        "message" => "File uploaded and database updated successfully.",
+        "image" => $filePath
+    ]);
+} catch (Exception $e) {
+    // Rollback หากมีข้อผิดพลาด
+    if (isset($pdo) && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => $e->getMessage()
+    ]);
 }
 ?>

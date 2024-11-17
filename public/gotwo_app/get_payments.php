@@ -5,12 +5,14 @@ $username = "root";
 $password = "";
 $dbname = "data_test";
 
+header('Content-Type: application/json');
+
 try {
     // Connect to the database
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Write a SQL query to retrieve data from the post table and related tables
+    // SQL query
     $stmt = $conn->prepare("
         SELECT 
         status_post.status_post_id,
@@ -19,6 +21,7 @@ try {
         status_post.pay, 
         status_post.review, 
         status_post.comment,
+        status_post.image,
         post.post_id AS post_id, 
         table_customer.name AS customer_name,
         table_customer.regis_customer_id AS customer_id, 
@@ -35,12 +38,13 @@ try {
         post.status_helmet AS status_helmet,
         post.price AS price,
         post.check_status AS check_status
-    FROM status_post
-    INNER JOIN post ON status_post.post_id = post.post_id
-    INNER JOIN table_customer ON status_post.customer_id = table_customer.regis_customer_id
-    INNER JOIN table_rider ON post.rider_id = table_rider.regis_rider_id;
-     
+        FROM status_post
+        INNER JOIN post ON status_post.post_id = post.post_id
+        INNER JOIN table_customer ON status_post.customer_id = table_customer.regis_customer_id
+        INNER JOIN table_rider ON post.rider_id = table_rider.regis_rider_id
+        ORDER BY status_post.status_post_id DESC;
     ");
+
     $stmt->execute();
 
     // Fetch all data as an associative array
@@ -51,3 +55,4 @@ try {
 } catch (PDOException $e) {
     echo json_encode(["error" => "Connection failed: " . $e->getMessage()]);
 }
+?>
