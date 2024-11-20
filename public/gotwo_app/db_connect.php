@@ -2,7 +2,7 @@
 $servername = "localhost"; // ชื่อเซิร์ฟเวอร์ของฐานข้อมูล
 $username = "root"; // ชื่อผู้ใช้ฐานข้อมูล
 $password = ""; // รหัสผ่านของฐานข้อมูล
-$dbname = "gotwo"; // ชื่อฐานข้อมูลที่ต้องการเชื่อมต่อ
+$dbname = "data_test"; // ชื่อฐานข้อมูลที่ต้องการเชื่อมต่อ
 
 // สร้างการเชื่อมต่อ
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -154,9 +154,10 @@ try {
                             </a>
                         </div>
                     </label>
-                    <select name="cars" id="cars" class="styled-select">
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
+                    <select name="filter" id="filter" class="styled-select" onchange="filterData()">
+                        <option value="all">All</option>
+                        <option value="unsuspend">Unsuspend</option>
+                        <option value="suspended">Suspended</option>
                     </select>
                 </form>
 
@@ -175,7 +176,6 @@ try {
                                     </tr>
                                 </thead>
                                 <tbody id="dataTableBody">
-                                    
                                 </tbody>
                             </table>
                         </div>
@@ -274,5 +274,3 @@ function view_(id, checkbox) {
 </script>
 </body>
 </html>
-
-
