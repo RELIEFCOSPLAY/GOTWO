@@ -48,7 +48,7 @@ try {
     <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css" />
 </head>
 <body>
-    <div class="wrapper">
+<div class="wrapper">
         <aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
@@ -74,7 +74,30 @@ try {
             <p class="text-white mt-4 ms-2 fw-bold">MEUN</p>
             <hr class="text-white d-none d-sm-block" />
 
-            <li class="sidebar-item">
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="/public/gotwo_app/Dashboard.php" class="sidebar-link">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#Management" aria-expanded="false" aria-controls="Management">
+                        <i class="bi bi-kanban"></i>
+                        <span>Management</span>
+                    </a>
+                    <ul id="Management" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="/public/gotwo_app/Rider_Request.php" class="sidebar-link">Rider</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/public/gotwo_app/Customer_Suspend.php" class="sidebar-link">Customer</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item">
                     <a href="/public/gotwo_app/pending_tracking.php" class="sidebar-link">
                         <i class="bi bi-pin-map-fill"></i>
                         <span>Travel Tracking</span>
@@ -96,30 +119,6 @@ try {
                         </li>
                     </ul>
                 </li>
-
-                <li class="sidebar-item">
-                    <a href="/public/gotwo_app/pending_tracking.html" class="sidebar-link">
-                        <i class="bi bi-pin-map-fill"></i>
-                        <span>Travel Tracking</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#Payment" aria-expanded="false" aria-controls="Payment">
-                        <i class="bi bi-credit-card-fill"></i>
-                        <span>Payment</span>
-                    </a>
-                    <ul id="Payment" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_ride.html" class="sidebar-link">Rider</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_cus.html" class="sidebar-link">Refund</a>
-                        </li>
-                    </ul>
-                </li>
-                
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>

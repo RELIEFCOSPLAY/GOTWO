@@ -1,32 +1,29 @@
+/* จัดการ container ให้รองรับหน้าจอทุกขนาด */
 .container {
    flex-wrap: wrap;
    width: 100%;
-
-   /* จัดให้อยู่ตรงกลางตามแนวนอน */
-
-   /* ใช้ flex-wrap สำหรับหน้าจอขนาดเล็ก */
+   display: flex;
+   justify-content: center;
 }
 
-
+/* ปุ่มแต่ละปุ่ม */
 .butt {
    background-color: #DBE2EF;
    border: 1px solid #6E6E6E;
    width: 200px;
    height: 240px;
-   margin-top: 10 px;
-
+   margin-top: 10px;
+   transition: background-color 0.3s ease;
 }
 
-.butt:hover{
-   background-color: #a0e3d7;
+.butt:hover {
+   background-color: #a0e3d7; /* เปลี่ยนสีเมื่อ hover */
 }
 
 .btn {
    display: grid;
    place-items: center;
    margin: 20px;
-   float: none;
-
 }
 
 .btn i {
@@ -35,12 +32,14 @@
    font-size: 40px;
 }
 
+/* กลุ่มปุ่ม */
 #buttonn {
    font-weight: 600;
    display: flex;
-   flex-direction: column;
+   flex-wrap: wrap; /* รองรับหน้าจอเล็ก */
+   justify-content: center; /* จัดปุ่มให้อยู่ตรงกลาง */
    align-items: center;
-   
+   gap: 15px; /* ระยะห่างระหว่างปุ่ม */
 }
 
 #buttonn a button {
@@ -56,29 +55,42 @@
    font-size: 50px;
 }
 
+@media (max-width: 768px) {
+   .butt {
+      width: 150px; /* ลดขนาดปุ่ม */
+      height: 200px;
+   }
+
+   #buttonn button p {
+      font-size: 30px; /* ลดขนาดตัวอักษร */
+   }
+}
+
+/* Badge Section */
 .col-d-flex {
    display: flex;
    flex-direction: column;
    align-items: center;
    margin-top: 90px;
 }
-.badge {
-   background-color: #B7E9B4;
-   border: 2px solid #A1A1A1;
-   padding: 20px;
-   position: absolute; /* จัดตำแหน่งแบบอิสระ */
-   top: 50%; /* อยู่กึ่งกลางแนวตั้ง */
-   right: 35%; /* ระยะห่างจากขอบขวา */
-   transform: translateY(-50%); /* ปรับให้อยู่ตรงกลางแนวตั้งจริง ๆ */
-   width: fit-content; /* ขนาดตามเนื้อหา */
-   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงาเล็กน้อยถ้าต้องการ */
-}
 
+.badge {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   background-color: #B7E9B4;
+   border: 3px solid #A1A1A1;
+   padding: 50px;
+   margin: auto; /* จัดตำแหน่งให้อยู่ตรงกลาง */
+   width: fit-content; /* ขนาดตามเนื้อหา */
+   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+}
 
 .badge h4 {
    color: #6E6E6E;
    font-size: 50px;
-   text-align: start;
+   text-align: center;
    margin: 0;
 }
 
@@ -92,4 +104,32 @@
    text-align: center;
    font-size: 50px;
    margin: 0;
+}
+
+@media (max-width: 768px) {
+   .badge {
+      padding: 30px; /* ลดขนาด padding */
+   }
+
+   .badge h4,
+   .badge h2 {
+      font-size: 30px; /* ลดขนาดตัวอักษร */
+   }
+}
+
+/* Media Queries for Small Screens */
+@media (max-width: 576px) {
+   .butt {
+      width: 120px; /* ขนาดเล็กสุดสำหรับปุ่ม */
+      height: 180px;
+   }
+
+   .badge {
+      padding: 20px;
+   }
+
+   .badge h4,
+   .badge h2 {
+      font-size: 25px;
+   }
 }

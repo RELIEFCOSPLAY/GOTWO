@@ -259,10 +259,26 @@ try {
                                 </button></a>
                             <a href="/public/gotwo_app/payment_ride.html">
                                 <button type="payment" class="btn butt rounded btn-lg">
-                                    <i class="bi bi-credit-card" style="color: #D6A3DA;"></i>Payment Unpaid<br>
+                                    <i class="bi bi-credit-card" style="color: #000000;"></i>Payment Unpaid<br>
                                     <?php
                                     // Query เพื่อดึงจำนวนแถวที่มี pay = 3
                                     $sql = "SELECT COUNT(*) as pay FROM status_post WHERE pay = 3";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $pay = $fetch['pay'] ?? 0; // กำหนดค่าเริ่มต้นเป็น 0 หากไม่มีข้อมูล
+                                    ?>
+                                    <!-- แสดงจำนวนผลลัพธ์ -->
+                                    <p><?= $pay ?></p>
+                                </button>
+                            </a>
+                            </button></a>
+                            <a href="/public/gotwo_app/payment_ride_completed.html">
+                                <button type="payment_com" class="btn butt rounded btn-lg">
+                                    <i class="bi bi-credit-card" style="color: #D6A3DA;"></i>Payment completed<br>
+                                    <?php
+                                    // Query เพื่อดึงจำนวนแถวที่มี pay = 3
+                                    $sql = "SELECT COUNT(*) as pay FROM status_post WHERE pay = 4";
                                     $query = $conn->prepare($sql);
                                     $query->execute();
                                     $fetch = $query->fetch();
@@ -292,12 +308,23 @@ try {
                         <head>
                             <link rel="stylesheet" type="text/css" href="styles.css">
                         </head>
+                        <?php
+                        $sql = "SELECT COUNT(*) as count FROM status_post WHERE pay = 4";
+                        $query = $conn->prepare($sql);
+                        $query->execute();
+                        $fetch = $query->fetch();
+                        $count = $fetch['count'];
+
+                        // คูณผลลัพธ์ด้วย 10
+                        $result = $count * 10;
+                        ?>
 
                         <div class="badge">
                             <h4>Income money</h4>
                             <hr>
-                            <h2>10,602 THB</h2>
+                            <h2><?= $result ?></h2>
                         </div>
+
 
                         <!-- กราฟ
                         <canvas id="myChart"

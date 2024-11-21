@@ -217,6 +217,7 @@
           if (JSON.stringify(allPayments) !== JSON.stringify(payments)) {
             console.log("Data updated, re-rendering...");
             allPayments = payments; // Update the stored data
+            allPayments.sort((a, b) => new Date(b.time) - new Date(a.time)); // Sort by latest time
             filterPayments(currentFilter); // Update the display
           } else {
             console.log("No changes in data.");
@@ -225,7 +226,6 @@
           console.error("Error fetching payments:", error);
         }
       }
-
       // Function to filter and display payments based on status
       function filterPayments(status) {
         currentFilter = status;
@@ -243,14 +243,22 @@
 
       // Display payments based on filtered data
       function displayPayments(data) {
-    const container = document.getElementById("paymentContainer");
-    container.innerHTML = ""; // Clear previous content
+        const container = document.getElementById("paymentContainer");
+        container.innerHTML = ""; // Clear previous content
 
-    data.forEach((item, index) => {
-        const paySlipUrl = item.image && item.image.trim() !== "" ? item.image : ""; // Check for valid image URL
-        const Commission = 10;
+        data.forEach((item, index) => {
+          const dateParts = item.date.split("-"); // แยกวัน เดือน ปี
+          const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // เรียงใหม่เป็น วัน-เดือน-ปี
 
-        const paymentHTML = `
+          const paySlipUrl =
+            item.image && item.image.trim() !== "" ? item.image : ""; // Check for valid image URL
+          const Commission = 10;
+          const timeOnly =
+            item.time && item.time.includes(" ")
+              ? item.time.split(" ")[1].substring(0, 5)
+              : item.time.substring(0, 5);
+
+          const paymentHTML = `
         <div class="mt-4">
             <nav class="side_drawer rounded-top-4" style="background-color: rgb(219, 226, 239)">
                 <div class="container-fluid d-flex flex-row justify-content-between drawer_"
@@ -259,7 +267,8 @@
                         <div class="d-flex flex-row ms-5 align-items-center">
                             <img src="/public/img/pngegg.png" class="mx-3">
                             <div class="mt-3 fw-bold">
-                                <p>Time: ${item.time}</p>
+                               <p>Date: ${formattedDate}</p>
+                               <p>Time: ${timeOnly}</p>
                                 <p>Name: ${item.rider_name}</p>
                                 <p>From: ${item.pick_up}</p>
                                 <p>Role: Rider</p>
@@ -269,7 +278,8 @@
                         <div class="d-flex flex-row align-items-center">
                             <img src="/public/img/pngegg.png" class="mx-3">
                             <div class="mt-3 fw-bold">
-                                <p>Time: ${item.time}</p>
+                              <p>Date: ${formattedDate}</p>
+                               <p>Time: ${timeOnly}</p>
                                 <p>Name: ${item.customer_name}</p>
                                 <p>To: ${item.at_drop}</p>
                                 <p>Role: Customer</p>
@@ -279,8 +289,10 @@
                     <div class="d-flex flex-row align-items-center baht_M ms-5">
                         <div class="text-center">
                             <h2>${item.price} THB</h2>
-                            <h1 class="${item.pay == 4 ? 'text-success' : 'text-danger'}">
-                                ${item.pay == 4 ? 'Completed' : 'Not Completed'}
+                            <h1 class="${
+                              item.pay == 4 ? "text-success" : "text-danger"
+                            }">
+                                ${item.pay == 4 ? "Completed" : "Not Completed"}
                             </h1>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -305,7 +317,9 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h5 class="text-dark">Paid</h5>
-                                <h5 class="text-dark">${item.price - Commission} THB</h5>
+                                <h5 class="text-dark">${
+                                  item.price - Commission
+                                } THB</h5>
                             </div>
                         </div>
                         <div class="container QR_Box d-flex justify-content-center my-5">
@@ -325,9 +339,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-center">
-                        <img id="paySlipImage${index}" src="${paySlipUrl}" alt="Pay Slip" style="display: ${paySlipUrl ? 'block' : 'none'}; max-width: 100%; height: auto; margin-bottom: 15px;">
+                        <img id="paySlipImage${index}" src="${paySlipUrl}" alt="Pay Slip" style="display: ${
+            paySlipUrl ? "block" : "none"
+          }; max-width: 100%; height: auto; margin-bottom: 15px;">
                         <h5 class="text-dark mt-4">Paid ${item.price} THB</h5>
-                        <p id="errorText${index}" class="text-danger" style="display: ${paySlipUrl ? 'none' : 'block'};">Error loading Pay Slip.</p>
+                        <p id="errorText${index}" class="text-danger" style="display: ${
+            paySlipUrl ? "none" : "block"
+          };">Error loading Pay Slip.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -336,28 +354,24 @@
             </div>
         </div>
         `;
-        container.insertAdjacentHTML("beforeend", paymentHTML);
-    });
-}
+          container.insertAdjacentHTML("beforeend", paymentHTML);
+        });
+      }
 
+      // ฟังก์ชันสำหรับแสดง Pay Slip
+      function showPaySlip(paySlipUrl, index) {
+        const modalImage = document.querySelector(`#qrModal${index} img`);
+        const errorText = document.getElementById(`errorText${index}`);
 
-
-
-        // ฟังก์ชันสำหรับแสดง Pay Slip
-        function showPaySlip(paySlipUrl, index) {
-    const modalImage = document.querySelector(`#qrModal${index} img`);
-    const errorText = document.getElementById(`errorText${index}`);
-
-    if (paySlipUrl && paySlipUrl.trim() !== "") {
-        modalImage.src = paySlipUrl; // ตั้งค่า src ให้กับรูป
-        modalImage.style.display = "block"; // แสดงรูป
-        errorText.style.display = "none"; // ซ่อนข้อความข้อผิดพลาด
-    } else {
-        modalImage.style.display = "none"; // ซ่อนรูป
-        errorText.style.display = "block"; // แสดงข้อความข้อผิดพลาด
-    }
-
-}
+        if (paySlipUrl && paySlipUrl.trim() !== "") {
+          modalImage.src = paySlipUrl; // ตั้งค่า src ให้กับรูป
+          modalImage.style.display = "block"; // แสดงรูป
+          errorText.style.display = "none"; // ซ่อนข้อความข้อผิดพลาด
+        } else {
+          modalImage.style.display = "none"; // ซ่อนรูป
+          errorText.style.display = "block"; // แสดงข้อความข้อผิดพลาด
+        }
+      }
 
       // Optional: Filter displayed payments by search input
       function filterResults() {
