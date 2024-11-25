@@ -25,6 +25,7 @@ try {
         post.post_id AS post_id, 
         table_customer.name AS customer_name,
         table_customer.regis_customer_id AS customer_id, 
+        table_customer.tel AS customer_tel,
         table_rider.name AS rider_name, 
         table_rider.regis_rider_id AS rider_id, 
         table_rider.gender AS rider_gender,
@@ -42,7 +43,7 @@ try {
         INNER JOIN post ON status_post.post_id = post.post_id
         INNER JOIN table_customer ON status_post.customer_id = table_customer.regis_customer_id
         INNER JOIN table_rider ON post.rider_id = table_rider.regis_rider_id
-        ORDER BY status_post.status_post_id DESC;
+        ORDER BY date DESC, time DESC
     ");
 
     $stmt->execute();

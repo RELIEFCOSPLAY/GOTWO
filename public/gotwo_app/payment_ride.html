@@ -21,9 +21,9 @@
     <!-- <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    />
+    /> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
 
   <body>
@@ -145,11 +145,11 @@
             </ul>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
-              <i class="bi bi-person-circle"></i>
-              <span>Profile</span>
+            <a href="/public/gotwo_app/profile.php" class="sidebar-link">
+                <i class="bi bi-person-circle"></i>
+                <span>Profile</span>
             </a>
-          </li>
+        </li>
         </ul>
         <div class="sidebar-footer">
           <a href="/public/gotwo_app/login_gotwo.html" class="sidebar-link">
@@ -175,13 +175,17 @@
               <span class="slider_nav_animation"></span>
             </ul>
           </div>
-
           <div class="box">
-            <input type="text" placeholder="Search" />
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search"
+                oninput="filterResults()"
+            />
             <a href="#">
-              <i class="bi bi-search"></i>
+                <i class="bi bi-search"></i>
             </a>
-          </div>
+        </div>
 
           <div id="paymentContainer" class="mt-1"></div>
         </div>
@@ -217,6 +221,12 @@
           console.error("Error fetching payments:", error);
         }
       }
+      function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+    }
+    return text;
+}
 
       // Function to filter and display payments based on status
       function filterPayments(status) {
@@ -239,8 +249,8 @@
         container.innerHTML = ""; // ล้างเนื้อหาก่อน
 
         data.forEach((item, index) => {
-          const dateParts = item.date.split("-"); // แยกวัน เดือน ปี
-          const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // เรียงใหม่เป็น วัน-เดือน-ปี
+          const dateParts = item.date.split("-"); 
+          const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; 
 
           const timeOnly = item.time.includes(" ")
             ? item.time.split(" ")[1].substring(0, 5)
@@ -257,7 +267,7 @@
                                         <div class="mt-3 fw-bold">
                                             <p>Date: ${formattedDate}</p>
                                             <p>Time: ${timeOnly}</p>
-                                            <p>Name: ${item.rider_name}</p>
+                                            <p>Name: ${truncateText(item.rider_name, 10)}</p>
                                             <p>From: ${item.pick_up}</p>
                                             <p>Role: Rider</p>
                                         </div>
@@ -268,7 +278,7 @@
                                         <div class="mt-3 fw-bold">    
                                             <p>Date: ${formattedDate}</p>
                                             <p>Time: ${timeOnly}</p>
-                                            <p>Name: ${item.customer_name}</p>
+                                             <p>Name: ${truncateText(item.customer_name, 10)}</p>
                                             <p>To: ${item.at_drop}</p>
                                             <p>Role: Customer</p>
                                         </div>
@@ -374,67 +384,68 @@
 
       //////////////////////////////////////
       function handleAddPhoto(status_post_id) {
-        const fileInput = document.createElement("input");
-        fileInput.type = "file";
-        fileInput.accept = "image/*";
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*";
 
-        fileInput.click();
+  fileInput.click();
 
-        fileInput.onchange = (event) => {
-          const file = event.target.files[0];
-          if (file) {
-            const formData = new FormData();
-            formData.append("image", file);
-            formData.append("status_post_id", status_post_id);
+  fileInput.onchange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("status_post_id", status_post_id);
 
-            fetch("upload_image.php", {
-              method: "POST",
-              body: formData,
-            })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then((data) => {
-                console.log("Response from server:", data);
-                if (data.success) {
-                  alert("Upload successful!");
-                  fetchPayments(); // รีเฟรชข้อมูลหลังอัปโหลด
-                } else {
-                  alert(`Upload failed: ${data.message}`);
-                }
-              })
-              .catch((error) => {
-                console.error("Error occurred:", error);
-              });
+      fetch("upload_image.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
           }
-        };
-      }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Response from server:", data);
+          if (data.success) {
+            alert("Upload successful!");
+            location.reload(); // Refresh the page after the alert
+          } else {
+            alert(`Upload failed: ${data.message}`);
+          }
+        })
+        .catch((error) => {
+          console.error("Error occurred:", error);
+        });
+    }
+  };
+}
 
-      // Optional: Filter displayed payments by search input
-      function filterResults() {
-        const query = document
-          .getElementById("searchInput")
-          .value.toLowerCase();
-        const filteredData = allPayments
-          .filter(
-            (payment) =>
-              (payment.rider_name &&
-                payment.rider_name.toLowerCase().includes(query)) ||
-              (payment.customer_name &&
-                payment.customer_name.toLowerCase().includes(query))
-          )
-          .filter((payment) => payment.pay == currentFilter); // Match current filter (Unpaid or Completed)
-        displayPayments(filteredData);
-      }
 
       // Fetch data when page loads
       document.addEventListener("DOMContentLoaded", fetchPayments);
     </script>
 
     <script>
+        function filterResults() {
+    const query = document.getElementById("searchInput").value.toLowerCase(); // รับข้อความค้นหา
+
+    // หากไม่มีข้อความค้นหา ให้แสดงข้อมูลทั้งหมดที่ตรงกับ currentFilter
+    const filteredData = query
+        ? allPayments.filter(
+              (payment) =>
+                  payment.pay == currentFilter && // เฉพาะสถานะ Completed
+                  ((payment.rider_name &&
+                      payment.rider_name.toLowerCase().includes(query)) || // ค้นหาชื่อ Rider
+                      (payment.customer_name &&
+                          payment.customer_name.toLowerCase().includes(query))) // ค้นหาชื่อ Customer
+          )
+        : allPayments.filter((payment) => payment.pay == currentFilter); // แสดงทั้งหมดที่ pay == currentFilter
+
+    displayPayments(filteredData); // แสดงผลข้อมูลที่ผ่านการกรอง
+}
       function showQrCode(riderNumberBank, price, index) {
         $.ajax({
           url: "qr_gre.php",

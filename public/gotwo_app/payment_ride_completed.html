@@ -153,12 +153,12 @@
                         </li>
                     </ul>
                 </li> -->
-          <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
-              <i class="bi bi-person-circle"></i>
-              <span>Profile</span>
-            </a>
-          </li>
+                <li class="sidebar-item">
+                  <a href="/public/gotwo_app/profile.php" class="sidebar-link">
+                      <i class="bi bi-person-circle"></i>
+                      <span>Profile</span>
+                  </a>
+              </li>
         </ul>
         <div class="sidebar-footer">
           <a href="/public/gotwo_app/login_gotwo.html" class="sidebar-link">
@@ -186,11 +186,16 @@
           </div>
 
           <div class="box">
-            <input type="text" placeholder="Search" />
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search"
+                oninput="filterResults()"
+            />
             <a href="#">
-              <i class="bi bi-search"></i>
+                <i class="bi bi-search"></i>
             </a>
-          </div>
+        </div>
           <div id="paymentContainer" class="mt-1"></div>
         </div>
       </div>
@@ -225,6 +230,12 @@
         } catch (error) {
           console.error("Error fetching payments:", error);
         }
+      }
+      function truncateText(text, maxLength) {
+        if (text.length > maxLength) {
+          return text.substring(0, maxLength) + "...";
+        }
+        return text;
       }
       // Function to filter and display payments based on status
       function filterPayments(status) {
@@ -269,7 +280,7 @@
                             <div class="mt-3 fw-bold">
                                <p>Date: ${formattedDate}</p>
                                <p>Time: ${timeOnly}</p>
-                                <p>Name: ${item.rider_name}</p>
+                               <p>Name: ${truncateText(item.rider_name, 10)}</p>
                                 <p>From: ${item.pick_up}</p>
                                 <p>Role: Rider</p>
                             </div>
@@ -280,7 +291,7 @@
                             <div class="mt-3 fw-bold">
                               <p>Date: ${formattedDate}</p>
                                <p>Time: ${timeOnly}</p>
-                                <p>Name: ${item.customer_name}</p>
+                                <p>Name: ${truncateText(item.customer_name, 10)}</p>
                                 <p>To: ${item.at_drop}</p>
                                 <p>Role: Customer</p>
                             </div>
@@ -375,20 +386,24 @@
 
       // Optional: Filter displayed payments by search input
       function filterResults() {
-        const query = document
-          .getElementById("searchInput")
-          .value.toLowerCase();
-        const filteredData = allPayments
-          .filter(
-            (payment) =>
-              (payment.rider_name &&
-                payment.rider_name.toLowerCase().includes(query)) ||
-              (payment.customer_name &&
-                payment.customer_name.toLowerCase().includes(query))
+    const query = document.getElementById("searchInput").value.toLowerCase(); // รับข้อความค้นหา
+
+    // หากไม่มีข้อความค้นหา ให้แสดงข้อมูลทั้งหมดที่ตรงกับ currentFilter
+    const filteredData = query
+        ? allPayments.filter(
+              (payment) =>
+                  payment.pay == currentFilter && // เฉพาะสถานะ Completed
+                  ((payment.rider_name &&
+                      payment.rider_name.toLowerCase().includes(query)) || // ค้นหาชื่อ Rider
+                      (payment.customer_name &&
+                          payment.customer_name.toLowerCase().includes(query))) // ค้นหาชื่อ Customer
           )
-          .filter((payment) => payment.pay == currentFilter); // Match current filter (Unpaid or Completed)
-        displayPayments(filteredData);
-      }
+        : allPayments.filter((payment) => payment.pay == currentFilter); // แสดงทั้งหมดที่ pay == currentFilter
+
+    displayPayments(filteredData); // แสดงผลข้อมูลที่ผ่านการกรอง
+}
+
+
 
       // Fetch data when page loads
       document.addEventListener("DOMContentLoaded", fetchPayments);

@@ -1,11 +1,11 @@
 <?php
-$severname = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "data_test";
 
 try {
-    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Query ดึงข้อมูลทั้งหมด
@@ -14,12 +14,13 @@ try {
                r.gender AS rider_gender, r.img_profile AS rider_img_profile,
                c.name AS customer_name, c.email AS customer_email, c.tel AS customer_tel, 
                c.gender AS customer_gender, c.img_profile AS customer_img_profile,
-               p.pick_up, p.at_drop
+               p.pick_up, p.at_drop,p.date
         FROM status_post s
         JOIN table_rider r ON s.rider_id = r.regis_rider_id
         JOIN table_customer c ON s.customer_id = c.regis_customer_id
         JOIN post p ON s.post_id = p.post_id
         WHERE s.status = 4
+        ORDER BY p.date DESC
     ";
     $query = $conn->prepare($sql);
     $query->execute();
@@ -119,11 +120,11 @@ try {
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-person-circle"></i>
-                        <span>Profile</span>
-                    </a>
-                </li>
+            <a href="/public/gotwo_app/profile.php" class="sidebar-link">
+                <i class="bi bi-person-circle"></i>
+                <span>Profile</span>
+            </a>
+        </li>
 
             </ul>
             <div class="sidebar-footer">
@@ -222,32 +223,41 @@ try {
         const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
         const show_modal = `
         <div class="popup center container">
-            <div class="d-flex flex-row justify-content-center">
-                <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
-                <div class="mt-3 ms-2">
-                    <div class="d-flex flex-row">
-                        <i class="bi bi-person-fill"></i>
-                        <p class="ms-2 align-content-center">Rider</p>
-                    </div>
-                    <p>${item.rider_name}</p>
-                    <p>${item.rider_email}</p>
-                    <p>${item.rider_tel}</p>
-                    <p>Gender: ${item.rider_gender}</p>
-                </div>
-            </div>
-            <div class="d-flex flex-row justify-content-center">
-                <img src="${item.customer_img_profile}" class="rounded-circle" width="150" height="150">
-                <div class="mt-3 ms-2">
-                    <div class="d-flex flex-row">
-                        <i class="bi bi-person-fill"></i>
-                        <p class="ms-2 align-content-center">Customer</p>
-                    </div>
-                    <p>${item.customer_name}</p>
-                    <p>${item.customer_email}</p>
-                    <p>${item.customer_tel}</p>
-                    <p>Gender: ${item.customer_gender}</p>
-                </div>
-            </div>
+       <div class="popup center container">
+            <div class="d-flex flex-row align-items-center">
+    <div class="me-3">
+        <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
+    </div>
+    <div class="mt-3">
+        <div class="d-flex flex-row align-items-center">
+            <i class="bi bi-person-fill"></i>
+            <p class="ms-2 align-content-center fw-bold">Rider</p>
+        </div>
+        <p>Date: ${item.date}</p>
+        <p>Name: ${item.rider_name}</p>
+        <p>Email: ${item.rider_email}</p>
+        <p>Tel: ${item.rider_tel}</p>
+        <p>Gender: ${item.rider_gender}</p>
+    </div>
+</div>
+<hr>
+<div class="d-flex flex-row align-items-center">
+    <div class="me-3">
+        <img src="${item.customer_img_profile}" class="rounded-circle" width="150" height="150">
+    </div>
+    <div class="mt-3">
+        <div class="d-flex flex-row align-items-center">
+            <i class="bi bi-person-fill"></i>
+            <p class="ms-2 align-content-center fw-bold">Customer</p>
+        </div>
+        <p>Date: ${item.date}</p>
+        <p>Name: ${item.customer_name}</p>
+        <p>Email: ${item.customer_email}</p>
+        <p>Tel: ${item.customer_tel}</p>
+        <p>Gender: ${item.customer_gender}</p>
+    </div>
+</div>
+
             <div class="d-flex flex-row justify-content-center">
                 <div class="d-flex flex-row">
                     <i class="bi bi-geo-alt-fill"></i>

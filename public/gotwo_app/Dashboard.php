@@ -1,11 +1,11 @@
 <?php
-$severname = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "data_test";
 
 try {
-    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
@@ -116,13 +116,12 @@ try {
                      </li>
                  </ul>
              </li> -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+             <li class="sidebar-item">
+                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
                         <span>Profile</span>
                     </a>
                 </li>
-
             </ul>
             <div class="sidebar-footer">
                 <a href="/public/gotwo_app/login_gotwo2.html" class="sidebar-link">

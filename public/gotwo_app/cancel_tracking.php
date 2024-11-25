@@ -1,37 +1,43 @@
 <?php
 
-$severname = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "data_test";
 
 try {
-    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    // เชื่อมต่อฐานข้อมูล
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Query ดึงข้อมูลทั้งหมด
+    // Query ดึงข้อมูล
     $sql = "
         SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
                r.gender AS rider_gender, r.img_profile AS rider_img_profile,
                c.name AS customer_name, c.email AS customer_email, c.tel AS customer_tel, 
                c.gender AS customer_gender, c.img_profile AS customer_img_profile,
-               p.pick_up, p.at_drop
+               p.pick_up, p.at_drop, p.date, 
+               a.name AS admin_name
         FROM status_post s
         JOIN table_rider r ON s.rider_id = r.regis_rider_id
         JOIN table_customer c ON s.customer_id = c.regis_customer_id
         JOIN post p ON s.post_id = p.post_id
+        JOIN table_admin a ON s.admin_id = a.admin_id
         WHERE s.status = 5
+        ORDER BY p.date DESC
     ";
     $query = $conn->prepare($sql);
     $query->execute();
     $data = $query->fetchAll(PDO::FETCH_ASSOC); // ดึงข้อมูลทั้งหมด
 
     // ส่งข้อมูลไปยัง JavaScript
-    echo "<script>const demo_data = " . json_encode($data) . ";</script>";
+    echo "<script>const demo_data = " . json_encode($data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) . ";</script>";
 } catch (PDOException $e) {
     echo "<script>console.error('Database error: " . $e->getMessage() . "');</script>";
+    echo "<script>const demo_data = [];</script>"; // ตั้งค่าเป็นอาร์เรย์ว่างในกรณีเกิดข้อผิดพลาด
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +75,24 @@ try {
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                    <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
+                    <!-- ////////////////////////////// -->
+                    <script>
+                        // ฟังก์ชันแสดงชื่อ Admin
+                        function displayAdmin(data) {
+                            if (data.length > 0) {
+                                const adminName = data[0].admin_name; // ใช้ข้อมูล admin_name จากรายการแรก
+                                document.getElementById('dataAdmin_name').innerText = `Admin: ${adminName}`;
+                            } else {
+                                document.getElementById('dataAdmin_name').innerText = 'Admin: Unknown';
+                            }
+                        }
+
+                        // เรียกใช้ฟังก์ชันหลัง DOM โหลดเสร็จ
+                        window.onload = function() {
+                            displayAdmin(demo_data);
+                        };
+                    </script>
+
                 </div>
             </a>
 
@@ -123,7 +146,7 @@ try {
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
                         <span>Profile</span>
                     </a>
@@ -205,52 +228,60 @@ try {
         <script src="/public/js/gotwo_js/cancel_tracking_nav_animation.js"></script>
         <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
- <!-- ////////////////////////////////////// -->
- <script>
-    function displayTableData(data) {
-        let tableBody = '';
-        data.forEach((item, index) => {
-            tableBody += `
+        <!-- ////////////////////////////////////// -->
+        <script>
+            function displayTableData(data) {
+                let tableBody = '';
+                data.forEach((item, index) => {
+                    tableBody += `
             <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
                 <td><img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
                 <td><img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
                 <td>${item.pick_up}</td>
                 <td>${item.at_drop}</td>
             </tr>`;
-        });
-        document.querySelector('#dataTableBody').innerHTML = tableBody;
-    }
+                });
+                document.querySelector('#dataTableBody').innerHTML = tableBody;
+            }
 
-    function view_modal(index) {
-        const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
-        const show_modal = `
+            function view_modal(index) {
+                const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
+                const show_modal = `
         <div class="popup center container">
-            <div class="d-flex flex-row justify-content-center">
-                <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
-                <div class="mt-3 ms-2">
-                    <div class="d-flex flex-row">
-                        <i class="bi bi-person-fill"></i>
-                        <p class="ms-2 align-content-center">Rider</p>
-                    </div>
-                    <p>${item.rider_name}</p>
-                    <p>${item.rider_email}</p>
-                    <p>${item.rider_tel}</p>
-                    <p>Gender: ${item.rider_gender}</p>
-                </div>
-            </div>
-            <div class="d-flex flex-row justify-content-center">
-                <img src="${item.customer_img_profile}" class="rounded-circle" width="150" height="150">
-                <div class="mt-3 ms-2">
-                    <div class="d-flex flex-row">
-                        <i class="bi bi-person-fill"></i>
-                        <p class="ms-2 align-content-center">Customer</p>
-                    </div>
-                    <p>${item.customer_name}</p>
-                    <p>${item.customer_email}</p>
-                    <p>${item.customer_tel}</p>
-                    <p>Gender: ${item.customer_gender}</p>
-                </div>
-            </div>
+           <div class="popup center container">
+            <div class="d-flex flex-row align-items-center">
+    <div class="me-3">
+        <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
+    </div>
+    <div class="mt-3">
+        <div class="d-flex flex-row align-items-center">
+            <i class="bi bi-person-fill"></i>
+            <p class="ms-2 align-content-center fw-bold">Rider</p>
+        </div>
+        <p>Date: ${item.date}</p>
+        <p>Name: ${item.rider_name}</p>
+        <p>Email: ${item.rider_email}</p>
+        <p>Tel: ${item.rider_tel}</p>
+        <p>Gender: ${item.rider_gender}</p>
+    </div>
+</div>
+<hr>
+<div class="d-flex flex-row align-items-center">
+    <div class="me-3">
+        <img src="${item.customer_img_profile}" class="rounded-circle" width="150" height="150">
+    </div>
+    <div class="mt-3">
+        <div class="d-flex flex-row align-items-center">
+            <i class="bi bi-person-fill"></i>
+            <p class="ms-2 align-content-center fw-bold">Customer</p>
+        </div>
+        <p>Date: ${item.date}</p>
+        <p>Name: ${item.customer_name}</p>
+        <p>Email: ${item.customer_email}</p>
+        <p>Tel: ${item.customer_tel}</p>
+        <p>Gender: ${item.customer_gender}</p>
+    </div>
+</div>
             <div class="d-flex flex-row justify-content-center">
                 <div class="d-flex flex-row">
                     <i class="bi bi-geo-alt-fill"></i>
@@ -262,13 +293,13 @@ try {
             </div>
         </div>
         `;
-        document.querySelector('#madal_display').innerHTML = show_modal;
-    }
+                document.querySelector('#madal_display').innerHTML = show_modal;
+            }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
-    });
-</script>
+            document.addEventListener('DOMContentLoaded', () => {
+                displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
+            });
+        </script>
 
 
 </body>

@@ -13,6 +13,7 @@ try {
 
     $image = $_FILES['image'];
     $status_post_id = intval($_POST['status_post_id']);
+    $pay = isset($_POST['pay']) ? intval($_POST['pay']) : 4; // รับค่า `pay` หรือใช้ค่าเริ่มต้นเป็น 4
 
     // ตรวจสอบข้อผิดพลาดของไฟล์
     if ($image['error'] !== UPLOAD_ERR_OK) {
@@ -67,11 +68,12 @@ try {
     // อัปเดตรูปภาพและสถานะในฐานข้อมูล
     $sqlUpdate = "
         UPDATE status_post 
-        SET image = :image, status = 6, pay = 4 
+        SET image = :image, status = 6, pay = :pay 
         WHERE status_post_id = :status_post_id
     ";
     $stmt = $pdo->prepare($sqlUpdate);
     $stmt->bindParam(':image', $filePath);
+    $stmt->bindParam(':pay', $pay);
     $stmt->bindParam(':status_post_id', $status_post_id);
 
     if (!$stmt->execute()) {
