@@ -1,18 +1,37 @@
 <?php
-
-$severname = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "gotwo";
+$dbname = "data_test";
 
 try {
-    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Query ดึงข้อมูลทั้งหมด
+    $sql = "
+        SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
+               r.gender AS rider_gender, r.img_profile AS rider_img_profile,
+               c.name AS customer_name, c.email AS customer_email, c.tel AS customer_tel, 
+               c.gender AS customer_gender, c.img_profile AS customer_img_profile,
+               p.pick_up, p.at_drop,p.date
+        FROM status_post s
+        JOIN table_rider r ON s.rider_id = r.regis_rider_id
+        JOIN table_customer c ON s.customer_id = c.regis_customer_id
+        JOIN post p ON s.post_id = p.post_id
+        WHERE s.status = 3
+        ORDER BY p.date DESC
+    ";
+    $query = $conn->prepare($sql);
+    $query->execute();
+    $data = $query->fetchAll(PDO::FETCH_ASSOC); // ดึงข้อมูลทั้งหมด
+
+    // ส่งข้อมูลไปยัง JavaScript
+    echo "<script>const demo_data = " . json_encode($data) . ";</script>";
 } catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    echo "<script>console.error('Database error: " . $e->getMessage() . "');</script>";
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,38 +77,57 @@ try {
              </div>
          </a>
 
-         <p class="text-white mt-4 ms-2 fw-bold">MENU</p>
-         <hr class="text-white d-none d-sm-block" />
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="/public/gotwo_app/Dashboard.php" class="sidebar-link">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#Management" aria-expanded="false" aria-controls="Management">
+                        <i class="bi bi-kanban"></i>
+                        <span>Management</span>
+                    </a>
+                    <ul id="Management" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="/public/gotwo_app/Rider_Request.php" class="sidebar-link">Rider</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/public/gotwo_app/Customer_Suspend.php" class="sidebar-link">Customer</a>
+                        </li>
+                    </ul>
+                </li>
 
-         <ul class="sidebar-nav">
-             <li class="sidebar-item">
-                 <a href="/public/gotwo_app/Dashboard.php" class="sidebar-link">
-                     <i class="bi bi-speedometer2"></i>
-                     <span>Dashboard</span>
-                 </a>
-             </li>
-             <li class="sidebar-item">
-                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                     data-bs-target="#Management" aria-expanded="false" aria-controls="Management">
-                     <i class="bi bi-kanban"></i>
-                     <span>Management</span>
-                 </a>
-                 <ul id="Management" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                     <li class="sidebar-item">
-                         <a href="/public/gotwo_app/Rider_Request.php" class="sidebar-link">Rider</a>
-                     </li>
-                     <li class="sidebar-item">
-                         <a href="/public/gotwo_app/Customer_Suspend.php" class="sidebar-link">Customer</a>
-                     </li>
-                 </ul>
-             </li>
+                <li class="sidebar-item">
+                    <a href="/public/gotwo_app/pending_tracking.php" class="sidebar-link">
+                        <i class="bi bi-pin-map-fill"></i>
+                        <span>Travel Tracking</span>
+                    </a>
+                </li>
 
-             <li class="sidebar-item">
-                 <a href="/public/gotwo_app/pending_tracking.php" class="sidebar-link">
-                     <i class="bi bi-pin-map-fill"></i>
-                     <span>Travel Tracking</span>
-                 </a>
-             </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#Payment" aria-expanded="false" aria-controls="Payment">
+                        <i class="bi bi-credit-card-fill"></i>
+                        <span>Payment</span>
+                    </a>
+                    <ul id="Payment" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="/public/gotwo_app/payment_ride.html" class="sidebar-link">Rider</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/public/gotwo_app/payment_cus.html" class="sidebar-link">Refund</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+            <a href="/public/gotwo_app/profile.php" class="sidebar-link">
+                <i class="bi bi-person-circle"></i>
+                <span>Profile</span>
+            </a>
+        </li>
 
              <li class="sidebar-item">
                  <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
@@ -178,30 +216,6 @@ try {
                             </tr>
                         </thead>
                         <tbody id="dataTableBody">
-                            <!-- <tr>
-                                <td>Peter Potter</td>
-                                <td>Griffin lily</td>
-                                <td>FahThai Soi5</td>
-                                <td>M-square</td>
-                            </tr>
-                            <tr>
-                                <td>Lisa Lalisa</td>
-                                <td>Jisoo Kim</td>
-                                <td>D1</td>
-                                <td>M-square</td>
-                            </tr>
-                            <tr>
-                                <td>Rose Salin</td>
-                                <td>Henry Wang</td>
-                                <td>D1</td>
-                                <td>M-square</td>
-                            </tr>
-                            <tr>
-                                <td>Riku Gun</td>
-                                <td>Miyuki</td>
-                                <td>C5</td>
-                                <td>M-square</td>
-                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -227,115 +241,81 @@ try {
         </div>
         <script src="/public/js/gotwo_js/totavei_tracking_nav_animation.js"></script>
         <script src="/public/js/gotwo_js/searchfuction.js"></script>
-        <?php
-        // ดึงข้อมูลจากฐานข้อมูล Rider และ Customer ที่ status_post = 3
-        $sql = "
-            SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
-                   r.gender AS rider_gender, r.img_profile AS rider_img_profile,
-                   c.name AS customer_name, c.email AS customer_email, c.tel AS customer_tel, 
-                   c.gender AS customer_gender, c.img_profile AS customer_img_profile,
-                   p.pick_up, p.at_drop
-            FROM status_post s
-            JOIN table_rider r ON s.rider_id = r.regis_rider_id
-            JOIN table_customer c ON s.customer_id = c.regis_customer_id
-            JOIN post p ON s.post_id = p.post_id
-            WHERE s.status = 3
-        ";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $fetch = $query->fetch(PDO::FETCH_ASSOC);
-        
-        // ตรวจสอบว่ามีข้อมูลหรือไม่
-        if ($fetch) {
-            // Rider Information
-            $rider_name = $fetch['rider_name'];
-            $rider_email = $fetch['rider_email'];
-            $rider_tel = $fetch['rider_tel'];
-            $rider_gender = $fetch['rider_gender'];
-            $rider_img_profile = $fetch['rider_img_profile'];
-        
-            // Customer Information
-            $customer_name = $fetch['customer_name'];
-            $customer_email = $fetch['customer_email'];
-            $customer_tel = $fetch['customer_tel'];
-            $customer_gender = $fetch['customer_gender'];
-            $customer_img_profile = $fetch['customer_img_profile'];
-        
-            // Post Information
-            $pick_up = $fetch['pick_up'];
-            $at_drop = $fetch['at_drop'];
-        }
-        ?>
-        
+     
+        <!-- ////////////////////////////////////// -->
         <script>
-            const demo_data = [{
-                name: <?= json_encode($rider_name) ?>,
-                cus: <?= json_encode($customer_name) ?>,
-                pickup: <?= json_encode($pick_up) ?>,
-                drop: <?= json_encode($at_drop) ?>,
-                rider_img: <?= json_encode($rider_img_profile) ?>,
-                customer_img: <?= json_encode($customer_img_profile) ?>
-            }];
-        
-            let show_data = '';
-            for (let read of demo_data) {
-                show_data += `
-                <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider">
-                    <td><div><img src="${read.rider_img}" class="rounded-circle mx-3" width="50" height="50">${read.name}</div></td>
-                    <td><div><img src="${read.customer_img}" class="rounded-circle mx-3" width="50" height="50">${read.cus}</div></td>
-                    <td>${read.pickup}</td>
-                    <td>${read.drop}</td>
-                </tr>
-                `;
-            }
-        
-            document.querySelector('#dataTableBody').innerHTML = show_data;
-            view_modal();
-        
-            function view_modal() {
-                let show_modal = '';
-                show_modal += `
-                <div class="popup center container">
-                    <div class="d-flex flex-row justify-content-center">
-                        <img src="${demo_data[0].rider_img}" class="rounded-circle" width="150" height="150">
-                        <div class="mt-3 ms-2">
-                            <div class="d-flex flex-row">
-                                <i class="bi bi-person-fill"></i>
-                                <p class="ms-2 align-content-center">Rider</p>
-                            </div>
-                            <p>${demo_data[0].name}</p>
-                            <p><?= json_encode($rider_email) ?></p>
-                            <p><?= json_encode($rider_tel) ?></p>
-                            <p>Gender: <?= json_encode($rider_gender) ?></p>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row justify-content-center">
-                        <img src="${demo_data[0].customer_img}" class="rounded-circle" width="150" height="150">
-                        <div class="mt-3 ms-2">
-                            <div class="d-flex flex-row">
-                                <i class="bi bi-person-fill"></i>
-                                <p class="ms-2 align-content-center">Customer</p>
-                            </div>
-                            <p>${demo_data[0].cus}</p>
-                            <p><?= json_encode($customer_email) ?></p>
-                            <p><?= json_encode($customer_tel) ?></p>
-                            <p>Gender: <?= json_encode($customer_gender) ?></p>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row justify-content-center">
-                        <div class="d-flex flex-row">
-                            <i class="bi bi-geo-alt-fill"></i>
-                            <p class="ms-2 align-content-center">${demo_data[0].pickup}</p>
-                            <i class="bi bi-arrow-right ms-2 me-2"></i>
-                            <i class="bi bi-geo-alt-fill"></i>
-                            <p class="ms-2 align-content-center">${demo_data[0].drop}</p>
-                        </div>
-                    </div>
+    function displayTableData(data) {
+        let tableBody = '';
+        data.forEach((item, index) => {
+            tableBody += `
+            <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
+                <td><img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
+                <td><img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
+                <td>${item.pick_up}</td>
+                <td>${item.at_drop}</td>
+            </tr>`;
+        });
+        document.querySelector('#dataTableBody').innerHTML = tableBody;
+    }
+
+    function view_modal(index) {
+        const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
+        const show_modal = `
+        <div class="popup center container">
+           <div class="popup center container">
+            <div class="d-flex flex-row align-items-center">
+    <div class="me-3">
+        <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
+    </div>
+    <div class="mt-3">
+        <div class="d-flex flex-row align-items-center">
+            <i class="bi bi-person-fill"></i>
+            <p class="ms-2 align-content-center fw-bold">Rider</p>
+        </div>
+        <p>Date: ${item.date}</p>
+        <p>Name: ${item.rider_name}</p>
+        <p>Email: ${item.rider_email}</p>
+        <p>Tel: ${item.rider_tel}</p>
+        <p>Gender: ${item.rider_gender}</p>
+    </div>
+</div>
+<hr>
+<div class="d-flex flex-row align-items-center">
+    <div class="me-3">
+        <img src="${item.customer_img_profile}" class="rounded-circle" width="150" height="150">
+    </div>
+    <div class="mt-3">
+        <div class="d-flex flex-row align-items-center">
+            <i class="bi bi-person-fill"></i>
+            <p class="ms-2 align-content-center fw-bold">Customer</p>
+        </div>
+        <p>Date: ${item.date}</p>
+        <p>Name: ${item.customer_name}</p>
+        <p>Email: ${item.customer_email}</p>
+        <p>Tel: ${item.customer_tel}</p>
+        <p>Gender: ${item.customer_gender}</p>
+    </div>
+</div>
+            <div class="d-flex flex-row justify-content-center">
+                <div class="d-flex flex-row">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <p class="ms-2 align-content-center">${item.pick_up}</p>
+                    <i class="bi bi-arrow-right ms-2 me-2"></i>
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <p class="ms-2 align-content-center">${item.at_drop}</p>
                 </div>
-                `;
-                document.querySelector('#madal_display').innerHTML = show_modal;
-            }
-        </script>
+            </div>
+        </div>
+        `;
+        document.querySelector('#madal_display').innerHTML = show_modal;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
+    });
+</script>
+
+
 </body>
 
 </html>

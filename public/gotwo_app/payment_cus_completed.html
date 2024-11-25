@@ -105,7 +105,7 @@
                     </ul>
                 </li> -->
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
                         <span>Profile</span>
                     </a>
@@ -133,7 +133,12 @@
                 </div>
 
                 <div class="box">
-                    <input type="text" placeholder="Search">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search"
+                        oninput="filterResults()"
+                    />
                     <a href="#">
                         <i class="bi bi-search"></i>
                     </a>
@@ -146,7 +151,7 @@
 
     <script>
         let allPayments = []; // Store fetched payments here
-        let currentFilter = 4; // 0 for Unpaid, 1 for Completed
+        let currentFilter = 5; // 0 for Unpaid, 1 for Completed
 
         // Fetch data from PHP and display it
         async function fetchPayments() {
@@ -173,6 +178,12 @@
                 console.error("Error fetching payments:", error);
             }
         }
+        function truncateText(text, maxLength) {
+        if (text.length > maxLength) {
+          return text.substring(0, maxLength) + "...";
+        }
+        return text;
+      }
 
         // Function to filter and display payments based on status
         function filterPayments(status) {
@@ -193,9 +204,17 @@
             container.innerHTML = ""; // ล้างเนื้อหาก่อน
 
             data.forEach((item, index) => {
-                const timeOnly = item.time.includes(' ') ? item.time.split(' ')[1].substring(0, 5) : item.time.substring(0, 5);
-                const Commission = 10;
-                const paymentHTML = `
+          const dateParts = item.date.split("-"); // แยกวัน เดือน ปี
+          const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // เรียงใหม่เป็น วัน-เดือน-ปี
+
+          const paySlipUrl =
+            item.image && item.image.trim() !== "" ? item.image : ""; // Check for valid image URL
+          const timeOnly =
+            item.time && item.time.includes(" ")
+              ? item.time.split(" ")[1].substring(0, 5)
+              : item.time.substring(0, 5);
+
+          const paymentHTML = `
                     <div class="mt-4">
                         <nav class="side_drawer rounded-top-4" style="background-color: rgb(219, 226, 239)">
                             <div class="container-fluid d-flex flex-row justify-content-between drawer_"
@@ -204,28 +223,30 @@
                                     <div class="d-flex flex-row ms-5 align-items-center">
                                         <img src="/public/img/pngegg.png" class="mx-3">
                                         <div class="mt-3 fw-bold">
-                                            <p>Time: ${timeOnly}</p>
-                                            <p>Name: ${item.rider_name}</p>
-                                            <p>From: ${item.pick_up}</p>
-                                            <p>Role: Rider</p>
-                                        </div>
-                                    </div>
-                                    <h1 class="d-flex flex-row align-items-center mx-5">-------></h1>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <img src="/public/img/pngegg.png" class="mx-3">
-                                        <div class="mt-3 fw-bold">    
-                                            <p>Time: ${timeOnly}</p>
-                                            <p>Name: ${item.customer_name}</p>
-                                            <p>To: ${item.at_drop}</p>
-                                            <p>Role: Customer</p>
-                                        </div>
-                                    </div>
+                               <p>Date: ${formattedDate}</p>
+                               <p>Time: ${timeOnly}</p>
+                               <p>Name: ${truncateText(item.rider_name, 10)}</p>
+                                <p>From: ${item.pick_up}</p>
+                                <p>Role: Rider</p>
+                            </div>
+                        </div>
+                        <h1 class="d-flex flex-row align-items-center mx-5">-------></h1>
+                        <div class="d-flex flex-row align-items-center">
+                            <img src="/public/img/pngegg.png" class="mx-3">
+                            <div class="mt-3 fw-bold">
+                              <p>Date: ${formattedDate}</p>
+                               <p>Time: ${timeOnly}</p>
+                                <p>Name: ${truncateText(item.customer_name, 10)}</p>
+                                <p>To: ${item.at_drop}</p>
+                                <p>Role: Customer</p>
+                            </div>
+                        </div>
                                 </div>
                                 <div class="d-flex flex-row align-items-center baht_M ms-5">
                                     <div class="text-center">
                                         <h2>${item.price} THB</h2>
-                                        <h1 class="${item.pay != 0 || item.pay == 4 ? 'text-success' : 'text-danger'}">
-                                            ${item.pay != 0 || item.pay == 4 ? 'Compled' : 'Not compled'}
+                                        <h1 class="${item.pay != 0 || item.pay == 5 ? 'text-success' : 'text-danger'}">
+                                            ${item.pay != 0 || item.pay == 5 ? 'Compled' : 'Not compled'}
                                         </h1>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -236,66 +257,89 @@
                             </div>
                         </nav>
                         <div class="collapse rounded-bottom-4" id="navbarToggleExternalContent${index}">
-                            <div class="p-4 rounded-bottom-4" style="background-color: rgb(219, 226, 239)">
-                                <hr>
-                                <div class="d-flex justify-content-center">
-                                    <div class="container details_paid">
-                                        <div class="d-flex justify-content-between">
-                                            <h5 class="text-dark">Customer pays</h5>
-                                            <h5 class="text-dark">${item.price} THB</h5>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <h5 class="text-dark">Commission</h5>
-                                            <h5 class="text-dark">${Commission} THB</h5>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <h5 class="text-dark">Paid</h5>
-                                            <h5 class="text-dark">${item.price - Commission} THB</h5>
-                                        </div>
-                                    </div>
+                <div class="p-4 rounded-bottom-4" style="background-color: rgb(219, 226, 239)">
+                    <hr>
+                    <div class="d-flex justify-content-center">
+                        <div class="container details_paid">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="text-dark">Customer pays</h5>
+                                <h5 class="text-dark">${item.price} THB</h5>
+                            </div>
+                           
+                            <div class="d-flex justify-content-between">
+                                <h5 class="text-dark">Paid</h5>
+                                <h5 class="text-dark">${
+                                  item.price 
+                                } THB</h5>
+                            </div>
+                        </div>
                                     <div class="container QR_Box d-flex justify-content-center my-5">
-                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#qrModal${index}" id="showQrCodeButton" onclick="showQrCode('${item.rider_tel}', ${item.price - 10}, ${index})">Show QR Code</button>
-                                    </div>
+                          <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#qrModal${index}" onclick="showPaySlip('${paySlipUrl}', ${index})">Show Pay Slip</button>
+                        </div>
                                 </div>
                             </div>
                         </div>
                     </div>
         
-                     <!-- Modal Popup สำหรับ QR Code -->
-                    <div class="modal fade" id="qrModal${index}" tabindex="-1" aria-labelledby="qrModalLabel${index}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="qrModalLabel${index}">QR Code</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <img id="qrCodeImage${index}" src="" alt="QR Code" style="display: none;">
-                                    <h5 class="text-dark mt-4"> Paid ${item.price - Commission} THB</h5>
-                                    <p id="errorText${index}" class="text-danger" style="display: none;">Error generating QR code.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn_addPhoto btn btn-success" data-bs-dismiss="modal">Add Photo</button>
-                                    <button type="button" class="btn_close btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Modal Popup -->
+        <div class="modal fade" id="qrModal${index}" tabindex="-1" aria-labelledby="qrModalLabel${index}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="qrModalLabel${index}">Show Pay Slip</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body text-center">
+                        <img id="paySlipImage${index}" src="${paySlipUrl}" alt="Pay Slip" style="display: ${
+            paySlipUrl ? "block" : "none"
+          }; max-width: 100%; height: auto; margin-bottom: 15px;">
+                        <h5 class="text-dark mt-4">Paid ${item.price} THB</h5>
+                        <p id="errorText${index}" class="text-danger" style="display: ${
+            paySlipUrl ? "none" : "block"
+          };">Error loading Pay Slip.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
                 `;
                 container.insertAdjacentHTML('beforeend', paymentHTML);
             });
         }
 
+ // ฟังก์ชันสำหรับแสดง Pay Slip
+ function showPaySlip(paySlipUrl, index) {
+        const modalImage = document.querySelector(`#qrModal${index} img`);
+        const errorText = document.getElementById(`errorText${index}`);
 
-        // Optional: Filter displayed payments by search input
-        function filterResults() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filteredData = allPayments.filter(payment =>
-                (payment.rider_name && payment.rider_name.toLowerCase().includes(query)) ||
-                (payment.customer_name && payment.customer_name.toLowerCase().includes(query))
-            ).filter(payment => payment.pay == currentFilter); // Match current filter (Unpaid or Completed)
-            displayPayments(filteredData);
+        if (paySlipUrl && paySlipUrl.trim() !== "") {
+          modalImage.src = paySlipUrl; // ตั้งค่า src ให้กับรูป
+          modalImage.style.display = "block"; // แสดงรูป
+          errorText.style.display = "none"; // ซ่อนข้อความข้อผิดพลาด
+        } else {
+          modalImage.style.display = "none"; // ซ่อนรูป
+          errorText.style.display = "block"; // แสดงข้อความข้อผิดพลาด
         }
+      }
+      function filterResults() {
+    const query = document.getElementById("searchInput").value.toLowerCase(); // รับข้อความค้นหา
+
+    // หากไม่มีข้อความค้นหา ให้แสดงข้อมูลทั้งหมดที่ตรงกับ currentFilter
+    const filteredData = query
+        ? allPayments.filter(
+              (payment) =>
+                  payment.pay == currentFilter && // เฉพาะสถานะ Completed
+                  ((payment.rider_name &&
+                      payment.rider_name.toLowerCase().includes(query)) || // ค้นหาชื่อ Rider
+                      (payment.customer_name &&
+                          payment.customer_name.toLowerCase().includes(query))) // ค้นหาชื่อ Customer
+          )
+        : allPayments.filter((payment) => payment.pay == currentFilter); // แสดงทั้งหมดที่ pay == currentFilter
+
+    displayPayments(filteredData); // แสดงผลข้อมูลที่ผ่านการกรอง
+}
 
         // Fetch data when page loads
         document.addEventListener('DOMContentLoaded', fetchPayments);

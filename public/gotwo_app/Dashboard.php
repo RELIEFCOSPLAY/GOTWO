@@ -1,12 +1,11 @@
 <?php
-
-$severname = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "gotwo";
+$dbname = "data_test";
 
 try {
-    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
@@ -117,13 +116,12 @@ try {
                      </li>
                  </ul>
              </li> -->
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+             <li class="sidebar-item">
+                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
                         <span>Profile</span>
                     </a>
                 </li>
-
             </ul>
             <div class="sidebar-footer">
                 <a href="/public/gotwo_app/login_gotwo2.html" class="sidebar-link">
@@ -139,9 +137,12 @@ try {
                     <div class="btn-toolbar justify-content-between" role="toolbar"
                         aria-label="Toolbar with button groups">
                         <div class="btn-group" role="group" aria-label="First group">
-                            <a href="/public/gotwo_app/Rider_Request.html"><button type="verifly"
+                            <a href="/public/gotwo_app/Rider_Request.php"><button type="verifly"
                                     class="btn butt rounded btn-lg"><i class="bi bi-file-text"
-                                        style="color: #0C7536;"></i>Verifly rider<br>
+
+                                        style="color: #0C7536;"></i>Rider Request<br>
+                                    <!-- style="color: #0C7536;"></i>Verifly rider<br> -->
+
                                     <!-- ------------------------------------------------- -->
                                     <?php
                                     $sql = "SELECT COUNT(*) as status_rider FROM table_rider WHERE status_rider = 0";
@@ -154,7 +155,7 @@ try {
                                     <p><?= $status_rider ?></p>
                                 </button></a>
 
-                            <a href="/public/gotwo_app/pending_tracking.html"><button type="pending"
+                            <a href="/public/gotwo_app/pending_tracking.php"><button type="pending"
                                     class="btn butt rounded btn-lg"><i class="bi bi-clock-history"
                                         style="color: #B65252;"></i>Pending<br>
                                     <!-- ------------------------------------------------- -->
@@ -169,7 +170,7 @@ try {
                                     <p><?= $status ?></p>
                                 </button></a>
 
-                            <a href="/public/gotwo_app/req_tracking.html"><button type="request"
+                            <a href="/public/gotwo_app/req_tracking.php"><button type="request"
                                     class="btn butt rounded btn-lg"><i class="bi bi-list-ul"
                                         style="color: #F0A007;"></i>Request<br>
                                     <!-- ------------------------------------------------- -->
@@ -185,11 +186,12 @@ try {
                                 </button></a>
                         </div>
                     </div>
-                    
+
                     <div class="btn-toolbar justify-content-between" role="toolbar"
                         aria-label="Toolbar with button groups">
                         <div class="btn-group" role="group" aria-label="First group">
-                            <a href="/public/gotwo_app/confirm_tracking.html"><button type="confirm"
+                            <a href="/public/gotwo_app/confirm_tracking.php">
+                                <button type="confirm"
                                     class="btn butt rounded btn-lg"><i class="bi bi-check-circle"
                                         style="color: #5C368C;"></i>Confirm<br>
                                     <!-- ------------------------------------------------- -->
@@ -204,7 +206,7 @@ try {
                                     <p><?= $status ?></p>
                                 </button></a>
 
-                            <a href="/public/gotwo_app/totravel_tracking.html"><button type="travel"
+                            <a href="/public/gotwo_app/totravel_tracking.php"><button type="travel"
                                     class="btn butt rounded btn-lg"><i class="bi bi-bicycle"
                                         style="color: #405189;"></i>To travel<br>
                                     <!-- ------------------------------------------------- -->
@@ -218,7 +220,7 @@ try {
                                     <!-- ------------------------------------------------- -->
                                     <p><?= $status ?></p>
                                 </button></a>
-                            <a href="/public/gotwo_app/success_tracking.html"><button type="success"
+                            <a href="/public/gotwo_app/success_tracking.php"><button type="success"
                                     class="btn butt rounded btn-lg"><i class="bi bi-check-all"
                                         style="color: #009C3E;"></i>Success<br>
                                     <!-- ------------------------------------------------- -->
@@ -239,7 +241,8 @@ try {
                         aria-label="Toolbar with button groups">
                         <div class="btn-group" role="group" aria-label="First group">
 
-                            <a href="/public/gotwo_app/cancel_tracking.html"><button type="cancel"
+                            <a href="/public/gotwo_app/cancel_tracking.php">
+                                <button type="cancel"
                                     class="btn butt rounded btn-lg"><i class="bi bi-x-circle"
                                         style="color: #E51A1A;"></i>Cancel<br>
                                     <!-- ------------------------------------------------- -->
@@ -253,16 +256,44 @@ try {
                                     <!-- ------------------------------------------------- -->
                                     <p><?= $status ?></p>
                                 </button></a>
-                            <a href="/public/gotwo_app/payment_ride.html"><button type="payment"
-                                    class="btn butt rounded btn-lg"><i class="bi bi-credit-card"
-                                        style="color: #D6A3DA;"></i>Payment unpaid<br>
-                                    <p>6</p>
-                                </button></a>
-                            <a href="/public/gotwo_app/report.html"><button type="report"
+                            <a href="/public/gotwo_app/payment_ride.html">
+                                <button type="payment" class="btn butt rounded btn-lg">
+                                    <i class="bi bi-credit-card" style="color: #000000;"></i>Payment Unpaid<br>
+                                    <?php
+                                    // Query เพื่อดึงจำนวนแถวที่มี pay = 3
+                                    $sql = "SELECT COUNT(*) as pay FROM status_post WHERE pay = 3";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $pay = $fetch['pay'] ?? 0; // กำหนดค่าเริ่มต้นเป็น 0 หากไม่มีข้อมูล
+                                    ?>
+                                    <!-- แสดงจำนวนผลลัพธ์ -->
+                                    <p><?= $pay ?></p>
+                                </button>
+                            </a>
+                            </button></a>
+                            <a href="/public/gotwo_app/payment_ride_completed.html">
+                                <button type="payment_com" class="btn butt rounded btn-lg">
+                                    <i class="bi bi-credit-card" style="color: #D6A3DA;"></i>Payment completed<br>
+                                    <?php
+                                    // Query เพื่อดึงจำนวนแถวที่มี pay = 3
+                                    $sql = "SELECT COUNT(*) as pay FROM status_post WHERE pay = 4";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $fetch = $query->fetch();
+                                    $pay = $fetch['pay'] ?? 0; // กำหนดค่าเริ่มต้นเป็น 0 หากไม่มีข้อมูล
+                                    ?>
+                                    <!-- แสดงจำนวนผลลัพธ์ -->
+                                    <p><?= $pay ?></p>
+                                </button>
+                            </a>
+
+
+                            <!-- <a href="/public/gotwo_app/report.html"><button type="report"
                                     class="btn butt rounded btn-lg"><i class="bi bi-exclamation-octagon"
                                         style="color: #D6C211;"></i>Report<br>
                                     <p>7</p>
-                                </button></a>
+                                </button></a> -->
 
                         </div>
                     </div>
@@ -272,20 +303,35 @@ try {
                     <div class="col-d-flex">
 
                         <!-- money -->
-                        <div class="badge text-wrap"
-                            style="background-color: #B7E9B4;border: 2px solid #A1A1A1; padding: 20px;">
-                            <h4 style="color: #6E6E6E; font-size: 50px; text-align: start;">Income money</h4>
-                            <hr style="color: #6E6E6E;">
-                            <h2 style="color: black; text-align: center; font-size: 50px;">10,602 THB</h2>
+
+                        <head>
+                            <link rel="stylesheet" type="text/css" href="styles.css">
+                        </head>
+                        <?php
+                        $sql = "SELECT COUNT(*) as count FROM status_post WHERE pay = 4";
+                        $query = $conn->prepare($sql);
+                        $query->execute();
+                        $fetch = $query->fetch();
+                        $count = $fetch['count'];
+
+                        // คูณผลลัพธ์ด้วย 10
+                        $result = $count * 10;
+                        ?>
+
+                        <div class="badge">
+                            <h4>Income money</h4>
+                            <hr>
+                            <h2><?= $result ?></h2>
                         </div>
 
-                        <!-- กราฟ -->
+
+                        <!-- กราฟ
                         <canvas id="myChart"
                             style="width:100%;max-width:500px; background-color: #DBE2EF; padding:50px 100px; margin-top: 50px;"
                             class="chart-with-background"></canvas>
 
                         <script src="/public/js/gotwo_js/dashboard.js">
-                        </script>
+                        </script> -->
 
                     </div>
                 </div>

@@ -55,6 +55,7 @@
     align-items: center;
     box-shadow: 0 2px 2px rgb(0, 0, 0, 0.3);
 }
+
 .box:hover input{
     width: 400px;
 }
@@ -111,4 +112,12 @@
 .details_paid{
     margin-top: 40px;
     margin-left: 200px;
+}
+/* จัดตำแหน่งรูปภาพและเส้น */
+.side-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
 }

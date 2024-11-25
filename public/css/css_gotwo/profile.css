@@ -1,0 +1,22 @@
+.profile-container {
+  display: flex;
+  align-items: center; 
+  gap: 100px; /* เพิ่มระยะห่างระหว่างรูปภาพกับข้อมูล */
+  padding: 20px; /* เพิ่มระยะห่างภายในคอนเทนเนอร์ */
+}
+
+.profile-img {
+  width: 250px; 
+  height: 250px; 
+  object-fit: cover;
+  border-radius: 50%; 
+  border: 3px solid #ccc; 
+}
+
+.profile-details {
+  flex: 1; 
+}
+.profile-details .form-control {
+  width: 500px; /* ปรับความกว้างของ input */
+  max-width: 100%; /* ป้องกันการล้นในหน้าจอขนาดเล็ก */
+}
