@@ -241,6 +241,63 @@ try {
 
             <script>
 //==================== button =====================================================
+document.getElementById('confirmButton').addEventListener('click', function () {
+    const riderId = this.getAttribute('data-rider-id');
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to confirm this rider?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, confirm it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            updateStatus(riderId, 'confirm');
+        }
+    });
+});
+
+document.getElementById('rejectButton').addEventListener('click', function () {
+    const riderId = this.getAttribute('data-rider-id');
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to reject this rider?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#28a745',
+        confirmButtonText: 'Yes, reject it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            updateStatus(riderId, 'reject');
+        }
+    });
+});
+
+// ฟังก์ชันสำหรับอัปเดตสถานะ
+async function updateStatus(riderId, status) {
+    try {
+        const response = await axios.post('status_req.php', {
+            regis_rider_id: riderId,
+            status: status
+        });
+
+        if (response.data.success) {
+            Swal.fire('Success!', response.data.message, 'success').then(() => {
+                location.reload(); // รีโหลดหน้าเว็บ
+            });
+        } else {
+            Swal.fire('Error!', response.data.message || 'Failed to update status.', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        Swal.fire('Error!', 'Failed to update status.', 'error');
+    }
+}
+
 
 
 // ==================update status==================================================
