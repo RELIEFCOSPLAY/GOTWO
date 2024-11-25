@@ -32,7 +32,7 @@ try {
 
 <body>
     <div class="wrapper">
-        <aside id="sidebar">
+    <aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-grid-fill"></i>
@@ -72,16 +72,16 @@ try {
                     </a>
                     <ul id="Management" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/Rider_Request.html" class="sidebar-link">Rider</a>
+                            <a href="/public/gotwo_app/Rider_Request.php" class="sidebar-link">Rider</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/Customer_Suspend.html" class="sidebar-link">Customer</a>
+                            <a href="/public/gotwo_app/Customer_Suspend.php" class="sidebar-link">Customer</a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="/public/gotwo_app/pending_tracking.html" class="sidebar-link">
+                    <a href="/public/gotwo_app/pending_tracking.php" class="sidebar-link">
                         <i class="bi bi-pin-map-fill"></i>
                         <span>Travel Tracking</span>
                     </a>
