@@ -106,10 +106,10 @@ try {
                     </a>
                     <ul id="Payment" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_ride.php" class="sidebar-link">Rider</a>
+                            <a href="/public/gotwo_app/payment_ride.html" class="sidebar-link">Rider</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_cus.php" class="sidebar-link">Refund</a>
+                            <a href="/public/gotwo_app/payment_cus.html" class="sidebar-link">Refund</a>
                         </li>
                     </ul>
                 </li>
@@ -142,15 +142,15 @@ try {
                         <div class="profile-details">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" value="Waraphorn Hungsaboot" readonly>
+                                <input type="text" class="form-control" id="name" value="<?= $adminData ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" value="admin@gmail.com" readonly>
+                                <input type="email" class="form-control" id="email" value="<?= $adminData ? htmlspecialchars($adminData['username']) : 'Unknown'; ?>" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="phoneNumber" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="phoneNumber" value="651071234" readonly>
+                                <input type="tel" class="form-control" id="phoneNumber" value=" <?= $adminData ? htmlspecialchars($adminData['tel']) : 'Unknown'; ?>" readonly>
                             </div>
                         </div>
                     </div>

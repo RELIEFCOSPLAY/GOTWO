@@ -1,0 +1,163 @@
+POST: []
+FILES: []
+Error: Invalid input data. Missing file or status_post_id.
+POST: []
+FILES: []
+Error: Invalid input data. Missing file or status_post_id.
+POST: {"status_post_id":"39"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","full_path":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpE941.tmp","error":0,"size":303406}}
+POST: {"status_post_id":"39","pay":"5"}
+FILES: {"image":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php1EFD.tmp","error":0,"size":331618}}
+POST: []
+FILES: []
+POST: []
+FILES: []
+Error: Invalid input data. Missing file or status_post_id.
+POST: {"status_post_id":"39","pay":"5"}
+FILES: {"image":{"name":"455158571_407070599064090_437390108865627519_n.jpg","full_path":"455158571_407070599064090_437390108865627519_n.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php3BAC.tmp","error":0,"size":114592}}
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"99050.jpg","full_path":"99050.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpBE3D.tmp","error":0,"size":97943}}
+POST: []
+FILES: []
+Error: Invalid input data. Missing file or status_post_id.
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"Lena.gif","full_path":"Lena.gif","type":"image\/gif","tmp_name":"C:\\xampp\\tmp\\phpF0FB.tmp","error":0,"size":71028}}
+Error: Invalid file type: image/gif
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php474.tmp","error":0,"size":267046}}
+Error: Failed to send file to PAD Network: Error sending file to PAD Network: Failed to connect to 192.168.4.1 port 80 after 21021 ms: Couldn't connect to server
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpB68D.tmp","error":0,"size":267046}}
+Error: Failed to send file to PAD Network: Error sending file to PAD Network: Failed to connect to 192.168.4.1 port 80 after 21024 ms: Couldn't connect to server
+POST: []
+FILES: []
+Error: Invalid input data. Missing file or status_post_id.
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"Untitled design (1).png","full_path":"Untitled design (1).png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpA97E.tmp","error":0,"size":2969065}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"39","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php736A.tmp","error":0,"size":267046}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"23","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php8DED.tmp","error":0,"size":267046}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"41","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 01.58.34 - A refined graphic design with cute fish and an elegant ocean theme. The background is a gradient blue transitioning from dark blue at the bottom to li.webp","full_path":"DALL\u00b7E 2024-09-12 01.58.34 - A refined graphic design with cute fish and an elegant ocean theme. The background is a gradient blue transitioning from dark blue at the bottom to li.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php62B8.tmp","error":0,"size":180560}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"39","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpBBCB.tmp","error":0,"size":267046}}
+POST: {"status_post_id":"40","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 01.58.34 - A refined graphic design with cute fish and an elegant ocean theme. The background is a gradient blue transitioning from dark blue at the bottom to li.webp","full_path":"DALL\u00b7E 2024-09-12 01.58.34 - A refined graphic design with cute fish and an elegant ocean theme. The background is a gradient blue transitioning from dark blue at the bottom to li.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php389A.tmp","error":0,"size":180560}}
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php3F5.tmp","error":0,"size":432150}}
+POST: {"status_post_id":"23"}
+FILES: {"image":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpCB87.tmp","error":0,"size":331618}}
+POST: {"status_post_id":"22"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php881C.tmp","error":0,"size":432150}}
+POST: {"status_post_id":"42","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpEE88.tmp","error":0,"size":267046}}
+POST: {"status_post_id":"39","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php6DAD.tmp","error":0,"size":267046}}
+POST: {"status_post_id":"22"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 02.00.20 - A realistic and serene graphic design featuring a full moon and calm ocean scene. The moon is detailed with craters and soft shadows, glowing brightly.webp","full_path":"DALL\u00b7E 2024-09-12 02.00.20 - A realistic and serene graphic design featuring a full moon and calm ocean scene. The moon is detailed with craters and soft shadows, glowing brightly.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpCAF2.tmp","error":0,"size":284382}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php6633.tmp","error":0,"size":331618}}
+Error: SQLSTATE[HY000] [1130] Host 'host.docker.internal' is not allowed to connect to this MariaDB server
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php944E.tmp","error":0,"size":267046}}
+Error: SQLSTATE[HY000] [1130] Host 'host.docker.internal' is not allowed to connect to this MariaDB server
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php737.tmp","error":0,"size":432150}}
+Error: SQLSTATE[HY000] [1130] Host 'host.docker.internal' is not allowed to connect to this MariaDB server
+POST: []
+FILES: []
+Error: Invalid request method.
+[2024-11-29 17:21:12] POST: {"status_post_id":"24","pay":"5"}
+[2024-11-29 17:21:12] FILES: {"image":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpB3A6.tmp","error":0,"size":331618}}
+[2024-11-29 17:23:30] POST: {"status_post_id":"23","pay":"5"}
+[2024-11-29 17:23:30] FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpCD5E.tmp","error":0,"size":267046}}
+[2024-11-29 17:23:30] Host: localhost:3000
+[2024-11-29 17:23:30] Relative Path: gotwo_app/uploads/img_6749ea82031930.80566907.webp
+[2024-11-29 17:27:14] POST: {"status_post_id":"39","pay":"5"}
+[2024-11-29 17:27:14] FILES: {"image":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php3AB0.tmp","error":0,"size":331618}}
+[2024-11-29 17:27:14] Host: localhost:3000
+[2024-11-29 17:27:14] Relative Path: gotwo_app/uploads/img_6749eb6294d382.29214609.jpg
+[2024-11-29 17:31:38] POST: {"status_post_id":"24","pay":"5"}
+[2024-11-29 17:31:38] FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php41F0.tmp","error":0,"size":432150}}
+[2024-11-29 17:31:38] Host: localhost:3000
+[2024-11-29 17:31:38] Relative Path: gotwo_app/uploads/img_6749ec6a9237a6.70402246.webp
+[2024-11-29 17:32:22] POST: []
+[2024-11-29 17:32:22] FILES: []
+[2024-11-29 17:32:22] Error: Invalid request method.
+[2024-11-29 17:33:24] POST: {"status_post_id":"23"}
+[2024-11-29 17:33:24] FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpDFC1.tmp","error":0,"size":267046}}
+[2024-11-29 17:33:24] Host: localhost:3000
+[2024-11-29 17:33:24] Relative Path: gotwo_app/uploads/img_6749ecd485d186.18426406.webp
+[2024-11-29 17:33:25] POST: []
+[2024-11-29 17:33:25] FILES: []
+[2024-11-29 17:33:25] Error: Invalid request method.
+[2024-11-29 17:40:44] POST: []
+[2024-11-29 17:40:44] FILES: []
+[2024-11-29 17:40:44] Error: Invalid request method.
+[2024-11-29 17:40:52] POST: []
+[2024-11-29 17:40:52] FILES: []
+[2024-11-29 17:40:52] Error: Invalid request method.
+[2024-11-29 17:43:11] POST: {"status_post_id":"22","pay":"5"}
+[2024-11-29 17:43:11] FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpD46B.tmp","error":0,"size":432150}}
+[2024-11-29 17:43:11] Relative Path: gotwo_app/uploads/img_6749ef1f710438.84702546.webp
+[2024-11-29 17:43:49] POST: {"status_post_id":"42","pay":"5"}
+[2024-11-29 17:43:49] FILES: {"image":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php691A.tmp","error":0,"size":331618}}
+[2024-11-29 17:43:49] Relative Path: gotwo_app/uploads/img_6749ef45813ec7.69995154.jpg
+[2024-11-29 17:45:17] POST: {"status_post_id":"22","pay":"5"}
+[2024-11-29 17:45:17] FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpBFD0.tmp","error":0,"size":432150}}
+[2024-11-29 17:45:17] Host: localhost:3000
+[2024-11-29 17:45:17] Relative Path: gotwo_app/uploads/img_6749ef9d40bbf9.85968276.webp
+[2024-11-29 17:46:08] POST: {"status_post_id":"22","pay":"5"}
+[2024-11-29 17:46:08] FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php898B.tmp","error":0,"size":267046}}
+[2024-11-29 17:46:08] Host: localhost:3000
+[2024-11-29 17:46:08] Relative Path: gotwo_app/uploads/img_6749efd0dd80a9.63780733.webp
+POST: {"status_post_id":"23","pay":"5"}
+FILES: {"image":{"name":"Untitled design (1).png","full_path":"Untitled design (1).png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpDA34.tmp","error":0,"size":2969065}}
+POST: {"status_post_id":"24"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpBAC2.tmp","error":0,"size":267046}}
+POST: {"status_post_id":"22","pay":"5"}
+FILES: {"image":{"name":"99050.jpg","full_path":"99050.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php4AFE.tmp","error":0,"size":97943}}
+POST: {"status_post_id":"22","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","full_path":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpBF07.tmp","error":0,"size":303406}}
+POST: {"status_post_id":"23","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php35ED.tmp","error":0,"size":432150}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"22"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php328D.tmp","error":0,"size":267046}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php5550.tmp","error":0,"size":267046}}
+POST: {"status_post_id":"23","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","full_path":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpA045.tmp","error":0,"size":303406}}
+POST: {"status_post_id":"22"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php3D6C.tmp","error":0,"size":432150}}
+POST: {"status_post_id":"39","pay":"5"}
+FILES: {"image":{"name":"Untitled design (1).png","full_path":"Untitled design (1).png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpE8D1.tmp","error":0,"size":2969065}}
+POST: {"status_post_id":"23","pay":"5"}
+FILES: {"image":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php53D1.tmp","error":0,"size":331618}}

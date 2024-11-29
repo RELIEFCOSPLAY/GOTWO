@@ -50,7 +50,27 @@
                 d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
               />
             </svg>
-            <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
+
+            <script>
+              // ดึงข้อมูลชื่อแอดมินจาก API และแสดงใน HTML
+              fetch("admin.php") 
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error("Network response was not ok " + response.statusText);
+                  }
+                  return response.json();
+                })
+                .then((data) => {
+                  // อัปเดตชื่อใน HTML
+                  const adminNameElement = document.getElementById("name");
+                  adminNameElement.textContent = data.admin || "Unknown"; 
+                })
+                .catch((error) => {
+                  console.error("Error fetching admin name:", error);
+                  document.getElementById("name").textContent = "Error fetching name";
+                });
+            </script>
+            <span class="mx-4 fw-bold" id="name"></span>
           </div>
         </a>
 
@@ -141,27 +161,13 @@
               </li>
             </ul>
           </li>
-          <!-- <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#Report" aria-expanded="false" aria-controls="Report">
-                        <i class="bi bi-flag-fill"></i>
-                        <span>Report</span>
-                    </a>
-                    <ul id="Report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Rider</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Customer</a>
-                        </li>
-                    </ul>
-                </li> -->
-                <li class="sidebar-item">
-                  <a href="/public/gotwo_app/profile.php" class="sidebar-link">
-                      <i class="bi bi-person-circle"></i>
-                      <span>Profile</span>
-                  </a>
-              </li>
+
+          <li class="sidebar-item">
+            <a href="/public/gotwo_app/profile.php" class="sidebar-link">
+              <i class="bi bi-person-circle"></i>
+              <span>Profile</span>
+            </a>
+          </li>
         </ul>
         <div class="sidebar-footer">
           <a href="/public/gotwo_app/login_gotwo.html" class="sidebar-link">
@@ -256,6 +262,23 @@
 
       // Fetch data when page loads
       document.addEventListener("DOMContentLoaded", fetchPayments);
+      document.addEventListener("DOMContentLoaded", function () {
+    fetch("admin.php")
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            const adminNameElement = document.getElementById("name");
+            adminNameElement.textContent = data.admin || "Unknown";
+        })
+        .catch((error) => {
+            console.error("Error fetching admin name:", error);
+            document.getElementById("name").textContent = "Error fetching name";
+        });
+});
 
       // Display payments based on filtered data
       function displayPayments(data) {
@@ -410,34 +433,27 @@
           const file = event.target.files[0];
           if (file) {
             const formData = new FormData();
-            formData.append("image", file);
-            formData.append("status_post_id", status_post_id);
-            formData.append("pay", 5);
+            formData.append("image", file); // แนบไฟล์
+            formData.append("status_post_id", status_post_id); // ส่ง ID ของโพสต์
+            formData.append("pay", 5); // กำหนดสถานะ paid
+
             fetch("upload_image.php", {
+              // PHP Endpoint
               method: "POST",
               body: formData,
             })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-              })
+              .then((response) => response.json())
               .then((data) => {
                 if (data.success) {
                   alert("Upload successful!");
-
-                  // เปลี่ยนค่า pay เป็น 5 และรีเฟรชหน้าหลังจากอัพเดตสำเร็จ
-                  updatePayStatus(status_post_id, 5).then(() => {
-                    // รีเฟรชหน้า
-                    location.reload();
-                  });
+                  location.reload(); // รีโหลดหน้า
                 } else {
                   alert(`Upload failed: ${data.message}`);
                 }
               })
               .catch((error) => {
-                console.error("Error occurred:", error);
+                console.error("Error during upload:", error);
+                alert("An error occurred while uploading. Please try again.");
               });
           }
         };

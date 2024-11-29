@@ -2,14 +2,31 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "gotwo";
+$dbname = "data_test";
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "SELECT regis_rider_id, name, email, tel, img_profile, status_rider, gender,
+    `img_id_card`, `img_driver_license`, `img_car_picture`, `img_car_registration`, `img_act`,
+    expiration_date, car_rigistration, car_brand 
+    FROM table_rider WHERE regis_rider_id = :regis_rider_id";
+
+    $query = $conn->prepare($sql);
+    $query->bindParam(':regis_rider_id', $regis_rider_id, PDO::PARAM_INT);
+    $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!empty($fetch)) {
+        $riderData = $fetch[0]; 
+    } else {
+        $riderData = null; 
+    }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
+?>
+
 ?>
 
 
@@ -174,7 +191,7 @@ try {
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="phoneNumber" class="form-label">Phone Number</label>
-                                            <input type="tel" class="form-control" id="phoneNumber" readonly>
+                                            <input type="tel" class="form-control" id="phoneNumber" value="<?= $riderData ? htmlspecialchars($riderData['tel']) : 'Unknown'; ?>" readonly>
 
                                         </div>
                                         <div class="col-md-6">
@@ -208,41 +225,61 @@ try {
 
                     <!-- Buttons -->
                     <div class="d-flex justify-content-end gap-2 mt-1">
-                        <button type="button" class="btn btn-danger" id="rejectButton" data-rider-id="<?= htmlspecialchars($riderId) ?>">Reject</button>
-                        <button type="button" class="btn btn-success" id="confirmButton" data-rider-id="<?= htmlspecialchars($riderId) ?>">Confirm</button>
+                        <button type="button" class="btn btn-danger" id="rejectButton" data-rider-id="<?= htmlspecialchars($regis_rider_id) ?>">Reject</button>
+                        <button type="button" class="btn btn-success" id="confirmButton" data-rider-id="<?= htmlspecialchars($regis_rider_id) ?>">Confirm</button>
                     </div>
 
                 </form>
             </div>
             <script src="/public/js/gotwo_js/nav_animation.js"></script>
-            <?php
-            $riderId = $_GET['regis_rider_id']; // ดึงค่า regis_rider_id จาก URL
-
-            // ตรวจสอบว่ามีการเชื่อมต่อฐานข้อมูลสำเร็จ
-            if (!$conn) {
-                die("Database connection failed");
-            }
-
-            $sql = "SELECT regis_rider_id, name, email, tel, img_profile, status_rider, gender,
-        `img_id_card`, `img_driver's_license`, `img_car_picture`, `img_car_registration`, `img_act`,
-        expiration_date, car_rigistration, car_brand 
-        FROM table_rider WHERE regis_rider_id = :riderId";
-
-            $query = $conn->prepare($sql); 
-            $query->bindParam(':riderId', $riderId, PDO::PARAM_INT); 
-            $query->execute();
-
-            $fetch = $query->fetch(PDO::FETCH_ASSOC);
-
-            $riderData = json_encode($fetch, JSON_UNESCAPED_UNICODE);
-            ?>
-
+            <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
 
             <script>
+//=====================show info data=========================================
+<?php
+    // ดึงข้อมูลจากฐานข้อมูล Rider ที่ status_rider = 0
+    $sql = "SELECT regis_rider_id, name, email, tel, img_profile, status_rider FROM table_rider WHERE status_rider = 0";
+    $query = $conn->prepare($sql);
+    $query->execute();
+    $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    // แปลงข้อมูลเป็น JSON เพื่อส่งไปยัง JavaScript
+    $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+    ?>
+
+    <script>
+        // รับข้อมูล JSON จาก PHP
+        const demo_data = <?= $riderDataJSON ?>;
+        let show_data = '';
+
+        // วนลูปข้อมูลจาก demo_data
+        demo_data.forEach((read) => {
+            if (read.status_rider == 0) {
+                show_data += `
+            <tr>
+                <td scope="row">
+                    <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
+                    ${read.name || 'Unknown Name'}
+                </td>
+                <td>${read.email || 'No Email'}</td>
+                <td>${read.tel || 'No Tel'}</td>
+                <td>
+                    <a type="button" class="btn btn-success" 
+                       href="/public/gotwo_app/info_rider.php?regis_rider_id=${read.regis_rider_id}">
+                        View Detail
+                    </a>
+                </td>
+            </tr>`;
+            }
+        });
+
+        // แสดงข้อมูลในตาราง
+        document.querySelector('#dataTableBody').innerHTML = show_data;
 //==================== button =====================================================
-document.getElementById('confirmButton').addEventListener('click', function () {
-    const riderId = this.getAttribute('data-rider-id');
+document.addEventListener('DOMContentLoaded', function () {
+            const riderData = <?= json_encode($riderData, JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_AMP) ?> || {};
+
     Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to confirm this rider?',
@@ -254,13 +291,13 @@ document.getElementById('confirmButton').addEventListener('click', function () {
         cancelButtonText: 'Cancel'
     }).then((result) => {
         if (result.isConfirmed) {
-            updateStatus(riderId, 'confirm');
+            updateStatus(regis_rider_id, 'confirm');
         }
     });
 });
 
 document.getElementById('rejectButton').addEventListener('click', function () {
-    const riderId = this.getAttribute('data-rider-id');
+    const regis_rider_id = this.getAttribute('data-rider-id');
     Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to reject this rider?',
@@ -272,16 +309,16 @@ document.getElementById('rejectButton').addEventListener('click', function () {
         cancelButtonText: 'Cancel'
     }).then((result) => {
         if (result.isConfirmed) {
-            updateStatus(riderId, 'reject');
+            updateStatus(regis_rider_id, 'reject');
         }
     });
 });
 
 // ฟังก์ชันสำหรับอัปเดตสถานะ
-async function updateStatus(riderId, status) {
+async function updateStatus(regis_rider_id, status) {
     try {
         const response = await axios.post('status_req.php', {
-            regis_rider_id: riderId,
+            regis_rider_id: regis_rider_id,
             status: status
         });
 
@@ -301,10 +338,10 @@ async function updateStatus(riderId, status) {
 
 
 // ==================update status==================================================
-                async function updateStatus(riderId, status) {
+                async function updateStatus(regis_rider_id, status) {
                     try {
                         const response = await axios.post('status_req.php', {
-                            regis_rider_id: riderId,
+                            regis_rider_id: regis_rider_id,
                             status: status
                         });
 

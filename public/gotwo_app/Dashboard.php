@@ -7,6 +7,16 @@ $dbname = "data_test";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // ดึงข้อมูล admin
+    $sql = "SELECT name FROM table_admin ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $adminData = [
+        'name' => 'Admin User'
+    ];
+    // เก็บข้อมูลใน $adminData
+    $adminData = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
@@ -31,7 +41,7 @@ try {
 
 <body>
     <div class="wrapper">
-    <aside id="sidebar">
+        <aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-grid-fill"></i>
@@ -49,11 +59,14 @@ try {
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                    <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
+                    <span class="mx-4 fw-bold">
+                        <?= isset($adminData['name']) ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                    </span>
+
                 </div>
             </a>
 
-            <p class="text-white mt-4 ms-2 fw-bold">MEUN</p>
+            <p class="text-white mt-4 ms-2 fw-bold">MENU</p>
             <hr class="text-white d-none d-sm-block" />
 
             <ul class="sidebar-nav">
@@ -101,22 +114,8 @@ try {
                         </li>
                     </ul>
                 </li>
-                <!-- <li class="sidebar-item">
-                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                     data-bs-target="#Report" aria-expanded="false" aria-controls="Report">
-                     <i class="bi bi-flag-fill"></i>
-                     <span>Report</span>
-                 </a>
-                 <ul id="Report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Rider</a>
-                     </li>
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Customer</a>
-                     </li>
-                 </ul>
-             </li> -->
-             <li class="sidebar-item">
+
+                <li class="sidebar-item">
                     <a href="/public/gotwo_app/profile.php" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
                         <span>Profile</span>
@@ -272,12 +271,12 @@ try {
                                 </button>
                             </a>
                             </button></a>
-                            <a href="/public/gotwo_app/payment_ride_completed.html">
+                            <a href="/public/gotwo_app/payment_cus.html">
                                 <button type="payment_com" class="btn butt rounded btn-lg">
-                                    <i class="bi bi-credit-card" style="color: #D6A3DA;"></i>Payment completed<br>
+                                    <i class="bi bi-credit-card" style="color: #D6A3DA;"></i>Payment Refund<br>
                                     <?php
                                     // Query เพื่อดึงจำนวนแถวที่มี pay = 3
-                                    $sql = "SELECT COUNT(*) as pay FROM status_post WHERE pay = 4";
+                                    $sql = "SELECT COUNT(*) as pay FROM status_post WHERE pay = 2";
                                     $query = $conn->prepare($sql);
                                     $query->execute();
                                     $fetch = $query->fetch();

@@ -7,7 +7,10 @@ $dbname = "data_test";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    //// Admin
+    $adminQuery = $conn->prepare("SELECT name FROM table_admin ");
+    $adminQuery->execute();
+    $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC); 
     // Query ดึงข้อมูลทั้งหมด
     $sql = "
         SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
@@ -70,7 +73,9 @@ try {
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                    <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
+                    <span class="mx-4 fw-bold">
+                        <?= isset($adminData['name']) ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                    </span>
                 </div>
             </a>
 
@@ -122,12 +127,12 @@ try {
                         </li>
                     </ul>
                 </li>
-             <li class="sidebar-item">
-            <a href="/public/gotwo_app/profile.php" class="sidebar-link">
-                <i class="bi bi-person-circle"></i>
-                <span>Profile</span>
-            </a>
-        </li>
+                <li class="sidebar-item">
+                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
+                        <i class="bi bi-person-circle"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
 
             </ul>
             <div class="sidebar-footer">
@@ -180,7 +185,7 @@ try {
                             </tr>
                         </thead>
                         <tbody id="dataTableBody">
-                        
+
                         </tbody>
                     </table>
                 </div>
@@ -208,23 +213,23 @@ try {
         <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
         <script>
-    function displayTableData(data) {
-        let tableBody = '';
-        data.forEach((item, index) => {
-            tableBody += `
+            function displayTableData(data) {
+                let tableBody = '';
+                data.forEach((item, index) => {
+                    tableBody += `
             <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
                 <td><img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
                 <td><img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
                 <td>${item.pick_up}</td>
                 <td>${item.at_drop}</td>
             </tr>`;
-        });
-        document.querySelector('#dataTableBody').innerHTML = tableBody;
-    }
+                });
+                document.querySelector('#dataTableBody').innerHTML = tableBody;
+            }
 
-    function view_modal(index) {
-        const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
-        const show_modal = `
+            function view_modal(index) {
+                const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
+                const show_modal = `
         <div class="popup center container">
            <div class="popup center container">
             <div class="d-flex flex-row align-items-center">
@@ -271,13 +276,13 @@ try {
             </div>
         </div>
         `;
-        document.querySelector('#madal_display').innerHTML = show_modal;
-    }
+                document.querySelector('#madal_display').innerHTML = show_modal;
+            }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
-    });
-</script>
+            document.addEventListener('DOMContentLoaded', () => {
+                displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
+            });
+        </script>
 </body>
 
 </html>

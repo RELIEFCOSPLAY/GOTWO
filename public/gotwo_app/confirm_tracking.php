@@ -7,7 +7,10 @@ $dbname = "data_test";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    //// Admin
+    $adminQuery = $conn->prepare("SELECT name FROM table_admin ");
+    $adminQuery->execute();
+    $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
     // Query ดึงข้อมูลทั้งหมด
     $sql = "
         SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
@@ -36,6 +39,7 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -48,8 +52,9 @@ try {
     <link rel="stylesheet" href="/public/css/css_gotwo/tracking_nav_animation .css" />
     <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css" />
 </head>
+
 <body>
-<div class="wrapper">
+    <div class="wrapper">
         <aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
@@ -68,7 +73,9 @@ try {
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                    <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
+                    <span class="mx-4 fw-bold">
+                        <?= isset($adminData['name']) ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                    </span>
                 </div>
             </a>
 
@@ -148,7 +155,7 @@ try {
                             <li class="Request_nav_animation"><a href="/public/gotwo_app/req_tracking.php">Request</a>
                             </li>
                             <li class="Confirm_nav_animation"><a
-                                    href="/public/gotwo_app/comfirm_tracking.php">Confirm</a></li>
+                                    href="/public/gotwo_app/confirm_tracking.php">Confirm</a></li>
                             <li class="Totravel_nav_animation"><a href="/public/gotwo_app/totravel_tracking.php">To travel</a></li>
                             <li class="Success_nav_animation"><a
                                     href="/public/gotwo_app/success_tracking.php">Success</a></li>
@@ -190,7 +197,7 @@ try {
                                 <h5 class="modal-title" id="exampleModalLabel">Details</h5>
                             </div>
                             <div class="modal-body" id="madal_display">
-                                
+
                             </div>
                             <div class="modal-footer">
 
@@ -207,23 +214,23 @@ try {
 
         <!-- ////////////////////////////////////// -->
         <script>
-    function displayTableData(data) {
-        let tableBody = '';
-        data.forEach((item, index) => {
-            tableBody += `
+            function displayTableData(data) {
+                let tableBody = '';
+                data.forEach((item, index) => {
+                    tableBody += `
             <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
                 <td><img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
                 <td><img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
                 <td>${item.pick_up}</td>
                 <td>${item.at_drop}</td>
             </tr>`;
-        });
-        document.querySelector('#dataTableBody').innerHTML = tableBody;
-    }
+                });
+                document.querySelector('#dataTableBody').innerHTML = tableBody;
+            }
 
-    function view_modal(index) {
-        const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
-        const show_modal = `
+            function view_modal(index) {
+                const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
+                const show_modal = `
         <div class="popup center container">
             <div class="popup center container">
             <div class="d-flex flex-row align-items-center">
@@ -270,13 +277,13 @@ try {
             </div>
         </div>
         `;
-        document.querySelector('#madal_display').innerHTML = show_modal;
-    }
+                document.querySelector('#madal_display').innerHTML = show_modal;
+            }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
-    });
-</script>
+            document.addEventListener('DOMContentLoaded', () => {
+                displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
+            });
+        </script>
 
 
 </body>

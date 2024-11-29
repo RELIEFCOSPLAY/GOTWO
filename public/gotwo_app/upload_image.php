@@ -1,103 +1,100 @@
 <?php
 header('Content-Type: application/json');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 try {
-    // ตรวจสอบว่าไฟล์และ `status_post_id` ถูกส่งมา
+    file_put_contents('debug_log.txt', "POST: " . json_encode($_POST) . PHP_EOL, FILE_APPEND);
+    file_put_contents('debug_log.txt', "FILES: " . json_encode($_FILES) . PHP_EOL, FILE_APPEND);
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception("Invalid request method.");
+    }
+
     if (!isset($_FILES['image']) || !isset($_POST['status_post_id'])) {
-        echo json_encode([
-            "success" => false,
-            "message" => "Invalid input data."
-        ]);
-        exit;
+        throw new Exception("Invalid input data: Missing file or status_post_id.");
     }
 
     $image = $_FILES['image'];
     $status_post_id = intval($_POST['status_post_id']);
-    $pay = isset($_POST['pay']) ? intval($_POST['pay']) : 4; // รับค่า `pay` หรือใช้ค่าเริ่มต้นเป็น 4
+    $pay = isset($_POST['pay']) ? intval($_POST['pay']) : 4;
 
-    // ตรวจสอบข้อผิดพลาดของไฟล์
+    if ($pay !== 4 && $pay !== 5) {
+        throw new Exception("Invalid pay value. Only 4 or 5 are allowed.");
+    }
+
     if ($image['error'] !== UPLOAD_ERR_OK) {
-        echo json_encode([
-            "success" => false,
-            "message" => "File upload error: " . $image['error']
-        ]);
-        exit;
+        $errorMessages = [
+            UPLOAD_ERR_INI_SIZE => "File exceeds the upload_max_filesize directive in php.ini.",
+            UPLOAD_ERR_FORM_SIZE => "File exceeds the MAX_FILE_SIZE directive in the HTML form.",
+            UPLOAD_ERR_PARTIAL => "The uploaded file was only partially uploaded.",
+            UPLOAD_ERR_NO_FILE => "No file was uploaded.",
+            UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
+            UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
+            UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload."
+        ];
+        throw new Exception("File upload error: " . ($errorMessages[$image['error']] ?? "Unknown error."));
     }
 
-    // ตรวจสอบประเภทไฟล์ที่อนุญาต
     $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    $fileType = mime_content_type($image['tmp_name']);
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $fileType = finfo_file($finfo, $image['tmp_name']);
+    finfo_close($finfo);
+
     if (!in_array($fileType, $allowedTypes)) {
-        echo json_encode([
-            "success" => false,
-            "message" => "Invalid file type: " . $fileType
-        ]);
-        exit;
+        throw new Exception("Invalid file type: $fileType");
     }
 
-    // ตรวจสอบและสร้างโฟลเดอร์ถ้าไม่มี
-    $uploadDir = "uploads/";
-    if (!is_dir($uploadDir) && !mkdir($uploadDir, 0777, true)) {
-        echo json_encode([
-            "success" => false,
-            "message" => "Failed to create upload directory."
-        ]);
-        exit;
+    $uploadDir = "gotwo_app/uploads/";
+    if (!is_dir($uploadDir)) {
+        if (!mkdir($uploadDir, 0777, true)) {
+            throw new Exception("Failed to create upload directory: $uploadDir");
+        }
     }
 
-    // สร้างชื่อไฟล์แบบสุ่ม
-    $fileName = uniqid() . "." . pathinfo($image['name'], PATHINFO_EXTENSION);
+    $timestamp = time();
+    $extension = pathinfo($image['name'], PATHINFO_EXTENSION);
+    $fileName = $timestamp . "." . $extension;
     $filePath = $uploadDir . $fileName;
 
-    // ย้ายไฟล์ไปยังโฟลเดอร์
     if (!move_uploaded_file($image['tmp_name'], $filePath)) {
-        echo json_encode([
-            "success" => false,
-            "message" => "Failed to save the file."
-        ]);
-        exit;
+        throw new Exception("Failed to save file. Temp: {$image['tmp_name']}, Destination: $filePath");
     }
 
-    // เชื่อมต่อฐานข้อมูล
+    $relativePath = $uploadDir . $fileName;
+
     $pdo = new PDO('mysql:host=localhost;dbname=data_test', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // เริ่มต้น Transaction
     $pdo->beginTransaction();
 
-    // อัปเดตรูปภาพและสถานะในฐานข้อมูล
     $sqlUpdate = "
         UPDATE status_post 
         SET image = :image, status = 6, pay = :pay 
         WHERE status_post_id = :status_post_id
     ";
     $stmt = $pdo->prepare($sqlUpdate);
-    $stmt->bindParam(':image', $filePath);
+    $stmt->bindParam(':image', $relativePath);
     $stmt->bindParam(':pay', $pay);
     $stmt->bindParam(':status_post_id', $status_post_id);
 
     if (!$stmt->execute()) {
-        throw new Exception("Failed to update database.");
+        throw new Exception("Database update failed: " . json_encode($stmt->errorInfo()));
     }
 
-    // Commit Transaction
     $pdo->commit();
 
-    // ส่งผลลัพธ์กลับไป
     echo json_encode([
         "success" => true,
         "message" => "File uploaded and database updated successfully.",
-        "image" => $filePath
+        "image" => $relativePath,
+        "pay" => $pay
     ]);
 } catch (Exception $e) {
-    // Rollback หากมีข้อผิดพลาด
     if (isset($pdo) && $pdo->inTransaction()) {
         $pdo->rollBack();
     }
+    file_put_contents('debug_log.txt', "Error: " . $e->getMessage() . PHP_EOL, FILE_APPEND);
     http_response_code(500);
-    echo json_encode([
-        "success" => false,
-        "message" => $e->getMessage()
-    ]);
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
 ?>
