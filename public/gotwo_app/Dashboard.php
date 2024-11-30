@@ -123,7 +123,7 @@ try {
                 </li>
             </ul>
             <div class="sidebar-footer">
-                <a href="/public/gotwo_app/login_gotwo2.html" class="sidebar-link">
+                <a href="/public/gotwo_app/logout.php" class="sidebar-link">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
