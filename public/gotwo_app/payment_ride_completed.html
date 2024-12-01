@@ -377,28 +377,26 @@
         </div>
 
         <!-- Modal Popup -->
-        <div class="modal fade" id="qrModal${index}" tabindex="-1" aria-labelledby="qrModalLabel${index}" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="qrModalLabel${index}">Show Pay Slip</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img id="paySlipImage${index}" src="${paySlipUrl}" alt="Pay Slip" style="display: ${
-            paySlipUrl ? "block" : "none"
-          }; max-width: 100%; height: auto; margin-bottom: 15px;">
-                        <h5 class="text-dark mt-4">Paid ${item.price} THB</h5>
-                        <p id="errorText${index}" class="text-danger" style="display: ${
-            paySlipUrl ? "none" : "block"
-          };">Error loading Pay Slip.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
+       <div class="modal fade" id="qrModal${index}" tabindex="-1" aria-labelledby="qrModalLabel${index}" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qrModalLabel${index}">Show Pay Slip</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="paySlipImage${index}" src="${paySlipUrl}" alt="Pay Slip" style="display: ${paySlipUrl ? "block" : "none"}; max-width: 100%; height: auto; margin-bottom: 15px;">
+                <h5 class="text-dark mt-4">Paid ${item.price} THB</h5>
+                <p id="errorText${index}" class="text-danger" style="display: ${paySlipUrl ? "none" : "block"};">Error loading Pay Slip.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
+    </div>
+</div>
+
         `;
           container.insertAdjacentHTML("beforeend", paymentHTML);
         });

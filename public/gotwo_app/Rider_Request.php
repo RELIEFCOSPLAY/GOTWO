@@ -7,6 +7,7 @@ $dbname = "data_test";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
@@ -49,7 +50,7 @@ try {
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                    <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
+                    <span class="mx-4 fw-bold">Natthawut Sinnamkham</span>
                 </div>
             </a>
 
@@ -94,28 +95,14 @@ try {
                     </a>
                     <ul id="Payment" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_ride.php" class="sidebar-link">Rider</a>
+                            <a href="/public/gotwo_app/payment_ride.html" class="sidebar-link">Rider</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_cus.php" class="sidebar-link">Refund</a>
+                            <a href="/public/gotwo_app/payment_cus.html" class="sidebar-link">Refund</a>
                         </li>
                     </ul>
                 </li>
-                <!-- <li class="sidebar-item">
-                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                     data-bs-target="#Report" aria-expanded="false" aria-controls="Report">
-                     <i class="bi bi-flag-fill"></i>
-                     <span>Report</span>
-                 </a>
-                 <ul id="Report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Rider</a>
-                     </li>
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Customer</a>
-                     </li>
-                 </ul>
-             </li> -->
+               
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
@@ -196,6 +183,7 @@ try {
     $query = $conn->prepare($sql);
     $query->execute();
     $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+    
 
     // แปลงข้อมูลเป็น JSON เพื่อส่งไปยัง JavaScript
     $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
@@ -206,29 +194,31 @@ try {
         const demo_data = <?= $riderDataJSON ?>;
         let show_data = '';
 
-        // วนลูปข้อมูลจาก demo_data
+        // วนลูปข้อมูลจาก demo_data 
         demo_data.forEach((read) => {
-            if (read.status_rider == 0) {
-                show_data += `
-            <tr>
-                <td scope="row">
-                    <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
-                    ${read.name || 'Unknown Name'}
-                </td>
-                <td>${read.email || 'No Email'}</td>
-                <td>${read.tel || 'No Tel'}</td>
-                <td>
-                    <a type="button" class="btn btn-success" 
-                       href="/public/gotwo_app/info_rider.php?regis_rider_id=${read.regis_rider_id}">
-                        View Detail
-                    </a>
-                </td>
-            </tr>`;
-            }
-        });
+    if (read.status_rider == 0) {
+        show_data += `
+        <tr>
+            <td scope="row">
+                <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
+                ${read.name || 'Unknown Name'}
+            </td>
+            <td>${read.email || 'No Email'}</td>
+            <td>${read.tel || 'No Tel'}</td>
+            <td>
+                <a type="button" class="btn btn-success" 
+                   href="/public/gotwo_app/info_rider.php?regis_rider_id=${read.regis_rider_id}">
+                    View Detail
+                </a>
+            </td>
+        </tr>`;
+    }
+});
 
-        // แสดงข้อมูลในตาราง
-        document.querySelector('#dataTableBody').innerHTML = show_data;
+document.querySelector('#dataTableBody').innerHTML = show_data;
+
+
+        //
     </script>
 
 

@@ -8,28 +8,25 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT regis_rider_id, name, email, tel, img_profile, status_rider, gender,
-    `img_id_card`, `img_driver_license`, `img_car_picture`, `img_car_registration`, `img_act`,
-    expiration_date, car_rigistration, car_brand 
-    FROM table_rider WHERE regis_rider_id = :regis_rider_id";
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['regis_rider_id'])) {
+        $riderId = $_GET['regis_rider_id'];
 
-    $query = $conn->prepare($sql);
-    $query->bindParam(':regis_rider_id', $regis_rider_id, PDO::PARAM_INT);
-    $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT img_id_card FROM table_rider WHERE regis_rider_id = :riderId";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':riderId', $riderId, PDO::PARAM_INT);
+        $stmt->execute();
 
-    if (!empty($fetch)) {
-        $riderData = $fetch[0]; 
-    } else {
-        $riderData = null; 
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            echo json_encode(['success' => true, 'img_id_card' => $result['img_id_card']]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Image not found']);
+        }
     }
 } catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
 ?>
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,21 +119,7 @@ try {
                         </li>
                     </ul>
                 </li>
-                <!-- <li class="sidebar-item">
-                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                     data-bs-target="#Report" aria-expanded="false" aria-controls="Report">
-                     <i class="bi bi-flag-fill"></i>
-                     <span>Report</span>
-                 </a>
-                 <ul id="Report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Rider</a>
-                     </li>
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Customer</a>
-                     </li>
-                 </ul>
-             </li> -->
+
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
@@ -182,21 +165,21 @@ try {
                                             <input type="email" class="form-control" id="email" readonly>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="birthdate" class="form-label">Expiration Date</label>
-                                            <input type="text" class="form-control" id="birthdate" readonly>
+                                            <label for="expiration_date" class="form-label">Expiration Date</label>
+                                            <input type="text" class="form-control" id="expiration_date" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="phoneNumber" class="form-label">Phone Number</label>
-                                            <input type="tel" class="form-control" id="phoneNumber" value="<?= $riderData ? htmlspecialchars($riderData['tel']) : 'Unknown'; ?>" readonly>
+                                            <label for="tel" class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" id="tel" readonly>
 
                                         </div>
                                         <div class="col-md-6">
                                             <label for="gender" class="form-label">Gender</label>
-                                            <input type="text" class="form-control" id="gender"readonly>
+                                            <input type="text" class="form-control" id="gender" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -206,169 +189,223 @@ try {
 
 
                     <!-- Document -->
-                    <div class="form-section">
+                    <div class="form-section mb-3">
                         <h5>Document</h5>
                         <div class="border-top border mb-2" style="border-width: 4px; color:rgb(26, 28, 67);"></div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="file-upload-wrapper">
-                                    <input type="file" id="Driver's license" multiple class="form-control file-upload-input mt-1">
-                                    <input type="file" id="ACT" multiple class="form-control file-upload-input mt-1">
-                                    <input type="file" id="Car registration" multiple class="form-control file-upload-input mt-1">
-                                    <input type="file" id="ID Card" multiple class="form-control file-upload-input mt-1">
-                                    <input type="file" id="Car picture" multiple class="form-control file-upload-input mt-1">
-                                </div>
+                        <div class="col">
+                            <div class="row">
+                                <!-- ID Card Button -->
 
+                                <div class="column">
+
+
+                                    <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal" data-bs-target="#idCardModal" onclick="showIdCardImage(1)">
+                                        ID Card
+                                    </button>
+                                </div>
+                                <!-- Driver's License Button -->
+                                <div class="column">
+                                    <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal" data-bs-target="#licenseModal">
+                                        Driver's License
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Buttons -->
-                    <div class="d-flex justify-content-end gap-2 mt-1">
-                        <button type="button" class="btn btn-danger" id="rejectButton" data-rider-id="<?= htmlspecialchars($regis_rider_id) ?>">Reject</button>
-                        <button type="button" class="btn btn-success" id="confirmButton" data-rider-id="<?= htmlspecialchars($regis_rider_id) ?>">Confirm</button>
+
+                    <!-- Document Car -->
+                    <div class="form-section mt-3">
+                        <h5>Document Car</h5>
+                        <div class="border-top border mb-2" style="border-width: 4px; color:rgb(26, 28, 67);"></div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="column">
+                                    <div class="card w-75 h-50">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Act</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="card w-75 h-50">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Car Picture</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="card w-75 h-50">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Car registration</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                </form>
             </div>
-            <script src="/public/js/gotwo_js/nav_animation.js"></script>
-            <script src="/public/js/gotwo_js/searchfuction.js"></script>
+            <!-- popup -->
+            <div class="modal fade" id="idCardModal" tabindex="-1" aria-labelledby="idCardModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="idCardModalLabel">ID Card</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <img id="idCardImage" src="" alt="No Image Available" class="img-fluid" style="max-width: 100%; height: auto;">
+                            <p id="errorTextIDCard" style="display: none; color: red;">No Image Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
-            <script>
-//=====================show info data=========================================
-<?php
-    // ดึงข้อมูลจากฐานข้อมูล Rider ที่ status_rider = 0
-    $sql = "SELECT regis_rider_id, name, email, tel, img_profile, status_rider FROM table_rider WHERE status_rider = 0";
-    $query = $conn->prepare($sql);
-    $query->execute();
-    $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    // แปลงข้อมูลเป็น JSON เพื่อส่งไปยัง JavaScript
-    $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
-    ?>
+            <!-- Buttons -->
+            <div class="d-flex justify-content-end gap-2 mt-1">
+                <button type="button" class="btn btn-danger" id="rejectButton" data-rider-id="<?= htmlspecialchars($riderId) ?>">Reject</button>
+                <button type="button" class="btn btn-success" id="confirmButton" data-rider-id="<?= htmlspecialchars($riderId) ?>">Confirm</button>
+            </div>
 
-    <script>
-        // รับข้อมูล JSON จาก PHP
-        const demo_data = <?= $riderDataJSON ?>;
-        let show_data = '';
-
-        // วนลูปข้อมูลจาก demo_data
-        demo_data.forEach((read) => {
-            if (read.status_rider == 0) {
-                show_data += `
-            <tr>
-                <td scope="row">
-                    <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
-                    ${read.name || 'Unknown Name'}
-                </td>
-                <td>${read.email || 'No Email'}</td>
-                <td>${read.tel || 'No Tel'}</td>
-                <td>
-                    <a type="button" class="btn btn-success" 
-                       href="/public/gotwo_app/info_rider.php?regis_rider_id=${read.regis_rider_id}">
-                        View Detail
-                    </a>
-                </td>
-            </tr>`;
-            }
-        });
-
-        // แสดงข้อมูลในตาราง
-        document.querySelector('#dataTableBody').innerHTML = show_data;
-//==================== button =====================================================
-document.addEventListener('DOMContentLoaded', function () {
-            const riderData = <?= json_encode($riderData, JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_AMP) ?> || {};
-
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'Do you want to confirm this rider?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, confirm it!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            updateStatus(regis_rider_id, 'confirm');
+            </form>
+        </div>
+        <script src="/public/js/gotwo_js/nav_animation.js"></script>
+        <?php
+        $riderId = filter_input(INPUT_GET, 'regis_rider_id', FILTER_VALIDATE_INT);
+        if ($riderId === false || $riderId === null) {
+            die("");
         }
-    });
-});
 
-document.getElementById('rejectButton').addEventListener('click', function () {
-    const regis_rider_id = this.getAttribute('data-rider-id');
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'Do you want to reject this rider?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#28a745',
-        confirmButtonText: 'Yes, reject it!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            updateStatus(regis_rider_id, 'reject');
+
+        // ตรวจสอบว่ามีการเชื่อมต่อฐานข้อมูลสำเร็จ
+        if (!$conn) {
+            die("Database connection failed");
         }
-    });
-});
-
-// ฟังก์ชันสำหรับอัปเดตสถานะ
-async function updateStatus(regis_rider_id, status) {
-    try {
-        const response = await axios.post('status_req.php', {
-            regis_rider_id: regis_rider_id,
-            status: status
-        });
-
-        if (response.data.success) {
-            Swal.fire('Success!', response.data.message, 'success').then(() => {
-                location.reload(); // รีโหลดหน้าเว็บ
-            });
-        } else {
-            Swal.fire('Error!', response.data.message || 'Failed to update status.', 'error');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        Swal.fire('Error!', 'Failed to update status.', 'error');
-    }
-}
+        $sql = "SELECT 
+        `regis_rider_id`, `img_profile`, `name`, `email`, `tel`, `gender`, 
+        `img_id_card`, `img_driver_license`, `img_car_picture`, `img_car_registration`, 
+        `img_act`, `expiration_date`, `car_rigistration`, `car_brand`, `status_rider` 
+    FROM `table_rider` 
+    WHERE `regis_rider_id` = :riderId";
 
 
+        $query = $conn->prepare($sql);
+        $query->bindParam(':riderId', $riderId, PDO::PARAM_INT);
+        $query->execute();
 
-// ==================update status==================================================
-                async function updateStatus(regis_rider_id, status) {
-                    try {
-                        const response = await axios.post('status_req.php', {
-                            regis_rider_id: regis_rider_id,
+        $fetch = $query->fetch(PDO::FETCH_ASSOC);
+        $riderData = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+
+
+        ?>
+        <script>
+            // =======================update status==================================
+            async function updateStatus(riderId, status) {
+                try {
+                    const response = await fetch('status_req.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            regis_rider_id: riderId,
                             status: status
-                        });
+                        }),
+                    });
 
-                        if (response.data.success) {
-                            alert(response.data.message);
-                            location.reload();
-                        } else {
-                            alert(response.data.message || 'Failed to update status.');
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Failed to update status.');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
+
+                    const data = await response.json();
+                    if (data.success) {
+                        alert(data.message);
+                        document.getElementById('confirmButton').disabled = true;
+                        document.getElementById('rejectButton').disabled = true;
+                    } else {
+                        alert(data.message || 'Failed to update status.');
+                    }
+                } catch (error) {
+                    console.error('Error updating status:', error);
+                    alert('An error occurred while updating the status.');
                 }
+            }
 
-                document.addEventListener('DOMContentLoaded', function() {
-                    // ตัวอย่างข้อมูล JSON ที่ได้จาก PHP
-                    const riderData = <?= $riderData ?>;
 
-                    // กำหนดค่าไปยัง input ที่มี id ตรงกัน
+            document.getElementById('confirmButton').addEventListener('click', () => {
+                const riderId = document.getElementById('confirmButton').getAttribute('data-rider-id');
+                if (confirm("Are you sure you want to confirm this rider?")) {
+                    updateStatus(riderId, 'Confirmed');
+                }
+            });
+
+
+            document.getElementById('rejectButton').addEventListener('click', () => {
+                const riderId = document.getElementById('rejectButton').getAttribute('data-rider-id');
+                if (confirm("Are you sure you want to reject this rider?")) {
+                    updateStatus(riderId, 'Rejected');
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                try {
+                    const riderData = JSON.parse('<?= $riderData ?>') || {};
+
+                    // ฟังก์ชันสำหรับจัดฟอร์แมตวันที่
+                    const formatDate = (dateString) => {
+                        if (!dateString) return 'Not Available'; // ถ้าวันที่ว่าง
+                        const date = new Date(dateString);
+                        return date.toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        });
+                    };
+
+
+                    // Map fields to inputs
                     document.getElementById('name').value = riderData.name || 'Not Available';
                     document.getElementById('email').value = riderData.email || 'Not Available';
-                    document.getElementById('birthdate').value = riderData.expiration_date || 'Not Available';
-                    document.getElementById('phoneNumber').value = riderData.tel || 'Not Available';
+                    document.getElementById('expiration_date').value = formatDate(riderData.expiration_date); // ใช้ฟังก์ชัน formatDate
+                    document.getElementById('tel').value = riderData.tel || 'Not Available';
                     document.getElementById('gender').value = riderData.gender || 'Not Available';
-                });
-            </script>
+                } catch (error) {
+                    console.error("Error parsing rider data:", error);
+                }
+
+            });
+
+       function showIdCardImage(riderId) {
+    fetch(`info_rider.php?regis_rider_id=${riderId}`)
+        .then(response => response.json())
+        .then(data => {
+            const imageElement = document.getElementById('idCardImage');
+            const errorText = document.getElementById('errorTextIDCard');
+
+            if (data.success && data.img_id_card) {
+                const imageUrl = data.img_id_card.startsWith('/')
+                    ? data.img_id_card
+                    : `/${data.img_id_card}`; // เพิ่ม '/' หากไม่มี
+                imageElement.src = imageUrl;
+                imageElement.style.display = "block";
+                errorText.style.display = "none";
+            } else {
+                imageElement.style.display = "none";
+                errorText.style.display = "block";
+            }
+
+            const modal = new bootstrap.Modal(document.getElementById('idCardModal'));
+            modal.show();
+        })
+        .catch(error => {
+            console.error('Error fetching image:', error);
+        });
+}
+
+        </script>
 </body>
 
 </html>

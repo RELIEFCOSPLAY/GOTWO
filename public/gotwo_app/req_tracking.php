@@ -10,7 +10,7 @@ try {
     //// Admin
     $adminQuery = $conn->prepare("SELECT name FROM table_admin ");
     $adminQuery->execute();
-    $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC); 
+    $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
     // Query ดึงข้อมูลทั้งหมด
     $sql = "
         SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
@@ -136,7 +136,7 @@ try {
 
             </ul>
             <div class="sidebar-footer">
-            <a href="/public/gotwo_app/logout.php" class="sidebar-link">
+                <a href="/public/gotwo_app/logout.php" class="sidebar-link">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
@@ -191,17 +191,16 @@ try {
                 </div>
                 <!-- --------------------------------------------------------- modal rider ----------------------------------------------------------->
                 <div class="modal fade" id="exampleModal_rider" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Details</h5>
                             </div>
                             <div class="modal-body" id="madal_display">
-
+                                <!-- Content will be dynamically added here -->
                             </div>
                             <div class="modal-footer">
-
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -229,6 +228,7 @@ try {
 
             function view_modal(index) {
                 const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
+                const formattedDate = formatDate(item.date); // เรียกใช้ฟังก์ชันจัดฟอร์แมตวันที่
                 const show_modal = `
         <div class="popup center container">
            <div class="popup center container">
@@ -241,7 +241,7 @@ try {
             <i class="bi bi-person-fill"></i>
             <p class="ms-2 align-content-center fw-bold">Rider</p>
         </div>
-        <p>Date: ${item.date}</p>
+       <p>Date: ${formattedDate}</p>
         <p>Name: ${item.rider_name}</p>
         <p>Email: ${item.rider_email}</p>
         <p>Tel: ${item.rider_tel}</p>
@@ -258,7 +258,7 @@ try {
             <i class="bi bi-person-fill"></i>
             <p class="ms-2 align-content-center fw-bold">Customer</p>
         </div>
-        <p>Date: ${item.date}</p>
+       <p>Date: ${formattedDate}</p>
         <p>Name: ${item.customer_name}</p>
         <p>Email: ${item.customer_email}</p>
         <p>Tel: ${item.customer_tel}</p>
@@ -281,7 +281,16 @@ try {
 
             document.addEventListener('DOMContentLoaded', () => {
                 displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
-            });
+            }); 
+            // ฟังก์ชันสำหรับจัดฟอร์แมตวันที่
+            function formatDate(dateString) {
+                if (!dateString) return 'Not Available'; // ถ้าไม่มีข้อมูลวันที่
+                const date = new Date(dateString);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // เดือนเริ่มต้นที่ 0
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            }
         </script>
 </body>
 

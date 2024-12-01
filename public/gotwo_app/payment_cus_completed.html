@@ -1,236 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>payment_ride_completed</title>
 
-
-
     <script src="/public/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
 
-    <link rel="stylesheet" href="/public/css/css_gotwo/payment_ride_nav_animation_completed.css">
-    <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="/public/css/css_gotwo/payment_ride_nav_animation_completed.css"
+    />
+    <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css" />
+  </head>
 
-<body>
+  <body>
     <div class="wrapper">
-        <aside id="sidebar">
-            <div class="d-flex">
-                <button class="toggle-btn" type="button">
-                    <i class="bi bi-grid-fill"></i>
-                </button>
-                <div class="sidebar-logo">
-                    <a href="#" class="fw-bold" style="font-size: 40px;">GOTWO</a>
-                </div>
-
-            </div>
-            <a href="#" class="sidebar-person">
-                <div class="text-white ">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                        <path fill-rule="evenodd"
-                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                    </svg>
-                    <script>
-                        // ดึงข้อมูลชื่อแอดมินจาก API และแสดงใน HTML
-                        fetch("admin.php") 
-                          .then((response) => {
-                            if (!response.ok) {
-                              throw new Error("Network response was not ok " + response.statusText);
-                            }
-                            return response.json();
-                          })
-                          .then((data) => {
-                            // อัปเดตชื่อใน HTML
-                            const adminNameElement = document.getElementById("name");
-                            adminNameElement.textContent = data.admin || "Unknown"; 
-                          })
-                          .catch((error) => {
-                            console.error("Error fetching admin name:", error);
-                            document.getElementById("name").textContent = "Error fetching name";
-                          });
-                      </script>
-                      <span class="mx-4 fw-bold" id="name"></span>
-                </div>
-            </a>
-
-            <p class="text-white mt-4 ms-2 fw-bold">MEUN</p>
-            <hr class="text-white d-none d-sm-block" />
-
-            <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="/public/gotwo_app/Dashboard.php" class="sidebar-link">
-                        <i class="bi bi-speedometer2"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#Management" aria-expanded="false" aria-controls="Management">
-                        <i class="bi bi-kanban"></i>
-                        <span>Management</span>
-                    </a>
-                    <ul id="Management" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="/public/gotwo_app/Rider_Request.html" class="sidebar-link">Rider</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="/public/gotwo_app/Customer_Suspend.html" class="sidebar-link">Customer</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="/public/gotwo_app/pending_tracking.html" class="sidebar-link">
-                        <i class="bi bi-pin-map-fill"></i>
-                        <span>Travel Tracking</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#Payment" aria-expanded="false" aria-controls="Payment">
-                        <i class="bi bi-credit-card-fill"></i>
-                        <span>Payment</span>
-                    </a>
-                    <ul id="Payment" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_ride.html" class="sidebar-link">Rider</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_cus.html" class="sidebar-link">Refund</a>
-                        </li>
-                    </ul>
-                </li>
-               
-                <li class="sidebar-item">
-                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
-                        <i class="bi bi-person-circle"></i>
-                        <span>Profile</span>
-                    </a>
-                </li>
-
-            </ul>
-            <div class="sidebar-footer">
-                <a href="/public/gotwo_app/logout.php" class="sidebar-link">
-                    <i class="bi bi-box-arrow-right"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
-        </aside>
-
-        <div class="main p-3">
-            <div class="ms-4 mt-3">
-                <h1>Payment Refund</h1>
-                <div class="nav_animation">
-                    <ul>
-                        <li class="unpaid_nav_animation"><a href="/public/gotwo_app/payment_cus.html">Unpaid</a></li>
-                        <li class="completed_nav_animation"><a
-                                href="/public/gotwo_app/payment_cus_completed.html">Completed</a></li>
-                        <span class="slider_nav_animation"></span>
-                    </ul>
-                </div>
-
-                <div class="box">
-                    <input
-                        type="text"
-                        id="searchInput"
-                        placeholder="Search"
-                        oninput="filterResults()"
-                    />
-                    <a href="#">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </div>
-                <div id="paymentContainer" class="mt-1"></div>
-
-            </div>
+      <aside id="sidebar">
+        <div class="d-flex">
+          <button class="toggle-btn" type="button">
+            <i class="bi bi-grid-fill"></i>
+          </button>
+          <div class="sidebar-logo">
+            <a href="#" class="fw-bold" style="font-size: 40px">GOTWO</a>
+          </div>
         </div>
+        <a href="#" class="sidebar-person">
+          <div class="text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="currentColor"
+              class="bi bi-person-circle"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path
+                fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+              />
+            </svg>
+            <script>
+              // ดึงข้อมูลชื่อแอดมินจาก API และแสดงใน HTML
+              fetch("admin.php")
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error(
+                      "Network response was not ok " + response.statusText
+                    );
+                  }
+                  return response.json();
+                })
+                .then((data) => {
+                  // อัปเดตชื่อใน HTML
+                  const adminNameElement = document.getElementById("name");
+                  adminNameElement.textContent = data.admin || "Unknown";
+                })
+                .catch((error) => {
+                  console.error("Error fetching admin name:", error);
+                  document.getElementById("name").textContent =
+                    "Error fetching name";
+                });
+            </script>
+            <span class="mx-4 fw-bold" id="name"></span>
+          </div>
+        </a>
+
+        <p class="text-white mt-4 ms-2 fw-bold">MEUN</p>
+        <hr class="text-white d-none d-sm-block" />
+
+        <ul class="sidebar-nav">
+          <li class="sidebar-item">
+            <a href="/public/gotwo_app/Dashboard.php" class="sidebar-link">
+              <i class="bi bi-speedometer2"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a
+              href="#"
+              class="sidebar-link collapsed has-dropdown"
+              data-bs-toggle="collapse"
+              data-bs-target="#Management"
+              aria-expanded="false"
+              aria-controls="Management"
+            >
+              <i class="bi bi-kanban"></i>
+              <span>Management</span>
+            </a>
+            <ul
+              id="Management"
+              class="sidebar-dropdown list-unstyled collapse"
+              data-bs-parent="#sidebar"
+            >
+              <li class="sidebar-item">
+                <a
+                  href="/public/gotwo_app/Rider_Request.html"
+                  class="sidebar-link"
+                  >Rider</a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a
+                  href="/public/gotwo_app/Customer_Suspend.html"
+                  class="sidebar-link"
+                  >Customer</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li class="sidebar-item">
+            <a
+              href="/public/gotwo_app/pending_tracking.html"
+              class="sidebar-link"
+            >
+              <i class="bi bi-pin-map-fill"></i>
+              <span>Travel Tracking</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a
+              href="#"
+              class="sidebar-link collapsed has-dropdown"
+              data-bs-toggle="collapse"
+              data-bs-target="#Payment"
+              aria-expanded="false"
+              aria-controls="Payment"
+            >
+              <i class="bi bi-credit-card-fill"></i>
+              <span>Payment</span>
+            </a>
+            <ul
+              id="Payment"
+              class="sidebar-dropdown list-unstyled collapse"
+              data-bs-parent="#sidebar"
+            >
+              <li class="sidebar-item">
+                <a
+                  href="/public/gotwo_app/payment_ride.html"
+                  class="sidebar-link"
+                  >Rider</a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a
+                  href="/public/gotwo_app/payment_cus.html"
+                  class="sidebar-link"
+                  >Refund</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li class="sidebar-item">
+            <a href="/public/gotwo_app/profile.php" class="sidebar-link">
+              <i class="bi bi-person-circle"></i>
+              <span>Profile</span>
+            </a>
+          </li>
+        </ul>
+        <div class="sidebar-footer">
+          <a href="/public/gotwo_app/logout.php" class="sidebar-link">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Logout</span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="main p-3">
+        <div class="ms-4 mt-3">
+          <h1>Payment Refund</h1>
+          <div class="nav_animation">
+            <ul>
+              <li class="unpaid_nav_animation">
+                <a href="/public/gotwo_app/payment_cus.html">Unpaid</a>
+              </li>
+              <li class="completed_nav_animation">
+                <a href="/public/gotwo_app/payment_cus_completed.html"
+                  >Completed</a
+                >
+              </li>
+              <span class="slider_nav_animation"></span>
+            </ul>
+          </div>
+
+          <div class="box">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search"
+              oninput="filterResults()"
+            />
+            <a href="#">
+              <i class="bi bi-search"></i>
+            </a>
+          </div>
+          <div id="paymentContainer" class="mt-1"></div>
+        </div>
+      </div>
     </div>
 
     <script>
-        let allPayments = []; // Store fetched payments here
-        let currentFilter = 5; // 0 for Unpaid, 1 for Completed
+      let allPayments = []; // Store fetched payments here
+      let currentFilter = 5; // 0 for Unpaid, 1 for Completed
 
-        // Fetch data from PHP and display it
-        async function fetchPayments() {
-            try {
-                const response = await fetch('get_payments.php');
-                const payments = await response.json();
+      // Fetch data from PHP and display it
+      async function fetchPayments() {
+        try {
+          const response = await fetch("get_payments.php");
+          const payments = await response.json();
 
-                if (payments.error) {
-                    console.error(payments.error);
-                    document.getElementById('paymentContainer').innerHTML = "<p>Failed to load data.</p>";
-                    return;
-                }
+          if (payments.error) {
+            console.error(payments.error);
+            document.getElementById("paymentContainer").innerHTML =
+              "<p>Failed to load data.</p>";
+            return;
+          }
 
-                // Check if the data has changed before re-rendering
-                if (JSON.stringify(allPayments) !== JSON.stringify(payments)) {
-                    console.log("Data updated, re-rendering...");
-                    allPayments = payments; // Update the stored data
-                    filterPayments(currentFilter); // Update the display
-                }
-                else {
-                    console.log("No changes in data.");
-                }
-            } catch (error) {
-                console.error("Error fetching payments:", error);
-            }
+          // Check if the data has changed before re-rendering
+          if (JSON.stringify(allPayments) !== JSON.stringify(payments)) {
+            console.log("Data updated, re-rendering...");
+            allPayments = payments; // Update the stored data
+            filterPayments(currentFilter); // Update the display
+          } else {
+            console.log("No changes in data.");
+          }
+        } catch (error) {
+          console.error("Error fetching payments:", error);
         }
-        function truncateText(text, maxLength) {
+      }
+      function truncateText(text, maxLength) {
         if (text.length > maxLength) {
           return text.substring(0, maxLength) + "...";
         }
         return text;
       }
 
-        // Function to filter and display payments based on status
-        function filterPayments(status) {
-            currentFilter = status;
-            const filteredPayments = allPayments.filter(payment => payment.pay == status);
-            displayPayments(filteredPayments);
-        }
+      // Function to filter and display payments based on status
+      function filterPayments(status) {
+        currentFilter = status;
+        const filteredPayments = allPayments.filter(
+          (payment) => payment.pay == status
+        );
+        displayPayments(filteredPayments);
+      }
 
-        // Call fetchPayments every 3 seconds for real-time updates
-        setInterval(fetchPayments, 3000);
+      // Call fetchPayments every 3 seconds for real-time updates
+      setInterval(fetchPayments, 3000);
 
-        // Fetch data when page loads
-        document.addEventListener('DOMContentLoaded', fetchPayments);
-        document.addEventListener("DOMContentLoaded", function () {
-    fetch("admin.php")
-        .then((response) => {
+      // Fetch data when page loads
+      document.addEventListener("DOMContentLoaded", fetchPayments);
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("admin.php")
+          .then((response) => {
             if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.statusText}`);
+              throw new Error(
+                `Network response was not ok: ${response.statusText}`
+              );
             }
             return response.json();
-        })
-        .then((data) => {
+          })
+          .then((data) => {
             const adminNameElement = document.getElementById("name");
             adminNameElement.textContent = data.admin || "Unknown";
-        })
-        .catch((error) => {
+          })
+          .catch((error) => {
             console.error("Error fetching admin name:", error);
             document.getElementById("name").textContent = "Error fetching name";
-        });
-});
+          });
+      });
 
-        // Display payments based on filtered data
-        function displayPayments(data) {
-            const container = document.getElementById('paymentContainer');
-            container.innerHTML = ""; // ล้างเนื้อหาก่อน
+      // Display payments based on filtered data
+      function displayPayments(data) {
+        const container = document.getElementById("paymentContainer");
+        container.innerHTML = ""; // ล้างเนื้อหาก่อน
 
-            data.forEach((item, index) => {
+        data.forEach((item, index) => {
           const dateParts = item.date.split("-"); // แยกวัน เดือน ปี
           const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // เรียงใหม่เป็น วัน-เดือน-ปี
 
           const paySlipUrl =
-            item.image && item.image.trim() !== "" ? item.image : ""; // Check for valid image URL
+            item.image && item.image.trim() !== "" ? item.image : ""; 
           const timeOnly =
             item.time && item.time.includes(" ")
               ? item.time.split(" ")[1].substring(0, 5)
@@ -258,7 +317,10 @@
                             <div class="mt-3 fw-bold">
                               <p>Date: ${formattedDate}</p>
                                <p>Time: ${timeOnly}</p>
-                                <p>Name: ${truncateText(item.customer_name, 10)}</p>
+                                <p>Name: ${truncateText(
+                                  item.customer_name,
+                                  10
+                                )}</p>
                                 <p>To: ${item.at_drop}</p>
                                 <p>Role: Customer</p>
                             </div>
@@ -267,8 +329,16 @@
                                 <div class="d-flex flex-row align-items-center baht_M ms-5">
                                     <div class="text-center">
                                         <h2>${item.price} THB</h2>
-                                        <h1 class="${item.pay != 0 || item.pay == 5 ? 'text-success' : 'text-danger'}">
-                                            ${item.pay != 0 || item.pay == 5 ? 'Compled' : 'Not compled'}
+                                        <h1 class="${
+                                          item.pay != 0 || item.pay == 5
+                                            ? "text-success"
+                                            : "text-danger"
+                                        }">
+                                            ${
+                                              item.pay != 0 || item.pay == 5
+                                                ? "Compled"
+                                                : "Not compled"
+                                            }
                                         </h1>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -290,9 +360,7 @@
                            
                             <div class="d-flex justify-content-between">
                                 <h5 class="text-dark">Paid</h5>
-                                <h5 class="text-dark">${
-                                  item.price 
-                                } THB</h5>
+                                <h5 class="text-dark">${item.price} THB</h5>
                             </div>
                         </div>
                                     <div class="container QR_Box d-flex justify-content-center my-5">
@@ -304,35 +372,33 @@
                     </div>
         
                     <!-- Modal Popup -->
-        <div class="modal fade" id="qrModal${index}" tabindex="-1" aria-labelledby="qrModalLabel${index}" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="qrModalLabel${index}">Show Pay Slip</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img id="paySlipImage${index}" src="${paySlipUrl}" alt="Pay Slip" style="display: ${
-            paySlipUrl ? "block" : "none"
-          }; max-width: 100%; height: auto; margin-bottom: 15px;">
-                        <h5 class="text-dark mt-4">Paid ${item.price} THB</h5>
-                        <p id="errorText${index}" class="text-danger" style="display: ${
-            paySlipUrl ? "none" : "block"
-          };">Error loading Pay Slip.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
+           <div class="modal fade" id="qrModal${index}" tabindex="-1" aria-labelledby="qrModalLabel${index}" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qrModalLabel${index}">Show Pay Slip</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="paySlipImage${index}" src="${paySlipUrl}" alt="Pay Slip" style="display: ${paySlipUrl ? "block" : "none"}; max-width: 100%; height: auto; margin-bottom: 15px;">
+                <h5 class="text-dark mt-4">Paid ${item.price} THB</h5>
+                <p id="errorText${index}" class="text-danger" style="display: ${paySlipUrl ? "none" : "block"};">Error loading Pay Slip.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
-                `;
-                container.insertAdjacentHTML('beforeend', paymentHTML);
-            });
-        }
+    </div>
+</div>
 
- // ฟังก์ชันสำหรับแสดง Pay Slip
- function showPaySlip(paySlipUrl, index) {
+                `;
+          container.insertAdjacentHTML("beforeend", paymentHTML);
+        });
+      }
+
+      // ฟังก์ชันสำหรับแสดง Pay Slip
+      function showPaySlip(paySlipUrl, index) {
         const modalImage = document.querySelector(`#qrModal${index} img`);
         const errorText = document.getElementById(`errorText${index}`);
 
@@ -346,28 +412,29 @@
         }
       }
       function filterResults() {
-    const query = document.getElementById("searchInput").value.toLowerCase(); // รับข้อความค้นหา
+        const query = document
+          .getElementById("searchInput")
+          .value.toLowerCase(); // รับข้อความค้นหา
 
-    // หากไม่มีข้อความค้นหา ให้แสดงข้อมูลทั้งหมดที่ตรงกับ currentFilter
-    const filteredData = query
-        ? allPayments.filter(
+        // หากไม่มีข้อความค้นหา ให้แสดงข้อมูลทั้งหมดที่ตรงกับ currentFilter
+        const filteredData = query
+          ? allPayments.filter(
               (payment) =>
-                  payment.pay == currentFilter && // เฉพาะสถานะ Completed
-                  ((payment.rider_name &&
-                      payment.rider_name.toLowerCase().includes(query)) || // ค้นหาชื่อ Rider
-                      (payment.customer_name &&
-                          payment.customer_name.toLowerCase().includes(query))) // ค้นหาชื่อ Customer
-          )
-        : allPayments.filter((payment) => payment.pay == currentFilter); // แสดงทั้งหมดที่ pay == currentFilter
+                payment.pay == currentFilter && // เฉพาะสถานะ Completed
+                ((payment.rider_name &&
+                  payment.rider_name.toLowerCase().includes(query)) || // ค้นหาชื่อ Rider
+                  (payment.customer_name &&
+                    payment.customer_name.toLowerCase().includes(query))) // ค้นหาชื่อ Customer
+            )
+          : allPayments.filter((payment) => payment.pay == currentFilter); // แสดงทั้งหมดที่ pay == currentFilter
 
-    displayPayments(filteredData); // แสดงผลข้อมูลที่ผ่านการกรอง
-}
+        displayPayments(filteredData); // แสดงผลข้อมูลที่ผ่านการกรอง
+      }
 
-        // Fetch data when page loads
-        document.addEventListener('DOMContentLoaded', fetchPayments);
+      // Fetch data when page loads
+      document.addEventListener("DOMContentLoaded", fetchPayments);
     </script>
 
     <script src="/public/js/gotwo_js/payment_ride_nav_animation_completed.js"></script>
-</body>
-
+  </body>
 </html>
