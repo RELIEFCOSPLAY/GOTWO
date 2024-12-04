@@ -297,7 +297,7 @@
           const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // เรียงใหม่เป็น วัน-เดือน-ปี
 
           const paySlipUrl =
-            item.image && item.image.trim() !== "" ? item.image : ""; // Check for valid image URL
+            item.img_qr_admin && item.img_qr_admin.trim() !== "" ? item.img_qr_admin : ""; // Check for valid image URL
           const Commission = 10;
           const timeOnly =
             item.time && item.time.includes(" ")
