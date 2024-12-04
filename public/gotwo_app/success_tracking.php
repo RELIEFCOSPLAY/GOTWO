@@ -23,7 +23,7 @@ try {
         JOIN table_rider r ON s.rider_id = r.regis_rider_id
         JOIN table_customer c ON s.customer_id = c.regis_customer_id
         JOIN post p ON s.post_id = p.post_id
-        WHERE s.status = 4
+        WHERE s.status IN (4, 7) 
         ORDER BY p.date DESC
     ";
     $query = $conn->prepare($sql);
@@ -197,6 +197,7 @@ try {
                             <div class="modal-body" id="madal_display">
                                 <!-- Content will be dynamically added here -->
                             </div>
+                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>

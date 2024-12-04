@@ -13,18 +13,19 @@ try {
     $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
     // Query ดึงข้อมูลทั้งหมด
     $sql = "
-        SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
-               r.gender AS rider_gender, r.img_profile AS rider_img_profile,
-               c.name AS customer_name, c.email AS customer_email, c.tel AS customer_tel, 
-               c.gender AS customer_gender, c.img_profile AS customer_img_profile,
-               p.pick_up, p.at_drop,p.date
-        FROM status_post s
-        JOIN table_rider r ON s.rider_id = r.regis_rider_id
-        JOIN table_customer c ON s.customer_id = c.regis_customer_id
-        JOIN post p ON s.post_id = p.post_id
-        WHERE s.status = 2
-        ORDER BY p.date DESC
-    ";
+    SELECT   s.status_post_id AS id, r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
+           r.gender AS rider_gender, r.img_profile AS rider_img_profile,
+           c.name AS customer_name, c.email AS customer_email, c.tel AS customer_tel, 
+           c.gender AS customer_gender, c.img_profile AS customer_img_profile,
+           p.pick_up, p.at_drop, p.date, s.status
+    FROM status_post s
+    JOIN table_rider r ON s.rider_id = r.regis_rider_id
+    JOIN table_customer c ON s.customer_id = c.regis_customer_id
+    JOIN post p ON s.post_id = p.post_id
+    WHERE s.status IN (2, 7) 
+    ORDER BY p.date DESC
+";
+
     $query = $conn->prepare($sql);
     $query->execute();
     $data = $query->fetchAll(PDO::FETCH_ASSOC); // ดึงข้อมูลทั้งหมด
@@ -182,6 +183,8 @@ try {
                                 <th>Customername</th>
                                 <th>Pick up</th>
                                 <th>Drop</th>
+                                <th>Slip</th>
+                                <th>Status Payment </th>
                             </tr>
                         </thead>
                         <tbody id="dataTableBody">
@@ -207,6 +210,29 @@ try {
                 </div>
             </div>
         </div>
+
+        <!-- Payment_cus -->
+        <div class="modal fade" id="slipModal" tabindex="-1" aria-labelledby="slipModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="slipModalLabel">Slip Customer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="display: none;"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img id="slipImage" src="" alt="Slip" class="img-fluid" style="display: none;">
+                        <p id="errorText" class="text-danger" style="display: none;">Slip not available.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="successButton" type="button" class="btn btn-success" onclick="updateStatus()">Successfully</button>
+                        <button id="closeButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
         <script src="/public/js/gotwo_js/confirm_report_nav_animation.js"></script>
         <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
@@ -215,17 +241,37 @@ try {
         <script>
             function displayTableData(data) {
                 let tableBody = '';
+                let selectedId = ''; // ใช้ null สำหรับ selectedId
+
                 data.forEach((item, index) => {
+                    // ตรวจสอบสถานะและกำหนดข้อความแสดงผล
+                    const statusText =
+                        item.status == 7 ?
+                        '<span style="color: green; font-weight: bold;">Verified</span>' :
+                        '<span style="color: orange; font-weight: bold;">Under Review</span>';
+                    console.log('Demo Data:', demo_data);
+
+
+                    // เพิ่มแถวข้อมูลในตาราง
                     tableBody += `
-            <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
-                <td><img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
-                <td><img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
-                <td>${item.pick_up}</td>
-                <td>${item.at_drop}</td>
-            </tr>`;
+        <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
+            <td><img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
+            <td><img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
+            <td>${item.pick_up}</td>
+            <td>${item.at_drop}</td>
+            <td>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slipModal" onclick="event.stopPropagation(); view_slip(${index})">View Slip</button>
+            </td>
+            <td>${statusText}</td>
+        </tr>`;
                 });
+
+                // อัปเดตเนื้อหาใน tbody ของตาราง
                 document.querySelector('#dataTableBody').innerHTML = tableBody;
             }
+
+
+
 
             function view_modal(index) {
                 const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
@@ -281,8 +327,76 @@ try {
             }
 
             document.addEventListener('DOMContentLoaded', () => {
-                displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
-            }); 
+                displayTableData(demo_data);
+            });
+
+            function view_slip(index) {
+                const item = demo_data[index];
+                selectedId = item.id; // ตั้งค่า ID ที่เลือก
+                const slipImage = document.getElementById('slipImage');
+                const errorText = document.getElementById('errorText');
+                const successButton = document.getElementById('successButton');
+
+
+                console.log("Selected Item:", item); // Debug เพื่อตรวจสอบข้อมูล
+                console.log("Selected Status:", item.status);
+
+                if (item && item.image && item.image.trim() !== "") {
+                    slipImage.src = item.image;
+                    slipImage.style.display = "block";
+                    errorText.style.display = "none";
+                } else {
+                    slipImage.style.display = "none";
+                    errorText.style.display = "block";
+                }
+
+                // ซ่อนหรือแสดงปุ่ม "Successfully"
+                if (successButton) {
+                    if (item.status === 7) {
+                        successButton.style.display = "none"; // ซ่อนปุ่มถ้าสถานะเป็น 7
+                    } else {
+                        successButton.style.display = "block"; // แสดงปุ่มถ้าสถานะไม่ใช่ 7
+                    }
+                } else {
+                    console.error("Success Button not found in DOM"); // Debug เมื่อปุ่มไม่พบ
+                }
+            }
+
+
+            // ฟังก์ชันสำหรับอัปเดตสถานะ
+            function updateStatus() {
+                if (!selectedId) {
+                    alert("No item selected.");
+                    return;
+                }
+
+                fetch('/public/gotwo_app/confirm_payment_cus.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: selectedId,
+                            status: 7,
+                        }),
+                    })
+
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            alert('Status updated successfully!');
+                            location.reload();
+                        } else {
+                            alert('Failed to update status: ' + data.message);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
+                    });
+            }
+
+
             // ฟังก์ชันสำหรับจัดฟอร์แมตวันที่
             function formatDate(dateString) {
                 if (!dateString) return 'Not Available'; // ถ้าไม่มีข้อมูลวันที่

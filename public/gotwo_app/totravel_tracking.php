@@ -23,7 +23,7 @@ try {
         JOIN table_rider r ON s.rider_id = r.regis_rider_id
         JOIN table_customer c ON s.customer_id = c.regis_customer_id
         JOIN post p ON s.post_id = p.post_id
-        WHERE s.status = 3
+        WHERE s.status IN (3, 7) 
         ORDER BY p.date DESC
     ";
     $query = $conn->prepare($sql);

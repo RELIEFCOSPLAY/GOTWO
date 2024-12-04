@@ -434,44 +434,42 @@
 
       //////////////////////////////////////
       function handleAddPhoto(status_post_id) {
-        const fileInput = document.createElement("input");
-        fileInput.type = "file";
-        fileInput.accept = "image/*"; // อนุญาตเฉพาะไฟล์รูปภาพ
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*";
 
-        fileInput.click();
+  fileInput.click();
 
-        fileInput.onchange = (event) => {
-          const file = event.target.files[0];
-          if (file) {
-            const formData = new FormData();
-            formData.append("img_qr_admin", file);
-            formData.append("status_post_id", status_post_id);
+  fileInput.onchange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("img_qr_admin", file); // เปลี่ยนชื่อให้ตรงกับ PHP
+      formData.append("status_post_id", status_post_id); // ส่ง ID ของโพสต์
+      formData.append("pay", 4); // กำหนดสถานะ paid
 
-            fetch("upload_image.php", {
-              method: "POST",
-              body: formData,
-            })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then((data) => {
-                console.log("Response from server:", data);
-                if (data.success) {
-                  alert("Upload successful!");
-                  location.reload(); // Refresh the page after the alert
-                } else {
-                  alert(`Upload failed: ${data.message}`);
-                }
-              })
-              .catch((error) => {
-                console.error("Error occurred:", error);
-              });
+      fetch("upload_image.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            alert("Upload successful!");
+            location.reload(); // รีโหลดหน้า
+          } else {
+            alert(`Upload failed: ${data.message}`);
           }
-        };
-      }
+        })
+        .catch((error) => {
+          console.error("Error during upload:", error);
+          alert("An error occurred while uploading. Please try again.");
+        });
+    }
+  };
+}
+
+
 
       $(document).ready(function () {
         // กำหนดการคลิกสำหรับ #uploadBtn
