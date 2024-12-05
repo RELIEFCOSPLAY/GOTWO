@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -34,9 +34,9 @@ try {
 } catch (PDOException $e) {
     echo "<script>console.error('Database error: " . $e->getMessage() . "');</script>";
 }
-?>
+?> -->
 
-
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -294,4 +294,4 @@ try {
         </script>
 </body>
 
-</html>
+</html> -->

@@ -52,7 +52,9 @@
               fetch("admin.php") // ตรวจสอบชื่อไฟล์ให้ตรง
                 .then((response) => {
                   if (!response.ok) {
-                    throw new Error("Network response was not ok " + response.statusText);
+                    throw new Error(
+                      "Network response was not ok " + response.statusText
+                    );
                   }
                   return response.json();
                 })
@@ -63,7 +65,8 @@
                 })
                 .catch((error) => {
                   console.error("Error fetching admin name:", error);
-                  document.getElementById("name").textContent = "Error fetching name";
+                  document.getElementById("name").textContent =
+                    "Error fetching name";
                 });
             </script>
             <span class="mx-4 fw-bold" id="name"></span>
@@ -172,18 +175,18 @@
                         </li>
                     </ul>
                 </li> -->
-                <li class="sidebar-item">
-                  <a href="/public/gotwo_app/profile.php" class="sidebar-link">
-                      <i class="bi bi-person-circle"></i>
-                      <span>Profile</span>
-                  </a>
-              </li>
+          <li class="sidebar-item">
+            <a href="/public/gotwo_app/profile.php" class="sidebar-link">
+              <i class="bi bi-person-circle"></i>
+              <span>Profile</span>
+            </a>
+          </li>
         </ul>
         <div class="sidebar-footer">
           <a href="/public/gotwo_app/logout.php" class="sidebar-link">
             <i class="bi bi-box-arrow-right"></i>
             <span>Logout</span>
-        </a>
+          </a>
         </div>
       </aside>
 
@@ -206,23 +209,23 @@
 
           <div class="box">
             <input
-                type="text"
-                id="searchInput"
-                placeholder="Search"
-                oninput="filterResults()"
+              type="text"
+              id="searchInput"
+              placeholder="Search"
+              oninput="filterResults()"
             />
             <a href="#">
-                <i class="bi bi-search"></i>
+              <i class="bi bi-search"></i>
             </a>
-        </div>
+          </div>
           <div id="paymentContainer" class="mt-1"></div>
         </div>
       </div>
     </div>
 
     <script>
-      let allPayments = []; // Store fetched payments here
-      let currentFilter = 4; // 0 for Unpaid, 1 for Completed
+      let allPayments = [];
+      let currentFilter = 5;
 
       // Fetch data from PHP and display it
       async function fetchPayments() {
@@ -269,24 +272,29 @@
       setInterval(fetchPayments, 3000);
 
       // Fetch data when page loads
-      document.addEventListener("DOMContentLoaded", fetchPayments);
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchPayments(); // Fetch data initially
+        setInterval(fetchPayments, 3000); // Periodic updates
+      });
       document.addEventListener("DOMContentLoaded", function () {
-    fetch("admin.php")
-        .then((response) => {
+        fetch("admin.php")
+          .then((response) => {
             if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.statusText}`);
+              throw new Error(
+                `Network response was not ok: ${response.statusText}`
+              );
             }
             return response.json();
-        })
-        .then((data) => {
+          })
+          .then((data) => {
             const adminNameElement = document.getElementById("name");
             adminNameElement.textContent = data.admin || "Unknown";
-        })
-        .catch((error) => {
+          })
+          .catch((error) => {
             console.error("Error fetching admin name:", error);
             document.getElementById("name").textContent = "Error fetching name";
-        });
-});
+          });
+      });
       // Display payments based on filtered data
       function displayPayments(data) {
         const container = document.getElementById("paymentContainer");
@@ -295,9 +303,13 @@
         data.forEach((item, index) => {
           const dateParts = item.date.split("-"); // แยกวัน เดือน ปี
           const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // เรียงใหม่เป็น วัน-เดือน-ปี
+          const baseUrl = "http://localhost/";
+          const paySlipUrl = item.img_qr_admin
+            ? baseUrl + item.img_qr_admin
+            : "";
+            const successImg = item.success_img || "/public/img/user.png";
+            const travelImg = item.travel_img || "path/to/default-travel-icon.png";
 
-          const paySlipUrl =
-            item.img_qr_admin && item.img_qr_admin.trim() !== "" ? item.img_qr_admin : ""; // Check for valid image URL
           const Commission = 10;
           const timeOnly =
             item.time && item.time.includes(" ")
@@ -311,7 +323,7 @@
                     data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent${index}">
                     <div class="d-flex flex-row">
                         <div class="d-flex flex-row ms-5 align-items-center">
-                            <img src="/public/img/pngegg.png" class="mx-3">
+                         <img src="${travelImg}" class="mx-3" alt="Travel Image">
                             <div class="mt-3 fw-bold">
                                <p>Date: ${formattedDate}</p>
                                <p>Time: ${timeOnly}</p>
@@ -322,11 +334,14 @@
                         </div>
                         <h1 class="d-flex flex-row align-items-center mx-5">-------></h1>
                         <div class="d-flex flex-row align-items-center">
-                            <img src="/public/img/pngegg.png" class="mx-3">
+                            <img src="${successImg || '/public/img/default-profile-icon.png'}" class="mx-2" style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%;" alt="Profile Icon" onerror="this.src='/public/img/default-profile-icon.png';">
                             <div class="mt-3 fw-bold">
                               <p>Date: ${formattedDate}</p>
                                <p>Time: ${timeOnly}</p>
-                                <p>Name: ${truncateText(item.customer_name, 10)}</p>
+                                <p>Name: ${truncateText(
+                                  item.customer_name,
+                                  10
+                                )}</p>
                                 <p>To: ${item.at_drop}</p>
                                 <p>Role: Customer</p>
                             </div>
@@ -336,9 +351,9 @@
                         <div class="text-center">
                             <h2>${item.price} THB</h2>
                             <h1 class="${
-                              item.pay == 4 ? "text-success" : "text-danger"
+                              item.pay == 5 ? "text-success" : "text-danger"
                             }">
-                                ${item.pay == 4 ? "Completed" : "Not Completed"}
+                                ${item.pay == 5 ? "Completed" : "Not Completed"}
                             </h1>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -386,10 +401,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img id="paySlipImage${index}" src="${paySlipUrl}" alt="Pay Slip" style="display: ${paySlipUrl ? "block" : "none"}; max-width: 100%; height: auto; margin-bottom: 15px;">
-                <h5 class="text-dark mt-4">Paid ${item.price} THB</h5>
-                <p id="errorText${index}" class="text-danger" style="display: ${paySlipUrl ? "none" : "block"};">Error loading Pay Slip.</p>
-            </div>
+    <img id="paySlipImage${index}" src="${paySlipUrl}" alt="Pay Slip" 
+         style="display: ${paySlipUrl ? "block" : "none"}; 
+                max-width: 100%; 
+                height: auto; 
+                margin-bottom: 15px; 
+                margin-left: auto; 
+                margin-right: auto;">
+    <h5 class="text-dark mt-4">Paid ${item.price} THB</h5>
+    <p id="errorText${index}" class="text-danger" 
+       style="display: ${paySlipUrl ? "none" : "block"};">
+       Error loading Pay Slip.
+    </p>
+</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -403,40 +427,41 @@
       }
 
       // ฟังก์ชันสำหรับแสดง Pay Slip
+      // ฟังก์ชันสำหรับแสดง Pay Slip
       function showPaySlip(paySlipUrl, index) {
-        const modalImage = document.querySelector(`#qrModal${index} img`);
+        const modalImage = document.querySelector(`#paySlipImage${index}`);
         const errorText = document.getElementById(`errorText${index}`);
 
         if (paySlipUrl && paySlipUrl.trim() !== "") {
-          modalImage.src = paySlipUrl; // ตั้งค่า src ให้กับรูป
-          modalImage.style.display = "block"; // แสดงรูป
-          errorText.style.display = "none"; // ซ่อนข้อความข้อผิดพลาด
+          modalImage.src = paySlipUrl;
+          modalImage.style.display = "block"; // Show image
+          errorText.style.display = "none"; // Hide error message
         } else {
-          modalImage.style.display = "none"; // ซ่อนรูป
-          errorText.style.display = "block"; // แสดงข้อความข้อผิดพลาด
+          modalImage.style.display = "none"; // Hide image
+          errorText.style.display = "block"; // Show error message
         }
       }
 
       // Optional: Filter displayed payments by search input
       function filterResults() {
-    const query = document.getElementById("searchInput").value.toLowerCase(); // รับข้อความค้นหา
+        const query = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
 
-    // หากไม่มีข้อความค้นหา ให้แสดงข้อมูลทั้งหมดที่ตรงกับ currentFilter
-    const filteredData = query
-        ? allPayments.filter(
+        // หากไม่มีข้อความค้นหา ให้แสดงข้อมูลทั้งหมดที่ตรงกับ currentFilter
+        const filteredData = query
+          ? allPayments.filter(
               (payment) =>
-                  payment.pay == currentFilter && // เฉพาะสถานะ Completed
-                  ((payment.rider_name &&
-                      payment.rider_name.toLowerCase().includes(query)) || // ค้นหาชื่อ Rider
-                      (payment.customer_name &&
-                          payment.customer_name.toLowerCase().includes(query))) // ค้นหาชื่อ Customer
-          )
-        : allPayments.filter((payment) => payment.pay == currentFilter); // แสดงทั้งหมดที่ pay == currentFilter
+                payment.pay == currentFilter && // เฉพาะสถานะ Completed
+                ((payment.rider_name &&
+                  payment.rider_name.toLowerCase().includes(query)) || // ค้นหาชื่อ Rider
+                  (payment.customer_name &&
+                    payment.customer_name.toLowerCase().includes(query))) // ค้นหาชื่อ Customer
+            )
+          : allPayments.filter((payment) => payment.pay == currentFilter); // แสดงทั้งหมดที่ pay == currentFilter
 
-    displayPayments(filteredData); // แสดงผลข้อมูลที่ผ่านการกรอง
-}
-
-
+        displayPayments(filteredData); // แสดงผลข้อมูลที่ผ่านการกรอง
+      }
 
       // Fetch data when page loads
       document.addEventListener("DOMContentLoaded", fetchPayments);

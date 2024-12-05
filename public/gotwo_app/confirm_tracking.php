@@ -17,12 +17,12 @@ try {
            r.gender AS rider_gender, r.img_profile AS rider_img_profile,
            c.name AS customer_name, c.email AS customer_email, c.tel AS customer_tel, 
            c.gender AS customer_gender, c.img_profile AS customer_img_profile,
-           p.pick_up, p.at_drop, p.date, s.status
+           p.pick_up, p.at_drop, p.date, s.pay , s.image
     FROM status_post s
     JOIN table_rider r ON s.rider_id = r.regis_rider_id
     JOIN table_customer c ON s.customer_id = c.regis_customer_id
     JOIN post p ON s.post_id = p.post_id
-    WHERE s.status IN (2, 7) 
+    WHERE s.status = 2
     ORDER BY p.date DESC
 ";
 
@@ -153,8 +153,8 @@ try {
                         <ul>
                             <li class="Pending_nav_animation"><a
                                     href="/public/gotwo_app/pending_tracking.php">Pending</a></li>
-                            <li class="Request_nav_animation"><a href="/public/gotwo_app/req_tracking.php">Request</a>
-                            </li>
+                            <!-- <li class="Request_nav_animation"><a href="/public/gotwo_app/req_tracking.php">Request</a>
+                            </li> -->
                             <li class="Confirm_nav_animation"><a
                                     href="/public/gotwo_app/confirm_tracking.php">Confirm</a></li>
                             <li class="Totravel_nav_animation"><a href="/public/gotwo_app/totravel_tracking.php">To travel</a></li>
@@ -224,7 +224,7 @@ try {
                         <p id="errorText" class="text-danger" style="display: none;">Slip not available.</p>
                     </div>
                     <div class="modal-footer">
-                        <button id="successButton" type="button" class="btn btn-success" onclick="updateStatus()">Successfully</button>
+                        <button id="successButton" type="button" class="btn btn-success" onclick="updatePay()">Verified</button>
                         <button id="closeButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
 
@@ -241,15 +241,17 @@ try {
         <script>
             function displayTableData(data) {
                 let tableBody = '';
-                let selectedId = ''; // ใช้ null สำหรับ selectedId
+                let selectedId = ''; 
 
                 data.forEach((item, index) => {
                     // ตรวจสอบสถานะและกำหนดข้อความแสดงผล
                     const statusText =
-                        item.status == 7 ?
+                        item.pay == 2 ?
                         '<span style="color: green; font-weight: bold;">Verified</span>' :
                         '<span style="color: orange; font-weight: bold;">Under Review</span>';
                     console.log('Demo Data:', demo_data);
+                    const baseUrl = "http://localhost/"; 
+                    const fullImageUrl = baseUrl + item.image; 
 
 
                     // เพิ่มแถวข้อมูลในตาราง
@@ -339,7 +341,7 @@ try {
 
 
                 console.log("Selected Item:", item); // Debug เพื่อตรวจสอบข้อมูล
-                console.log("Selected Status:", item.status);
+                console.log("Selected pay:", item.pay);
 
                 if (item && item.image && item.image.trim() !== "") {
                     slipImage.src = item.image;
@@ -352,48 +354,47 @@ try {
 
                 // ซ่อนหรือแสดงปุ่ม "Successfully"
                 if (successButton) {
-                    if (item.status === 7) {
-                        successButton.style.display = "none"; // ซ่อนปุ่มถ้าสถานะเป็น 7
+                    if (item.pay === 2) {
+                        successButton.style.display = "none";
                     } else {
-                        successButton.style.display = "block"; // แสดงปุ่มถ้าสถานะไม่ใช่ 7
+                        successButton.style.display = "block";
                     }
                 } else {
-                    console.error("Success Button not found in DOM"); // Debug เมื่อปุ่มไม่พบ
+                    console.error("Success Button not found in DOM");
                 }
             }
 
 
             // ฟังก์ชันสำหรับอัปเดตสถานะ
-            function updateStatus() {
+            function updatePay() {
                 if (!selectedId) {
                     alert("No item selected.");
                     return;
                 }
-
                 fetch('/public/gotwo_app/confirm_payment_cus.php', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json',
+                            'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
                             id: selectedId,
-                            status: 7,
+                            pay: 2
                         }),
                     })
 
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.success) {
-                            alert('Status updated successfully!');
+                            alert('Pay updated successfully!');
                             location.reload();
                         } else {
-                            alert('Failed to update status: ' + data.message);
+                            alert('Failed to update Pay: ' + data.message);
                         }
+                      
+
+
                     })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                        alert('An error occurred. Please try again.');
-                    });
+
             }
 
 

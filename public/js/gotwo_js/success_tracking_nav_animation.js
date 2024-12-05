@@ -2,7 +2,7 @@
 let slider_nav_animation = document.querySelector(".slider_nav_animation");
 let slider_nav_animation_li = document.querySelectorAll(".nav_animation ul li");
 let index_value = 0;
-let left_position = 510;
+let left_position = 460;
 
 slider_nav_animation_li.forEach((item, index) => {
   slider_nav_animation.style.width =

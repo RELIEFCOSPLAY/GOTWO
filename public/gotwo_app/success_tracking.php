@@ -23,7 +23,7 @@ try {
         JOIN table_rider r ON s.rider_id = r.regis_rider_id
         JOIN table_customer c ON s.customer_id = c.regis_customer_id
         JOIN post p ON s.post_id = p.post_id
-        WHERE s.status IN (4, 7) 
+        WHERE s.status = 4
         ORDER BY p.date DESC
     ";
     $query = $conn->prepare($sql);
@@ -150,8 +150,8 @@ try {
                         <ul>
                             <li class="Pending_nav_animation"><a
                                     href="/public/gotwo_app/pending_tracking.php">Pending</a></li>
-                            <li class="Request_nav_animation"><a href="/public/gotwo_app/req_tracking.php">Request</a>
-                            </li>
+                            <!-- <li class="Request_nav_animation"><a href="/public/gotwo_app/req_tracking.php">Request</a>
+                            </li> -->
                             <li class="Confirm_nav_animation"><a
                                     href="/public/gotwo_app/confirm_tracking.php">Confirm</a></li>
                             <li class="Totravel_nav_animation"><a href="/public/gotwo_app/totravel_tracking.php">To travel</a></li>

@@ -8,20 +8,21 @@ try {
     file_put_contents('debug_log.txt', "POST: " . json_encode($_POST) . PHP_EOL, FILE_APPEND);
     file_put_contents('debug_log.txt', "FILES: " . json_encode($_FILES) . PHP_EOL, FILE_APPEND);
 
+    // Validate HTTP request method
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         throw new Exception("Invalid request method.");
     }
 
+    // Validate input data
     if (!isset($_FILES['img_qr_admin']) || !isset($_POST['status_post_id'])) {
         throw new Exception("Invalid input data: Missing file or status_post_id.");
     }
 
     $img_qr_admin = $_FILES['img_qr_admin'];
     $status_post_id = intval($_POST['status_post_id']);
-    $pay = isset($_POST['pay']) ? intval($_POST['pay']) : 4;
-
-    if ($pay !== 4 && $pay !== 5) {
-        throw new Exception("Invalid pay value. Only 4 or 5 are allowed.");
+    $pay = isset($_POST['pay']) ? intval($_POST['pay']) : 5; 
+    if ($pay !== 5 && $pay !== 6) {
+        throw new Exception("Invalid pay value. Only 5 or 6 are allowed.");
     }
 
     // Handle file upload errors
@@ -48,23 +49,27 @@ try {
         throw new Exception("Invalid file type: $fileType");
     }
 
-    // Define upload directory
-    $uploadDir = "admin_qr_gotwo_app/uploads/";
-    if (!is_dir($uploadDir)) {
-        if (!mkdir($uploadDir, 0777, true)) {
-            throw new Exception("Failed to create upload directory: $uploadDir");
+    // Define upload directory (physical path)
+    $physicalDir = "C:/xampp/htdocs/gotwo/uploads/";
+    if (!is_dir($physicalDir)) {
+        if (!mkdir($physicalDir, 0777, true)) {
+            throw new Exception("Failed to create upload directory: $physicalDir");
         }
     }
 
-    // Generate unique file name
+    // Define relative path for database
+    $relativeDir = "gotwo/uploads/";
     $timestamp = time();
     $extension = pathinfo($img_qr_admin['name'], PATHINFO_EXTENSION);
     $fileName = "qr_admin_" . $timestamp . "." . $extension;
-    $filePath = $uploadDir . $fileName;
 
-    // Move uploaded file
-    if (!move_uploaded_file($img_qr_admin['tmp_name'], $filePath)) {
-        throw new Exception("Failed to save file. Temp: {$img_qr_admin['tmp_name']}, Destination: $filePath");
+    // Full paths
+    $filePathPhysical = $physicalDir . $fileName; // Physical storage path
+    $filePathRelative = $relativeDir . $fileName; // Path to save in database
+
+    // Move uploaded file to physical path
+    if (!move_uploaded_file($img_qr_admin['tmp_name'], $filePathPhysical)) {
+        throw new Exception("Failed to save file. Temp: {$img_qr_admin['tmp_name']}, Destination: $filePathPhysical");
     }
 
     // Database operations
@@ -74,12 +79,12 @@ try {
 
     $sqlUpdate = "
         UPDATE status_post 
-        SET img_qr_admin = :img_qr_admin, status = 6, pay = :pay 
+        SET img_qr_admin = :img_qr_admin, pay = :pay 
         WHERE status_post_id = :status_post_id
     ";
 
     $stmt = $pdo->prepare($sqlUpdate);
-    $stmt->bindParam(':img_qr_admin', $filePath);
+    $stmt->bindParam(':img_qr_admin', $filePathRelative); // Save relative path in database
     $stmt->bindParam(':pay', $pay);
     $stmt->bindParam(':status_post_id', $status_post_id);
 
@@ -89,10 +94,11 @@ try {
 
     $pdo->commit();
 
+    // Return success response
     echo json_encode([
         "success" => true,
         "message" => "File uploaded and database updated successfully.",
-        "img_qr_admin" => $filePath,
+        "img_qr_admin" => $filePathRelative,
         "pay" => $pay
     ]);
 } catch (Exception $e) {
@@ -100,8 +106,11 @@ try {
     if (isset($pdo) && $pdo->inTransaction()) {
         $pdo->rollBack();
     }
+
+    // Log errors
     file_put_contents('debug_log.txt', "Error: " . $e->getMessage() . PHP_EOL, FILE_APPEND);
+
+    // Return error response
     http_response_code(500);
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-?>

@@ -213,11 +213,9 @@
         </div>
       </div>
     </div>
-
-    <!-- ////////////////////////// -->
     <script>
-      let allPayments = []; 
-      let currentFilter = 3;
+      let allPayments = []; // Store fetched payments here
+      let currentFilter = 3; // 0 for Unpaid, 1 for Completed
 
       // Fetch data from PHP and display it
       async function fetchPayments() {
@@ -231,13 +229,13 @@
               "<p>Failed to load data.</p>";
             return;
           }
-       
+
           // Check if the data has changed before re-rendering
           if (JSON.stringify(allPayments) !== JSON.stringify(payments)) {
             console.log("Data updated, re-rendering...");
-            allPayments = payments; 
-            allPayments.sort((a, b) => new Date(b.time) - new Date(a.time)); 
-            filterPayments(currentFilter); 
+            allPayments = payments; // Update the stored data
+            allPayments.sort((a, b) => new Date(b.time) - new Date(a.time)); // Sort by latest time
+            filterPayments(currentFilter); // Update the display
           } else {
             console.log("No changes in data.");
           }
@@ -245,7 +243,6 @@
           console.error("Error fetching payments:", error);
         }
       }
-
       function truncateText(text, maxLength) {
         if (text.length > maxLength) {
           return text.substring(0, maxLength) + "...";
@@ -255,13 +252,12 @@
 
       // Function to filter and display payments based on status
       function filterPayments(status) {
-    currentFilter = status;
-    const filteredPayments = allPayments.filter(
-        (payment) => payment.pay == status && payment.pay !== 6 
-    );
-    displayPayments(filteredPayments);
-}
-
+        currentFilter = status;
+        const filteredPayments = allPayments.filter(
+          (payment) => payment.pay == status
+        );
+        displayPayments(filteredPayments);
+      }
 
       // Call fetchPayments every 3 seconds for real-time updates
       setInterval(fetchPayments, 3000);
@@ -295,8 +291,6 @@
         data.forEach((item, index) => {
           const dateParts = item.date.split("-");
           const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-          const successImg = item.success_img || "/public/img/user.png";
-          const travelImg = item.travel_img || "path/to/default-travel-icon.png";
 
           const timeOnly = item.time.includes(" ")
             ? item.time.split(" ")[1].substring(0, 5)
@@ -309,7 +303,7 @@
                                 data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent${index}">
                                 <div class="d-flex flex-row">
                                     <div class="d-flex flex-row ms-5 align-items-center">
-                                       <img src="${travelImg}" class="mx-3" alt="Travel Image">
+                                        <img src="/public/img/pngegg.png" class="mx-3">
                                         <div class="mt-3 fw-bold">
                                             <p>Date: ${formattedDate}</p>
                                             <p>Time: ${timeOnly}</p>
@@ -323,8 +317,7 @@
                                     </div>
                                     <h1 class="d-flex flex-row align-items-center mx-5">-------></h1>
                                     <div class="d-flex flex-row align-items-center">
-                                  <img src="${successImg || '/public/img/default-profile-icon.png'}" class="mx-2" style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%;" alt="Profile Icon" onerror="this.src='/public/img/default-profile-icon.png';">
-
+                                        <img src="/public/img/pngegg.png" class="mx-3">
                                         <div class="mt-3 fw-bold">    
                                             <p>Date: ${formattedDate}</p>
                                             <p>Time: ${timeOnly}</p>
@@ -445,85 +438,34 @@
           const file = event.target.files[0];
           if (file) {
             const formData = new FormData();
-            formData.append("img_qr_admin", file);
+            formData.append("image", file);
             formData.append("status_post_id", status_post_id);
-            formData.append("pay", 5); 
 
             fetch("upload_image.php", {
               method: "POST",
               body: formData,
             })
-              .then((response) => response.json())
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+              })
               .then((data) => {
+                console.log("Response from server:", data);
                 if (data.success) {
                   alert("Upload successful!");
-                  location.reload();
+                  location.reload(); // Refresh the page after the alert
                 } else {
                   alert(`Upload failed: ${data.message}`);
                 }
               })
               .catch((error) => {
-                console.error("Error during upload:", error);
-                alert("An error occurred while uploading. Please try again.");
+                console.error("Error occurred:", error);
               });
           }
         };
       }
-
-
-      $(document).ready(function () {
-        // กำหนดการคลิกสำหรับ #uploadBtn
-        $("#uploadBtn").on("click", async function () {
-          const fileInput = $("#fileInput")[0];
-          if (!fileInput.files.length) {
-            alert("Please select a file to upload.");
-            return;
-          }
-
-          const formData = new FormData();
-          formData.append("image", fileInput.files[0]);
-
-          try {
-            const response = await fetch(
-              "http://localhost/gotwo/upload_p.php",
-              {
-                method: "POST",
-                body: formData,
-              }
-            );
-
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log("Upload Response:", data);
-
-            if (data.file) {
-              $("#uploadResult").html(`
-          <p>File uploaded successfully:</p>
-          <a href="${data.file}" target="_blank">${data.file}</a>
-          <img src="${data.file}" alt="Uploaded Image" class="img-fluid mt-2" />
-        `);
-            } else {
-              $("#uploadResult").html(
-                `<p>Error: ${data.error || "Unknown error occurred."}</p>`
-              );
-            }
-          } catch (error) {
-            console.error("Error uploading file:", error);
-            $("#uploadResult").html(
-              "<p>An error occurred while uploading the file.</p>"
-            );
-          }
-        });
-
-        // เพิ่มการใช้งาน handleAddPhoto
-        $("#anotherButton").on("click", function () {
-          const status_post_id = "123"; // กำหนดค่า ID ที่ต้องการ
-          handleAddPhoto(status_post_id);
-        });
-      });
 
       // Fetch data when page loads
       document.addEventListener("DOMContentLoaded", fetchPayments);
