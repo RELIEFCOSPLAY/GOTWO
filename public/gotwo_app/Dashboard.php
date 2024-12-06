@@ -174,11 +174,11 @@ try {
                                         style="color: #F0A007;"></i>Request<br>
                                     <!-- ------------------------------------------------- -->
                                     <?php
-                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 0";
+                                    $sql = "SELECT COUNT(*) as status FROM status_post WHERE status = 1";
                                     $query = $conn->prepare($sql);
                                     $query->execute();
                                     $fetch = $query->fetch();
-                                    $status = $fetch['status'] ?? 0;
+                                    $status = $fetch['status'] ?? 1;
                                     ?>
                                     <!-- ------------------------------------------------- -->
                                     <p><?= $status ?></p>
@@ -276,7 +276,7 @@ try {
                                     <i class="bi bi-credit-card" style="color: #D6A3DA;"></i>Payment Refund<br>
                                     <?php
                                     // Query เพื่อดึงจำนวนแถวที่มี pay = 3
-                                    $sql = "SELECT COUNT(*) as pay FROM status_post WHERE pay = 2";
+                                    $sql = "SELECT COUNT(*) as pay FROM status_post WHERE pay = 4";
                                     $query = $conn->prepare($sql);
                                     $query->execute();
                                     $fetch = $query->fetch();
@@ -307,7 +307,7 @@ try {
                             <link rel="stylesheet" type="text/css" href="styles.css">
                         </head>
                         <?php
-                        $sql = "SELECT COUNT(*) as count FROM status_post WHERE pay = 4";
+                        $sql = "SELECT COUNT(*) as count FROM status_post WHERE pay = 5";
                         $query = $conn->prepare($sql);
                         $query->execute();
                         $fetch = $query->fetch();
