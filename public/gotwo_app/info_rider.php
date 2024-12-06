@@ -7,24 +7,9 @@ $dbname = "data_test";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['regis_rider_id'])) {
-        $riderId = $_GET['regis_rider_id'];
-
-        $sql = "SELECT img_id_card FROM table_rider WHERE regis_rider_id = :riderId";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':riderId', $riderId, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            echo json_encode(['success' => true, 'img_id_card' => $result['img_id_card']]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Image not found']);
-        }
-    }
 } catch (PDOException $e) {
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    echo "Connection failed: " . $e->getMessage();
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -57,7 +42,6 @@ try {
                 <div class="sidebar-logo">
                     <a href="#" class="fw-bold" style="font-size: 40px;">GOTWO</a>
                 </div>
-
             </div>
             <a href="#" class="sidebar-person">
                 <div class="text-white ">
@@ -67,7 +51,9 @@ try {
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                    <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
+                    <span class="mx-4 fw-bold">
+                        <?= $adminData ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                    </span>
                 </div>
             </a>
 
@@ -96,14 +82,12 @@ try {
                         </li>
                     </ul>
                 </li>
-
                 <li class="sidebar-item">
                     <a href="/public/gotwo_app/pending_tracking.php" class="sidebar-link">
                         <i class="bi bi-pin-map-fill"></i>
                         <span>Travel Tracking</span>
                     </a>
                 </li>
-
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#Payment" aria-expanded="false" aria-controls="Payment">
@@ -112,24 +96,22 @@ try {
                     </a>
                     <ul id="Payment" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_ride.php" class="sidebar-link">Rider</a>
+                            <a href="/public/gotwo_app/payment_ride.html" class="sidebar-link">Rider</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/payment_cus.php" class="sidebar-link">Refund</a>
+                            <a href="/public/gotwo_app/payment_cus.html" class="sidebar-link">Refund</a>
                         </li>
                     </ul>
                 </li>
-
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
                         <span>Profile</span>
                     </a>
                 </li>
-
             </ul>
             <div class="sidebar-footer">
-                <a href="/public/gotwo_app/login_gotwo.html" class="sidebar-link">
+                <a href="/public/gotwo_app/logout.php" class="sidebar-link">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
@@ -156,25 +138,25 @@ try {
                             <div class="col-md-8">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="name" readonly>
+                                    <input type="text" class="form-control" id="name" readonly value=">
                                 </div>
-                                <div class="mb-3">
+                                <div class=" mb-3">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email" readonly>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="expiration_date" class="form-label">Expiration Date</label>
-                                            <input type="text" class="form-control" id="expiration_date" readonly>
+                                            <label for="birthdate" class="form-label">Expiration Date</label>
+                                            <input type="text" class="form-control" id="birthdate" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="tel" class="form-label">Phone Number</label>
-                                            <input type="tel" class="form-control" id="tel" readonly>
+                                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" id="phoneNumber" readonly>
 
                                         </div>
                                         <div class="col-md-6">
@@ -194,25 +176,29 @@ try {
                         <div class="border-top border mb-2" style="border-width: 4px; color:rgb(26, 28, 67);"></div>
                         <div class="col">
                             <div class="row">
-                                <!-- ID Card Button -->
-
                                 <div class="column">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card w-150 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
+                                            onclick="showImage('<?= htmlspecialchars($riderData['img_id_card'] ?? '/public/img/default_placeholder.jpg') ?>', 'ID Card')">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">ID Card</h5>
+                                            </div>
+                                        </div>
 
-
-                                    <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal" data-bs-target="#idCardModal" onclick="showIdCardImage(1)">
-                                        ID Card
-                                    </button>
+                                    </div>
                                 </div>
-                                <!-- Driver's License Button -->
                                 <div class="column">
-                                    <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal" data-bs-target="#licenseModal">
-                                        Driver's License
-                                    </button>
+                                    <div class="card w-150 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
+                                        onclick="showImage('<?= htmlspecialchars($riderData['img_driver_license'] ?? '/public/img/default_placeholder.jpg') ?>', 'Driver License')">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Driver's License</h5>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
                     <!-- Document Car -->
                     <div class="form-section mt-3">
@@ -221,190 +207,309 @@ try {
                         <div class="col">
                             <div class="row">
                                 <div class="column">
-                                    <div class="card w-75 h-50">
-                                        <div class="card-body">
+
+                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
+                                    
+                                        onclick="showImage('<?= htmlspecialchars($riderData['img_act'] ?? '/public/img/default_placeholder.jpg') ?>', 'Act')">
+                                        <div class="card-body text-center">
                                             <h5 class="card-title">Act</h5>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="column">
-                                    <div class="card w-75 h-50">
-                                        <div class="card-body">
+                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
+                                        onclick="showImage('<?= htmlspecialchars($riderData['img_car_picture'] ?? '/public/img/default_placeholder.jpg') ?>', 'Car Picture')">
+                                        <div class="card-body text-center">
                                             <h5 class="card-title">Car Picture</h5>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="column">
-                                    <div class="card w-75 h-50">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Car registration</h5>
+                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
+                                        onclick="showImage('<?= htmlspecialchars($riderData['img_car_registration'] ?? '/public/img/default_placeholder.jpg') ?>', 'Car Registration')">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Car Registration</h5>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
             </div>
-            <!-- popup -->
-            <div class="modal fade" id="idCardModal" tabindex="-1" aria-labelledby="idCardModalLabel" aria-hidden="true">
+            <!-- Modal -->
+            <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true"
+                data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="idCardModalLabel">ID Card</h5>
+                            <h5 class="modal-title" id="imageModalLabel">Document</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center">
-                            <img id="idCardImage" src="" alt="No Image Available" class="img-fluid" style="max-width: 100%; height: auto;">
-                            <p id="errorTextIDCard" style="display: none; color: red;">No Image Available</p>
+                            <img id="modalImage" src="" alt="Document" class="img-fluid">
                         </div>
                     </div>
                 </div>
             </div>
 
 
-
             <!-- Buttons -->
             <div class="d-flex justify-content-end gap-2 mt-1">
-                <button type="button" class="btn btn-danger" id="rejectButton" data-rider-id="<?= htmlspecialchars($riderId) ?>">Reject</button>
-                <button type="button" class="btn btn-success" id="confirmButton" data-rider-id="<?= htmlspecialchars($riderId) ?>">Confirm</button>
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="rejectButton"
+                    onclick="updateStatusCC(null, 3)">Reject</button>
+                <button
+                    type="button"
+                    class="btn btn-success"
+                    id="confirmButton"
+                    onclick="updateStatusCC(null, 1)">Confirm</button>
             </div>
+
+
 
             </form>
         </div>
         <script src="/public/js/gotwo_js/nav_animation.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
         <?php
-        $riderId = filter_input(INPUT_GET, 'regis_rider_id', FILTER_VALIDATE_INT);
-        if ($riderId === false || $riderId === null) {
-            die("");
+        // ฟังก์ชันสำหรับตรวจสอบไฟล์และคืนค่า URL
+        function getImageUrl($fileName, $targetDir, $baseUrl, $default = "default_placeholder.png")
+        {
+            return isset($fileName) && file_exists($targetDir . basename($fileName))
+                ? $baseUrl . basename($fileName)
+                : $baseUrl . $default;
         }
 
 
-        // ตรวจสอบว่ามีการเชื่อมต่อฐานข้อมูลสำเร็จ
-        if (!$conn) {
-            die("Database connection failed");
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // ดึงค่า regis_rider_id จาก URL
+            $riderId = $_GET['regis_rider_id'] ?? null;
+            if (!$riderId) {
+                throw new Exception("Rider ID is missing.");
+            }
+
+            // Query ข้อมูลจาก table_rider
+            $sql = "SELECT * FROM `table_rider` WHERE regis_rider_id = :riderId";
+            $query = $conn->prepare($sql);
+            $query->bindParam(':riderId', $riderId, PDO::PARAM_INT);
+            $query->execute();
+            $fetch = $query->fetch(PDO::FETCH_ASSOC);
+
+            if (!$fetch) {
+                throw new Exception("Rider not found.");
+            }
+
+            // Path และ Base URL
+            $targetDir = "C:/xampp/htdocs/gotwo/uploads/";
+            $baseUrl = "http://localhost/gotwo/uploads/";
+
+            // ดึงข้อมูลรูปภาพ
+            $idCardImage = getImageUrl($fetch['img_id_card'], $targetDir, $baseUrl);
+            $driverLicenseImage = getImageUrl($fetch['img_driver_license'], $targetDir, $baseUrl);
+            $actImage = getImageUrl($fetch['img_act'], $targetDir, $baseUrl);
+            $carImage = getImageUrl($fetch['img_car_picture'], $targetDir, $baseUrl);
+            $registrationImage = getImageUrl($fetch['img_car_registration'], $targetDir, $baseUrl);
+
+            // แปลงข้อมูลเป็น JSON
+            $riderData = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
-        $sql = "SELECT 
-        `regis_rider_id`, `img_profile`, `name`, `email`, `tel`, `gender`, 
-        `img_id_card`, `img_driver_license`, `img_car_picture`, `img_car_registration`, 
-        `img_act`, `expiration_date`, `car_rigistration`, `car_brand`, `status_rider` 
-    FROM `table_rider` 
-    WHERE `regis_rider_id` = :riderId";
-
-
-        $query = $conn->prepare($sql);
-        $query->bindParam(':riderId', $riderId, PDO::PARAM_INT);
-        $query->execute();
-
-        $fetch = $query->fetch(PDO::FETCH_ASSOC);
-        $riderData = json_encode($fetch, JSON_UNESCAPED_UNICODE);
-
-
         ?>
+
+
+
+
+
         <script>
-            // =======================update status==================================
-            async function updateStatus(riderId, status) {
-                try {
-                    const response = await fetch('status_req.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            regis_rider_id: riderId,
-                            status: status
-                        }),
-                    });
+            // ============================img========================================
+            // function showImage(imagePath) {
+            //     // Set the modal image source to the clicked image
+            //     document.getElementById('modalImage').src = imagePath;
+            // }
 
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+            // // =======================update status==================================
+            // async function updateStatus(riderId, status) {
+            //     try {
+            //         const response = await axios.post('update_statusridercc.php', {
+            //             regis_rider_id: riderId,
+            //             status: status
+            //         });
 
-                    const data = await response.json();
-                    if (data.success) {
-                        alert(data.message);
-                        document.getElementById('confirmButton').disabled = true;
-                        document.getElementById('rejectButton').disabled = true;
-                    } else {
-                        alert(data.message || 'Failed to update status.');
-                    }
-                } catch (error) {
-                    console.error('Error updating status:', error);
-                    alert('An error occurred while updating the status.');
-                }
+            //         if (response.data.success) {
+            //             alert(response.data.message);
+            //             location.reload();
+            //         } else {
+            //             alert(response.data.message || 'Failed to update status.');
+            //         }
+            //     } catch (error) {
+            //         console.error('Error:', error);
+            //         alert('Failed to update status.');
+            //     }
+            // }
+            function showImage(imageUrl, title) {
+                document.getElementById('modalImage').src = imageUrl || '/public/img/default_placeholder.jpg';
+                document.getElementById('imageModalLabel').textContent = title || 'Document';
             }
 
 
-            document.getElementById('confirmButton').addEventListener('click', () => {
-                const riderId = document.getElementById('confirmButton').getAttribute('data-rider-id');
-                if (confirm("Are you sure you want to confirm this rider?")) {
-                    updateStatus(riderId, 'Confirmed');
-                }
-            });
 
-
-            document.getElementById('rejectButton').addEventListener('click', () => {
-                const riderId = document.getElementById('rejectButton').getAttribute('data-rider-id');
-                if (confirm("Are you sure you want to reject this rider?")) {
-                    updateStatus(riderId, 'Rejected');
-                }
-            });
+            //===============================================================================================================
+            let riderIdGlobal; // ตัวแปรโกลบอลสำหรับเก็บ regis_rider_id
 
             document.addEventListener('DOMContentLoaded', function() {
-                try {
-                    const riderData = JSON.parse('<?= $riderData ?>') || {};
+                // ตัวอย่างข้อมูล JSON ที่ได้จาก PHP
+                const riderData = <?= $riderData ?>;
 
-                    // ฟังก์ชันสำหรับจัดฟอร์แมตวันที่
-                    const formatDate = (dateString) => {
-                        if (!dateString) return 'Not Available'; // ถ้าวันที่ว่าง
-                        const date = new Date(dateString);
-                        return date.toLocaleDateString('en-GB', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        });
-                    };
+                // กำหนดค่าไปยัง input ที่มี id ตรงกัน
+                document.getElementById('name').value = riderData.name || 'Not Available';
+                document.getElementById('email').value = riderData.email || 'Not Available';
+                document.getElementById('birthdate').value = riderData.expiration_date || 'Not Available';
+                document.getElementById('phoneNumber').value = riderData.tel || 'Not Available';
+                document.getElementById('gender').value = riderData.gender || 'Not Available';
+                document.getElementById('confirmButton').value = riderData.regis_rider_id || 'Not Available';
+                document.getElementById('rejectButton').value = riderData.regis_rider_id || 'Not Available';
 
-
-                    // Map fields to inputs
-                    document.getElementById('name').value = riderData.name || 'Not Available';
-                    document.getElementById('email').value = riderData.email || 'Not Available';
-                    document.getElementById('expiration_date').value = formatDate(riderData.expiration_date); // ใช้ฟังก์ชัน formatDate
-                    document.getElementById('tel').value = riderData.tel || 'Not Available';
-                    document.getElementById('gender').value = riderData.gender || 'Not Available';
-                } catch (error) {
-                    console.error("Error parsing rider data:", error);
-                }
-
+                // เก็บ regis_rider_id ไว้ในตัวแปรโกลบอล
+                riderIdGlobal = riderData.regis_rider_id || null;
             });
 
-       function showIdCardImage(riderId) {
-    fetch(`info_rider.php?regis_rider_id=${riderId}`)
-        .then(response => response.json())
-        .then(data => {
-            const imageElement = document.getElementById('idCardImage');
-            const errorText = document.getElementById('errorTextIDCard');
+            //===============================================================================================================
+            async function updateStatusCC(riderId, status) {
+                riderId = riderId || riderIdGlobal;
 
-            if (data.success && data.img_id_card) {
-                const imageUrl = data.img_id_card.startsWith('/')
-                    ? data.img_id_card
-                    : `/${data.img_id_card}`; // เพิ่ม '/' หากไม่มี
-                imageElement.src = imageUrl;
-                imageElement.style.display = "block";
-                errorText.style.display = "none";
-            } else {
-                imageElement.style.display = "none";
-                errorText.style.display = "block";
+                if (!riderId) {
+                    Swal.fire('Error', 'Rider ID is missing. Please try again.', 'error');
+                    return;
+                }
+
+                console.log("Rider ID:", riderId);
+                console.log("Status:", status);
+
+                // กรณี Reject (status === 3)
+                if (status === 3) {
+                    const reasonInput = await Swal.fire({
+                        title: 'Reject Rider',
+                        text: 'Please provide a reason for rejection:',
+                        input: 'textarea',
+                        inputPlaceholder: 'Enter your reason here...',
+                        inputAttributes: {
+                            'aria-label': 'Reason for rejection'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Submit',
+                        cancelButtonText: 'Cancel',
+                    });
+
+                    if (reasonInput.isDismissed) {
+                        Swal.fire('Cancelled', 'Your action has been cancelled.', 'info');
+                        return;
+                    }
+
+                    const reason = reasonInput.value.trim();
+                    if (!reason) {
+                        Swal.fire('Error', 'Reason cannot be empty.', 'error');
+                        return;
+                    }
+
+                    console.log("Reason:", reason);
+
+                    // ส่งค่าไปยัง Backend
+                    const API_URL = 'update_statusridercc.php';
+                    try {
+                        const response = await fetch(API_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                regis_rider_id: riderId,
+                                status: status, // status = 3
+                                reason: reason, // เพิ่ม reason
+                            }),
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        console.log("Response:", data);
+
+                        if (data.success) {
+                            Swal.fire('Success', data.message, 'success').then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire('Error', data.message || 'Failed to update status.', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        Swal.fire('Error', 'Failed to update status.', 'error');
+                    }
+                } else if (status === 1) { // กรณี Confirm (status === 1)
+                    const confirmation = await Swal.fire({
+                        title: 'Confirm Action',
+                        text: 'Are you sure you want to confirm this action?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, Confirm it!',
+                        cancelButtonText: 'Cancel',
+                        reverseButtons: true,
+                    });
+
+                    if (!confirmation.isConfirmed) {
+                        Swal.fire('Cancelled', 'Your action has been cancelled.', 'info');
+                        return;
+                    }
+
+                    const API_URL = 'update_statusridercc.php';
+
+                    try {
+                        const response = await fetch(API_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                regis_rider_id: riderId,
+                                status: status, // status = 1
+                            }),
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        console.log("Response:", data);
+
+                        if (data.success) {
+                            Swal.fire('Success', data.message, 'success').then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire('Error', data.message || 'Failed to update status.', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        Swal.fire('Error', 'Failed to update status.', 'error');
+                    }
+                }
             }
-
-            const modal = new bootstrap.Modal(document.getElementById('idCardModal'));
-            modal.show();
-        })
-        .catch(error => {
-            console.error('Error fetching image:', error);
-        });
-}
-
         </script>
 </body>
 

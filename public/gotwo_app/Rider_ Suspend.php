@@ -2,7 +2,7 @@
 $severname = "localhost";
 $username = "root";
 $password = "";
-$dbname = "gotwo";
+$dbname = "data_test";
 
 try {
     $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
@@ -32,7 +32,7 @@ try {
 <body>
 
     <div class="wrapper">
-        <aside id="sidebar">
+    <aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-grid-fill"></i>
@@ -40,7 +40,6 @@ try {
                 <div class="sidebar-logo">
                     <a href="#" class="fw-bold" style="font-size: 40px;">GOTWO</a>
                 </div>
-
             </div>
             <a href="#" class="sidebar-person">
                 <div class="text-white ">
@@ -50,16 +49,18 @@ try {
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                    <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
+                    <span class="mx-4 fw-bold">
+                        <?= $adminData ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                    </span>
                 </div>
             </a>
 
-            <p class="text-white mt-4 ms-2 fw-bold">MEUN</p>
+            <p class="text-white mt-4 ms-2 fw-bold">MENU</p>
             <hr class="text-white d-none d-sm-block" />
 
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="/public/gotwo_app/Dashboard.html" class="sidebar-link">
+                    <a href="/public/gotwo_app/Dashboard.php" class="sidebar-link">
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>
@@ -72,21 +73,19 @@ try {
                     </a>
                     <ul id="Management" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/Rider_Request.html" class="sidebar-link">Rider</a>
+                            <a href="/public/gotwo_app/Rider_Request.php" class="sidebar-link">Rider</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="/public/gotwo_app/Customer_Suspend.html" class="sidebar-link">Customer</a>
+                            <a href="/public/gotwo_app/Customer_Suspend.php" class="sidebar-link">Customer</a>
                         </li>
                     </ul>
                 </li>
-
                 <li class="sidebar-item">
-                    <a href="/public/gotwo_app/pending_tracking.html" class="sidebar-link">
+                    <a href="/public/gotwo_app/pending_tracking.php" class="sidebar-link">
                         <i class="bi bi-pin-map-fill"></i>
                         <span>Travel Tracking</span>
                     </a>
                 </li>
-
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#Payment" aria-expanded="false" aria-controls="Payment">
@@ -102,31 +101,15 @@ try {
                         </li>
                     </ul>
                 </li>
-                <!-- <li class="sidebar-item">
-                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                     data-bs-target="#Report" aria-expanded="false" aria-controls="Report">
-                     <i class="bi bi-flag-fill"></i>
-                     <span>Report</span>
-                 </a>
-                 <ul id="Report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Rider</a>
-                     </li>
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Customer</a>
-                     </li>
-                 </ul>
-             </li> -->
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
                         <span>Profile</span>
                     </a>
                 </li>
-
             </ul>
             <div class="sidebar-footer">
-                <a href="/public/gotwo_app/login_gotwo.html" class="sidebar-link">
+                <a href="/public/gotwo_app/logout.php" class="sidebar-link">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
@@ -194,12 +177,13 @@ try {
     <script src="/public/js/gotwo_js/searchfuction.js"></script>
     <!-- ------------------------------------------------- -->
     <?php
-    $sql = "SELECT regis_rider_id, name, email, tel, img_profile ,status_rider FROM table_rider WHERE status_rider=1 OR status_rider=2";
+    $sql = "SELECT regis_rider_id, name, email, tel, img_profile, status_rider FROM table_rider WHERE status_rider=1 OR status_rider=2";
     $query = $conn->prepare($sql);
     $query->execute();
     $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
     $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
     ?>
+
 
     <!-- ------------------------------------------------- -->
     <script>
@@ -208,30 +192,49 @@ try {
 
         let show_data = '';
         demo_data.forEach(read => {
+            const statusClass = (read.status_rider == 2 || read.status_rider == 1) ?  'text-danger' : 'text-success' ;
+            const statusText = (read.status_rider == 2 || read.status_rider == 1) ? 'Confirm' : 'Reject';
             show_data += `
-       <tr>
-            <td scope="row"><img src="${read.img_profile}" class="img_style mx-2">${read.name}</td>
-            <td>${read.email}</td>
-            <td>${read.tel}</td>
-            <td>${read.status_rider == 0 ? 'Unsuspend' : 'Suspend'}</td> 
+        <tr>
+            <td onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${read.regis_rider_id || 'unknown'}');" scope="row"><img src="${read.img_profile}" class="img_style mx-2">${read.name}</td>
+            <td onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${read.regis_rider_id || 'unknown'}');">${read.email}</td>
+            <td onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${read.regis_rider_id || 'unknown'}');">${read.tel}</td>
+            <td onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${read.regis_rider_id || 'unknown'}');">${read.status_rider == 1 ? 'Normal' : 'Suspend'}</td>
+
             <td>
                 <label class="switch">
-                    <input type="checkbox" ${read.status_rider == 1 ? 'checked' : ''} onchange="view_(${read.regis_rider_id}, this)">
+                    <input type="checkbox" ${read.status_rider == 2 ? 'checked' : ''} onchange="view_(${read.regis_rider_id}, this)">
                     <span class="slider round"></span>
+
                 </label>
             </td>
-       </tr>
-    `;
+        </tr>
+        `;
         });
 
         document.querySelector('#dataTableBody').innerHTML = show_data;
 
-        function view_(id, checkbox) {
-            const isChecked = checkbox.checked; // สถานะปัจจุบันของ Checkbox
-            const action = isChecked ? "Suspend" : "Unsuspend"; // ข้อความสำหรับ Swal
-            const status = isChecked ? 1 : 0; // 1 = Suspended, 0 = Unsuspended
+        
+        // ฟังก์ชันเปลี่ยนหน้า
+        function redirectToPage(url) {
+            if (url && url.includes('regis_rider_id')) {
+                console.log("Redirecting to:", url); // Log URL
+                window.location.href = url;
+            } else {
+                console.error("Invalid URL or regis_rider_id not provided.");
+                Swal.fire("Error", "Invalid URL or regis_rider_id not provided.", "error");
+            }
+        }
 
-            Swal.fire({
+        // ฟังก์ชันจัดการการเปลี่ยนสถานะ
+        async function view_(id, checkbox) {
+            const isChecked = checkbox.checked; // สถานะปัจจุบันของ Checkbox
+            const action = isChecked ? "Suspend" : "Normal"; // ข้อความสำหรับ Swal
+            const status = isChecked ? 2 : 1; // 2 = Suspended, 1 = Normal
+
+            
+
+            const result = await Swal.fire({
                 title: `Do you want to ${action} this account?`,
                 icon: "warning",
                 showCancelButton: true,
@@ -239,50 +242,49 @@ try {
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Yes",
                 cancelButtonText: "No"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    console.log("Sending Data:", {
-                        regis_rider_id: id,
-                        status_rider: status
-                    }); // Log ข้อมูลที่ส่ง
-                    fetch('update_statusrider.php', {
-                            method: 'POST', // ใช้ POST สำหรับอัปเดต
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                regis_rider_id: id,
-                                status: status
-                            })
-                        })
-                        .then(response => {
-                            console.log("Response:", response); // Log การตอบกลับ
-                            return response.json();
-                        })
-                        .then(data => {
-                            // console.log("Response Data:", data); // Log ข้อมูลที่เซิร์ฟเวอร์ส่งกลับ
-                            if (data.success) {
-                                Swal.fire("Success", `${action}ed successfully!`, "success");
-                                checkbox.checked = isChecked; // ยืนยันการเปลี่ยนสถานะ
-                            } else {
-                                Swal.fire("Error", `Failed to ${action} this account.`, "error");
-                                checkbox.checked = !isChecked; // ยกเลิกการเปลี่ยนสถานะ
-                            }
-                        })
-                        .catch(error => {
-                            Swal.fire("Success", "Updating the status.", "success");
-                            checkbox.checked = isChecked;
-                        });
+            });
 
-                } else {
-                    // กด "No" แสดงข้อความแจ้งยกเลิก
-                    const cancelledAction = isChecked ? "suspending" : "unsuspending";
-                    Swal.fire("Cancelled", `You have cancelled ${cancelledAction} this account.`, "info");
+            if (result.isConfirmed) {
+                try {
+                    // ส่งคำขอไปยังเซิร์ฟเวอร์
+                    const response = await fetch('update_statusrider.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            regis_rider_id: id,
+                            status: status
+                        })
+                    });
+
+                    const data = await response.json(); // แปลงการตอบกลับเป็น JSON
+
+                    if (data.success) {
+                        // อัปเดตสำเร็จ
+                        Swal.fire("Success", `${action}ed successfully!`, "success").then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        // อัปเดตไม่สำเร็จ
+                        Swal.fire("Error", `Failed to ${action} this account.`, "error");
+                        checkbox.checked = !isChecked; // คืนค่ากลับสถานะเดิม
+                    }
+                } catch (error) {
+                    // เกิดข้อผิดพลาดในการเชื่อมต่อ
+                    console.error("Error:", error);
+                    Swal.fire("Error", "An error occurred while updating the status.", "error");
                     checkbox.checked = !isChecked; // คืนค่ากลับสถานะเดิม
                 }
-            });
+            } else {
+                // ผู้ใช้ยกเลิกการดำเนินการ
+                const cancelledAction = isChecked ? "Suspending" : "Normal";
+                Swal.fire("Cancelled", `You have cancelled ${cancelledAction} this account.`, "info");
+                checkbox.checked = !isChecked; // คืนค่ากลับสถานะเดิม
+            }
         }
     </script>
+
 </body>
 
 </html>

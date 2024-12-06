@@ -7,7 +7,6 @@ $dbname = "data_test";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
@@ -32,7 +31,7 @@ try {
 <body>
 
     <div class="wrapper">
-        <aside id="sidebar">
+<aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-grid-fill"></i>
@@ -40,7 +39,6 @@ try {
                 <div class="sidebar-logo">
                     <a href="#" class="fw-bold" style="font-size: 40px;">GOTWO</a>
                 </div>
-
             </div>
             <a href="#" class="sidebar-person">
                 <div class="text-white ">
@@ -50,7 +48,9 @@ try {
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                    <span class="mx-4 fw-bold">Natthawut Sinnamkham</span>
+                    <span class="mx-4 fw-bold">
+                        <?= $adminData ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                    </span>
                 </div>
             </a>
 
@@ -79,14 +79,12 @@ try {
                         </li>
                     </ul>
                 </li>
-
                 <li class="sidebar-item">
                     <a href="/public/gotwo_app/pending_tracking.php" class="sidebar-link">
                         <i class="bi bi-pin-map-fill"></i>
                         <span>Travel Tracking</span>
                     </a>
                 </li>
-
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#Payment" aria-expanded="false" aria-controls="Payment">
@@ -102,17 +100,15 @@ try {
                         </li>
                     </ul>
                 </li>
-               
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
                         <span>Profile</span>
                     </a>
                 </li>
-
             </ul>
             <div class="sidebar-footer">
-                <a href="/public/gotwo_app/login_gotwo.html" class="sidebar-link">
+                <a href="/public/gotwo_app/logout.php" class="sidebar-link">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
@@ -183,7 +179,6 @@ try {
     $query = $conn->prepare($sql);
     $query->execute();
     $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
-    
 
     // แปลงข้อมูลเป็น JSON เพื่อส่งไปยัง JavaScript
     $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
@@ -196,29 +191,29 @@ try {
 
         // วนลูปข้อมูลจาก demo_data 
         demo_data.forEach((read) => {
-    if (read.status_rider == 0) {
-        show_data += `
-        <tr>
-            <td scope="row">
-                <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
-                ${read.name || 'Unknown Name'}
-            </td>
-            <td>${read.email || 'No Email'}</td>
-            <td>${read.tel || 'No Tel'}</td>
-            <td>
-                <a type="button" class="btn btn-success" 
-                   href="/public/gotwo_app/info_rider.php?regis_rider_id=${read.regis_rider_id}">
-                    View Detail
-                </a>
-            </td>
-        </tr>`;
-    }
-});
+            if (read.status_rider == 0) {
+                show_data += `
+            <tr>
+                <td scope="row">
+                    <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
+                    ${read.name || 'Unknown Name'}
+                </td>
+                <td>${read.email || 'No Email'}</td>
+                <td>${read.tel || 'No Tel'}</td>
+                <td>
+                    <a type="button" class="btn btn-success" 
+                       href="/public/gotwo_app/info_rider.php?regis_rider_id=${read.regis_rider_id}">
+                        View Detail
+                    </a>
+                </td>
+            </tr>`;
+            }
+        });
 
-document.querySelector('#dataTableBody').innerHTML = show_data;
+        // แสดงข้อมูลในตาราง
+        document.querySelector('#dataTableBody').innerHTML = show_data;
 
-
-        //
+      
     </script>
 
 

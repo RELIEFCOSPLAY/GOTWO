@@ -1,9 +1,8 @@
 <?php
-
 $severname = "localhost";
 $username = "root";
 $password = "";
-$dbname = "gotwo";
+$dbname = "data_test";
 
 try {
     $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
@@ -31,8 +30,8 @@ try {
 
 <body>
 
-   <div class="wrapper">
-   <aside id="sidebar">
+    <div class="wrapper">
+    <aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-grid-fill"></i>
@@ -40,7 +39,6 @@ try {
                 <div class="sidebar-logo">
                     <a href="#" class="fw-bold" style="font-size: 40px;">GOTWO</a>
                 </div>
-
             </div>
             <a href="#" class="sidebar-person">
                 <div class="text-white ">
@@ -50,11 +48,13 @@ try {
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                    <span class="mx-4 fw-bold"> Natthawut Sinnamkham</span>
+                    <span class="mx-4 fw-bold">
+                        <?= $adminData ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                    </span>
                 </div>
             </a>
 
-            <p class="text-white mt-4 ms-2 fw-bold">MEUN</p>
+            <p class="text-white mt-4 ms-2 fw-bold">MENU</p>
             <hr class="text-white d-none d-sm-block" />
 
             <ul class="sidebar-nav">
@@ -79,14 +79,12 @@ try {
                         </li>
                     </ul>
                 </li>
-
                 <li class="sidebar-item">
                     <a href="/public/gotwo_app/pending_tracking.php" class="sidebar-link">
                         <i class="bi bi-pin-map-fill"></i>
                         <span>Travel Tracking</span>
                     </a>
                 </li>
-
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#Payment" aria-expanded="false" aria-controls="Payment">
@@ -102,37 +100,21 @@ try {
                         </li>
                     </ul>
                 </li>
-                <!-- <li class="sidebar-item">
-                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                     data-bs-target="#Report" aria-expanded="false" aria-controls="Report">
-                     <i class="bi bi-flag-fill"></i>
-                     <span>Report</span>
-                 </a>
-                 <ul id="Report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Rider</a>
-                     </li>
-                     <li class="sidebar-item">
-                         <a href="#" class="sidebar-link">Customer</a>
-                     </li>
-                 </ul>
-             </li> -->
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
                         <i class="bi bi-person-circle"></i>
                         <span>Profile</span>
                     </a>
                 </li>
-
             </ul>
             <div class="sidebar-footer">
-                <a href="/public/gotwo_app/login_gotwo2.html" class="sidebar-link">
+                <a href="/public/gotwo_app/logout.php" class="sidebar-link">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
             </div>
         </aside>
-     <!-- ----------------------------------------------------------------------------------------------------- -->
+        <!-- ----------------------------------------------------------------------------------------------------- -->
 
         <div class="main p-3">
             <div class="ms-4 mt-3">
@@ -201,7 +183,7 @@ try {
     <!-- ------------------------------------------------- -->
     <?php
     // ดึงข้อมูลจากฐานข้อมูล Rider ที่ status_rider = 3(confirm) และ 4 (reject)
-    $sql = "SELECT name, email, tel, img_profile, status_rider FROM table_rider WHERE status_rider IN (3, 4)";
+    $sql = "SELECT regis_rider_id, name, email, tel, img_profile, status_rider FROM table_rider WHERE status_rider IN (3, 4)";
     $query = $conn->prepare($sql);
     $query->execute();
     $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -209,41 +191,41 @@ try {
     // แปลงข้อมูลเป็น JSON เพื่อส่งไปยัง JavaScript
     $riderDataJSON = json_encode($fetch, JSON_UNESCAPED_UNICODE);
     ?>
- <script>
-    // ข้อมูล JSON ที่ดึงมาจาก PHP
-    const demo_data = <?= $riderDataJSON ?>;
+    <script>
+        // ข้อมูล JSON ที่ดึงมาจาก PHP
+        const demo_data = <?= $riderDataJSON ?>;
 
-    // ฟังก์ชันกรองข้อมูล
-    function filterData() {
-        const filterValue = document.getElementById('filter').value;
-        console.log('Selected filter:', filterValue);
+        // ฟังก์ชันกรองข้อมูล
+        function filterData() {
+            const filterValue = document.getElementById('filter').value;
+            console.log('Selected filter:', filterValue);
 
-        let filteredData = demo_data;
+            let filteredData = demo_data;
 
-        // กรองข้อมูลตามสถานะ
-        if (filterValue === 'confirm') {
-            filteredData = demo_data.filter(item => item.status_rider == 3 || item.status_rider == 1); // Confirm
-        } else if (filterValue === 'reject') {
-            filteredData = demo_data.filter(item => item.status_rider == 4 || item.status_rider == 0); // Reject
+            // กรองข้อมูลตามสถานะ
+            if (filterValue === 'confirm') {
+                filteredData = demo_data.filter(item => item.status_rider == 3 || item.status_rider == 1); // Confirm
+            } else if (filterValue === 'reject') {
+                filteredData = demo_data.filter(item => item.status_rider == 4 || item.status_rider == 0); // Reject
+            }
+
+            console.log('Filtered data:', filteredData);
+
+            // อัปเดตตารางด้วยข้อมูลที่กรองแล้ว
+            updateTable(filteredData);
         }
 
-        console.log('Filtered data:', filteredData);
+        // ฟังก์ชันอัปเดตตาราง
+        function updateTable(data) {
+            let show_data = '';
 
-        // อัปเดตตารางด้วยข้อมูลที่กรองแล้ว
-        updateTable(filteredData);
-    }
+            // วนลูปข้อมูลและสร้าง HTML สำหรับตาราง
+            data.forEach((read) => {
+                const statusClass = (read.status_rider == 3 || read.status_rider == 1) ? 'text-success' : 'text-danger';
+                const statusText = (read.status_rider == 3 || read.status_rider == 1) ? 'Confirm' : 'Reject';
 
-    // ฟังก์ชันอัปเดตตาราง
-    function updateTable(data) {
-        let show_data = '';
-
-        // วนลูปข้อมูลและสร้าง HTML สำหรับตาราง
-        data.forEach((read) => {
-            const statusClass = (read.status_rider == 3 || read.status_rider == 1) ? 'text-success' : 'text-danger';
-            const statusText = (read.status_rider == 3 || read.status_rider == 1) ? 'Confirm' : 'Reject';
-
-            show_data += `
-                <tr onclick="redirectToPage('${read.url || '/public/gotwo_app/info_rider.php'}');">
+                show_data += `
+                <tr onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${read.regis_rider_id || 'unknown'}');">
                     <td scope="row">
                         <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
                         ${read.name || 'Unknown Name'}
@@ -252,28 +234,30 @@ try {
                     <td>${read.tel || 'No Tel'}</td>
                     <td class="${statusClass}">${statusText}</td>
                 </tr>`;
-        });
+            });
 
-        // อัปเดต DOM
-        const tableBody = document.querySelector('#dataTableBody');
-        tableBody.innerHTML = show_data;
+            // อัปเดต DOM
+            const tableBody = document.querySelector('#dataTableBody');
+            tableBody.innerHTML = show_data;
 
-        console.log('Table updated:', show_data);
-    }
-
-    // ฟังก์ชันเปลี่ยนหน้า
-    function redirectToPage(url) {
-        console.log("Redirecting to:", url); // Log URL
-        if (url) {
-            window.location.href = url;
-        } else {
-            console.error("No URL specified or fallback URL not accessible.");
+            console.log('Table updated:', show_data);
         }
-    }
 
-    // เรียกใช้ฟังก์ชันอัปเดตตารางครั้งแรก (โหลดข้อมูลทั้งหมด)
-    updateTable(demo_data);
-</script>
+        // ฟังก์ชันเปลี่ยนหน้า
+        function redirectToPage(url) {
+            if (url && url.includes('regis_rider_id')) {
+                console.log("Redirecting to:", url); // Log URL
+                window.location.href = url;
+            } else {
+                console.error("Invalid URL or regis_rider_id not provided.");
+                Swal.fire("Error", "Invalid URL or regis_rider_id not provided.", "error");
+            }
+        }
+
+
+        // เรียกใช้ฟังก์ชันอัปเดตตารางครั้งแรก (โหลดข้อมูลทั้งหมด)
+        updateTable(demo_data);
+    </script>
 
 
 </body>

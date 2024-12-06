@@ -18,7 +18,7 @@ try {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Information Customer</title>
+    <title>Information Rider</title>
 
     <script src="/public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
@@ -121,7 +121,7 @@ try {
         <div class="main p-2">
             <div class="container-fluid">
                 <!-- title -->
-                <h1 style="color: rgb(26, 28, 67);">Information Customer</h1>
+                <h1 style="color: rgb(26, 28, 67);">Information Rider</h1>
                 <form>
                     <!-- Account Section -->
                     <div class="form-section">
@@ -130,16 +130,16 @@ try {
                         <div class="row align-items-center">
                             <!-- Profile Image -->
                             <div class="col-md-4 text-center">
-                                <img src="<?= htmlspecialchars($customerData['img_profile'] ?? '/public/img/unnamed.jpg') ?>"
+                                <img src="<?= htmlspecialchars($riderData['img_profile'] ?? '/public/img/unnamed.jpg') ?>"
                                     alt="Profile" class="img-thumbnail" style="width: 150px; height: 150px;">
                             </div>
                             <!-- Account Details -->
                             <div class="col-md-8">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="name" readonly>
+                                    <input type="text" class="form-control" id="name" readonly value=">
                                 </div>
-                                <div class="mb-3">
+                                <div class=" mb-3">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="email" class="form-label">Email</label>
@@ -241,24 +241,25 @@ try {
                     </div>
                 </div>
             </div>
+
             </form>
         </div>
         <script src="/public/js/gotwo_js/nav_animation.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <?php
-        $customerId = $_GET['regis_customer_id']; // ดึงค่า regis_customer_id จาก URL
+        $riderId = $_GET['regis_rider_id']; // ดึงค่า regis_rider_id จาก URL
 
         // ตรวจสอบว่ามีการเชื่อมต่อฐานข้อมูลสำเร็จ
         if (!$conn) {
             die("Database connection failed");
         }
-        $sql = "SELECT * FROM `table_customer` WHERE regis_customer_id = :customerId";
+        $sql = "SELECT * FROM `table_rider` WHERE regis_rider_id = :riderId";
         $query = $conn->prepare($sql);
-        $query->bindParam(':customerId', $customerId, PDO::PARAM_INT);
+        $query->bindParam(':riderId', $riderId, PDO::PARAM_INT);
         $query->execute();
         $fetch = $query->fetch(PDO::FETCH_ASSOC);
-        $customerData = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+        $riderData = json_encode($fetch, JSON_UNESCAPED_UNICODE);
 
 
         ?>
@@ -270,10 +271,10 @@ try {
             }
 
             // =======================update status==================================
-            async function updateStatus(customerId, status) {
+            async function updateStatus(riderId, status) {
                 try {
                     const response = await axios.post('status_req.php', {
-                        regis_customer_id: customerId,
+                        regis_rider_id: riderId,
                         status: status
                     });
 
@@ -288,22 +289,28 @@ try {
                     alert('Failed to update status.');
                 }
             }
+            //===============================================================================================================
+            let riderIdGlobal; // ตัวแปรโกลบอลสำหรับเก็บ regis_rider_id
 
             document.addEventListener('DOMContentLoaded', function() {
                 // ตัวอย่างข้อมูล JSON ที่ได้จาก PHP
-                const customerData = <?= $customerData ?>;
+                const riderData = <?= $riderData ?>;
 
                 // กำหนดค่าไปยัง input ที่มี id ตรงกัน
-                document.getElementById('name').value = customerData.name || 'Not Available';
-                document.getElementById('email').value = customerData.email || 'Not Available';
-                document.getElementById('birthdate').value = customerData.expiration_date || 'Not Available';
-                document.getElementById('phoneNumber').value = customerData.tel || 'Not Available';
-                document.getElementById('gender').value = customerData.gender || 'Not Available';
+                document.getElementById('name').value = riderData.name || 'Not Available';
+                document.getElementById('email').value = riderData.email || 'Not Available';
+                document.getElementById('birthdate').value = riderData.expiration_date || 'Not Available';
+                document.getElementById('phoneNumber').value = riderData.tel || 'Not Available';
+                document.getElementById('gender').value = riderData.gender || 'Not Available';
+                document.getElementById('confirmButton').value = riderData.regis_rider_id || 'Not Available';
+                document.getElementById('rejectButton').value = riderData.regis_rider_id || 'Not Available';
+
+                // เก็บ regis_rider_id ไว้ในตัวแปรโกลบอล
+                riderIdGlobal = riderData.regis_rider_id || null;
             });
 
+            //===============================================================================================================
 
-
-            
         </script>
 </body>
 
