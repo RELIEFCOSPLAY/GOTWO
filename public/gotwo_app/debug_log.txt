@@ -173,3 +173,321 @@ POST: {"status_post_id":"24","pay":"5"}
 FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 02.00.20 - A realistic and serene graphic design featuring a full moon and calm ocean scene. The moon is detailed with craters and soft shadows, glowing brightly.webp","full_path":"DALL\u00b7E 2024-09-12 02.00.20 - A realistic and serene graphic design featuring a full moon and calm ocean scene. The moon is detailed with craters and soft shadows, glowing brightly.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpAF84.tmp","error":0,"size":284382}}
 POST: {"status_post_id":"39"}
 FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 01.58.34 - A refined graphic design with cute fish and an elegant ocean theme. The background is a gradient blue transitioning from dark blue at the bottom to li.webp","full_path":"DALL\u00b7E 2024-09-12 01.58.34 - A refined graphic design with cute fish and an elegant ocean theme. The background is a gradient blue transitioning from dark blue at the bottom to li.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php51DC.tmp","error":0,"size":180560}}
+POST: {"status_post_id":"24"}
+FILES: {"image":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpF5D2.tmp","error":0,"size":331618}}
+POST: {"status_post_id":"39","pay":"5"}
+FILES: {"image":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php890B.tmp","error":0,"size":331618}}
+POST: {"status_post_id":"23"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php396D.tmp","error":0,"size":267046}}
+POST: {"status_post_id":"22"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","full_path":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpB4A3.tmp","error":0,"size":303406}}
+POST: {"status_post_id":"39"}
+FILES: {"image":{"name":"Untitled design (1).png","full_path":"Untitled design (1).png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php9BB2.tmp","error":0,"size":2969065}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"40"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","full_path":"DALL\u00b7E 2024-09-12 01.59.43 - A beautiful and serene graphic design featuring a moon and ocean theme. The design includes a large, glowing full moon in the sky, casting light on th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php50D0.tmp","error":0,"size":303406}}
+POST: {"status_post_id":"39","pay":"5"}
+FILES: {"image":{"name":"99050.jpg","full_path":"99050.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php6B48.tmp","error":0,"size":97943}}
+POST: {"status_post_id":"24","pay":"5"}
+FILES: {"image":{"name":"DALL\u00b7E 2024-09-12 01.58.34 - A refined graphic design with cute fish and an elegant ocean theme. The background is a gradient blue transitioning from dark blue at the bottom to li.webp","full_path":"DALL\u00b7E 2024-09-12 01.58.34 - A refined graphic design with cute fish and an elegant ocean theme. The background is a gradient blue transitioning from dark blue at the bottom to li.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\php45F9.tmp","error":0,"size":180560}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"64"}
+FILES: {"img_qr_admin":{"name":"888.jpg","full_path":"888.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpD996.tmp","error":0,"size":146165}}
+Error: Invalid file type: image/jpeg
+POST: {"status_post_id":"64"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpB3CA.tmp","error":0,"size":166865}}
+Error: Invalid file type: image/jpeg
+POST: {"status_post_id":"64"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php56CB.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"63"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpD1BB.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"62"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php9D65.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"60"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php6AE8.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"57"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php90B8.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"56"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php117A.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"55"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpA081.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"42"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php77F7.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"39"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php455.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"56"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php3360.tmp","error":0,"size":166865}}
+POST: {"status_post_id":"55"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php104.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"42"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php86A5.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"56"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpFAA4.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"56"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-04 215455.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-04 215455.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpCF98.tmp","error":0,"size":255021}}
+POST: {"status_post_id":"42"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214926.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214926.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpA569.tmp","error":0,"size":169610}}
+POST: {"status_post_id":"56"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php37EB.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"55"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214356.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214356.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php3D95.tmp","error":0,"size":224372}}
+POST: {"status_post_id":"42"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php6EE.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"39"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpA96.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"55"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpB88C.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"42"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214853.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214853.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php54BB.tmp","error":0,"size":71607}}
+POST: {"status_post_id":"39"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214853.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214853.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php576A.tmp","error":0,"size":71607}}
+POST: {"status_post_id":"55"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpB119.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"42"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 214437.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 214437.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php39B2.tmp","error":0,"size":139225}}
+POST: {"status_post_id":"39"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 194958.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 194958.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php4CA4.tmp","error":0,"size":465179}}
+POST: {"status_post_id":"55"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-11-04 001245.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-11-04 001245.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpE309.tmp","error":0,"size":487748}}
+POST: {"status_post_id":"42"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php58FF.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"39"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php9CB6.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"55"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214356.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214356.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php15DC.tmp","error":0,"size":224372}}
+POST: {"status_post_id":"42"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php9CC.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"23"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpB48A.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"46"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php8182.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"22"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpDD5F.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"24"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-04 215455.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-04 215455.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpCEE.tmp","error":0,"size":255021}}
+POST: {"status_post_id":"40"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpE91C.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"43"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php7181.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"41","pay":"5"}
+FILES: {"image":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpF57C.tmp","error":0,"size":65482}}
+Error: Invalid input data: Missing file or status_post_id.
+POST: {"status_post_id":"41","pay":"5"}
+FILES: {"image":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 194958.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 194958.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php97F6.tmp","error":0,"size":465179}}
+Error: Invalid input data: Missing file or status_post_id.
+POST: {"status_post_id":"47"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php418B.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"41","pay":"5"}
+FILES: {"image":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php9095.tmp","error":0,"size":65482}}
+Error: Invalid input data: Missing file or status_post_id.
+POST: {"status_post_id":"44"}
+FILES: {"image":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php9F76.tmp","error":0,"size":65482}}
+Error: Invalid input data: Missing file or status_post_id.
+POST: {"status_post_id":"44"}
+FILES: {"image":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpB050.tmp","error":0,"size":147055}}
+Error: Invalid input data: Missing file or status_post_id.
+POST: {"status_post_id":"44"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php750C.tmp","error":0,"size":65482}}
+Error: Invalid input data: Missing file or status_post_id.
+POST: {"status_post_id":"44"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php5E83.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"41"}
+FILES: {"image":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php3CF4.tmp","error":0,"size":65482}}
+Error: Invalid input data: Missing file or status_post_id.
+POST: {"status_post_id":"41"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php681B.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"45"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php78E2.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"48"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpA415.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"53"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214853.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214853.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php3A9C.tmp","error":0,"size":71607}}
+POST: {"status_post_id":"54","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php4B59.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"59","pay":"4"}
+FILES: {"image":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php70A0.tmp","error":0,"size":65482}}
+Error: Invalid input data: Missing file or status_post_id.
+POST: {"status_post_id":"59","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpEC73.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"58","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php2FF6.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"61","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php6D6E.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"47","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php2958.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"44","pay":"5"}
+FILES: {"image":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpBE70.tmp","error":0,"size":65482}}
+Error: Invalid input data: Missing file or status_post_id.
+POST: {"status_post_id":"44","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php4227.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"41","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php7DDA.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"45","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpB5CD.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"48","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpF95E.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"54","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php338.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"53","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php439E.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"59","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpF5EB.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"58","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php325A.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"61","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php8398.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"44","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpC98D.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"47","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php4E57.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"41","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-11 134912 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-11 134912 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpB8D4.tmp","error":0,"size":224518}}
+POST: {"status_post_id":"45","pay":"undefined"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php6B86.tmp","error":0,"size":65482}}
+Error: Invalid pay value. Only 4 or 5 are allowed.
+POST: {"status_post_id":"45","pay":"undefined"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php8420.tmp","error":0,"size":147055}}
+Error: Invalid pay value. Only 4 or 5 are allowed.
+POST: {"status_post_id":"45","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpCA76.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"48","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php1105.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"54","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpC1B9.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php795F.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"53","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpC22F.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"61","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpC7F7.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"58","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpA29A.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"47","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpF0DB.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"44","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php6959.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"41","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpC95D.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"45","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpCC1.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"44","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpA5F1.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"41","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpC9C.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"61","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php3E14.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"48","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php928F.tmp","error":0,"size":147055}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php64C.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"54","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php7321.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php460F.tmp","error":0,"size":147055}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"54","pay":"4"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php912C.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"54","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 194958.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 194958.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php869B.tmp","error":0,"size":465179}}
+POST: {"status_post_id":"54","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214356.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214356.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php1CF2.tmp","error":0,"size":224372}}
+POST: {"status_post_id":"54","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-06 172555 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-06 172555 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php904.tmp","error":0,"size":35323}}
+POST: {"status_post_id":"53","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php1261.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"47","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php8BD8.tmp","error":0,"size":345499}}
+POST: {"status_post_id":"41","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 214437.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 214437.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php11CA.tmp","error":0,"size":139225}}
+POST: {"status_post_id":"61","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php74CC.tmp","error":0,"size":345499}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"48","pay":"4"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php389B.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"59","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpB1B1.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"54","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php2426.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"53","pay":"4"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php8E77.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"47","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php6F8B.tmp","error":0,"size":345499}}
+POST: {"status_post_id":"41","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 214437.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 214437.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpD5E7.tmp","error":0,"size":139225}}
+POST: {"status_post_id":"41","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php1B28.tmp","error":0,"size":345499}}
+POST: {"status_post_id":"61","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php52BF.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"48","pay":"6"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpDD95.tmp","error":0,"size":171516}}
+Error: Invalid pay value. Only 4 or 5 are allowed.
+POST: {"status_post_id":"48","pay":"6"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpF218.tmp","error":0,"size":345499}}
+Error: Invalid pay value. Only 4 or 5 are allowed.
+POST: {"status_post_id":"48","pay":"6"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-03 195021.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpA395.tmp","error":0,"size":345499}}
+Error: Invalid pay value. Only 5 or 6 are allowed.
+POST: {"status_post_id":"48","pay":"6"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-04 215455 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-04 215455 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php140.tmp","error":0,"size":255021}}
+POST: {"status_post_id":"48","pay":"6"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php2B94.tmp","error":0,"size":171516}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"61","pay":"6"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-11 134609 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-05-11 134609 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpC9C6.tmp","error":0,"size":611288}}
+POST: {"status_post_id":"48","pay":"6"}
+FILES: {"img_qr_admin":{"name":"slip.jpg","full_path":"slip.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php2F9.tmp","error":0,"size":331618}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpD56B.tmp","error":0,"size":267046}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpFA41.tmp","error":0,"size":432150}}
+POST: {"status_post_id":"53","pay":"6"}
+FILES: {"img_qr_admin":{"name":"99050.jpg","full_path":"99050.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php6D95.tmp","error":0,"size":97943}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"6a672622-ac32-4d5e-b15d-2176dedd30f0.jpg","full_path":"6a672622-ac32-4d5e-b15d-2176dedd30f0.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php38DF.tmp","error":0,"size":60770}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpE75C.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"53","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php3B09.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"54","pay":"6"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-27 233540.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\phpF76B.tmp","error":0,"size":147055}}
+POST: {"status_post_id":"48","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php36D2.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"54","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php17C4.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"48","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php9C37.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"48","pay":"5"}
+FILES: {"img_qr_admin":{"name":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","full_path":"\u0e2a\u0e01\u0e23\u0e35\u0e19\u0e0a\u0e47\u0e2d\u0e15 2024-04-30 214141 - Copy.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php42D4.tmp","error":0,"size":65482}}
+POST: {"status_post_id":"54","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php169F.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php3EE.tmp","error":0,"size":171516}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"54","pay":"5"}
+FILES: {"img_qr_admin":{"name":"f0f34068-57e4-4d8f-abd4-c74b85c0a04d.jpg","full_path":"f0f34068-57e4-4d8f-abd4-c74b85c0a04d.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php656D.tmp","error":0,"size":61528}}
+POST: {"status_post_id":"53","pay":"5"}
+FILES: {"img_qr_admin":{"name":"6a672622-ac32-4d5e-b15d-2176dedd30f0.jpg","full_path":"6a672622-ac32-4d5e-b15d-2176dedd30f0.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php26CB.tmp","error":0,"size":60770}}
+POST: {"status_post_id":"48","pay":"5"}
+FILES: {"img_qr_admin":{"name":"e5ac7640-9499-499d-93b9-331f81386b09.jpg","full_path":"e5ac7640-9499-499d-93b9-331f81386b09.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php7FF5.tmp","error":0,"size":61210}}
+POST: {"status_post_id":"48","pay":"5"}
+FILES: {"img_qr_admin":{"name":"461711644_2327702004262988_6299092845685132574_n.jpg","full_path":"461711644_2327702004262988_6299092845685132574_n.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpEC77.tmp","error":0,"size":360255}}
+POST: []
+FILES: []
+Error: Invalid request method.
+POST: {"status_post_id":"54","pay":"5"}
+FILES: {"img_qr_admin":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpA523.tmp","error":0,"size":267046}}

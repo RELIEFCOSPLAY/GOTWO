@@ -49,27 +49,35 @@ try {
         throw new Exception("Invalid file type: $fileType");
     }
 
-    // Define upload directory (physical path)
-    $physicalDir = "C:/xampp/htdocs/gotwo/uploads/";
-    if (!is_dir($physicalDir)) {
-        if (!mkdir($physicalDir, 0777, true)) {
-            throw new Exception("Failed to create upload directory: $physicalDir");
+    // Define upload directories
+    $primaryDir = "C:/xampp/htdocs/gotwo/uploads/";
+    $additionalDir = "C:/Users/Waraphorn_2546/Documents/GitHub/GOTWO/public/gotwo_app/gotwo/uploads";
+
+    foreach ([$primaryDir, $additionalDir] as $dir) {
+        if (!is_dir($dir)) {
+            if (!mkdir($dir, 0777, true)) {
+                throw new Exception("Failed to create upload directory: $dir");
+            }
         }
     }
 
-    // Define relative path for database
-    $relativeDir = "gotwo/uploads/";
+    // Generate consistent file name
     $timestamp = time();
     $extension = pathinfo($img_qr_admin['name'], PATHINFO_EXTENSION);
     $fileName = "qr_admin_" . $timestamp . "." . $extension;
 
-    // Full paths
-    $filePathPhysical = $physicalDir . $fileName; // Physical storage path
-    $filePathRelative = $relativeDir . $fileName; // Path to save in database
+    // Define file paths
+    $filePathPrimary = $primaryDir . $fileName;
+    $filePathAdditional = $additionalDir . "/" . $fileName;
 
-    // Move uploaded file to physical path
-    if (!move_uploaded_file($img_qr_admin['tmp_name'], $filePathPhysical)) {
-        throw new Exception("Failed to save file. Temp: {$img_qr_admin['tmp_name']}, Destination: $filePathPhysical");
+    // Move file to primary directory
+    if (!move_uploaded_file($img_qr_admin['tmp_name'], $filePathPrimary)) {
+        throw new Exception("Failed to save file to primary directory.");
+    }
+
+    // Copy file to additional directory
+    if (!copy($filePathPrimary, $filePathAdditional)) {
+        throw new Exception("Failed to copy file to additional directory.");
     }
 
     // Database operations
@@ -83,8 +91,9 @@ try {
         WHERE status_post_id = :status_post_id
     ";
 
+    $relativePath = "gotwo/uploads/" . $fileName;
     $stmt = $pdo->prepare($sqlUpdate);
-    $stmt->bindParam(':img_qr_admin', $filePathRelative); // Save relative path in database
+    $stmt->bindParam(':img_qr_admin', $relativePath); // Save relative path in database
     $stmt->bindParam(':pay', $pay);
     $stmt->bindParam(':status_post_id', $status_post_id);
 
@@ -98,8 +107,8 @@ try {
     echo json_encode([
         "success" => true,
         "message" => "File uploaded and database updated successfully.",
-        "img_qr_admin" => $filePathRelative,
-        "pay" => $pay
+        "file_primary" => $filePathPrimary,
+        "file_additional" => $filePathAdditional
     ]);
 } catch (Exception $e) {
     // Rollback if an error occurs

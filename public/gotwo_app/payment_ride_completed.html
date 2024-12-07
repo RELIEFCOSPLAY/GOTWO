@@ -307,8 +307,10 @@
           const paySlipUrl = item.img_qr_admin
             ? baseUrl + item.img_qr_admin
             : "";
-            const successImg = item.success_img || "/public/img/user.png";
-            const travelImg = item.travel_img || "path/to/default-travel-icon.png";
+           
+            const travelImg = item.travel_img || "http://localhost/public/gotwo_app/gotwo/uploads/default-travel-icon.png";
+            const successImg = item.travel_img || "http://localhost/public/gotwo_app/gotwo/uploads/default-travel-icon.png";
+
 
           const Commission = 10;
           const timeOnly =
@@ -323,7 +325,8 @@
                     data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent${index}">
                     <div class="d-flex flex-row">
                         <div class="d-flex flex-row ms-5 align-items-center">
-                         <img src="${travelImg}" class="mx-3" alt="Travel Image">
+                          
+                        <img src="${travelImg}" class="mx-3" style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%;" alt="Travel Image">
                             <div class="mt-3 fw-bold">
                                <p>Date: ${formattedDate}</p>
                                <p>Time: ${timeOnly}</p>
@@ -334,7 +337,7 @@
                         </div>
                         <h1 class="d-flex flex-row align-items-center mx-5">-------></h1>
                         <div class="d-flex flex-row align-items-center">
-                            <img src="${successImg || '/public/img/default-profile-icon.png'}" class="mx-2" style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%;" alt="Profile Icon" onerror="this.src='/public/img/default-profile-icon.png';">
+                        <img src="${successImg}" class="mx-3" style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%;" alt="Tuccess Image">
                             <div class="mt-3 fw-bold">
                               <p>Date: ${formattedDate}</p>
                                <p>Time: ${timeOnly}</p>
@@ -426,7 +429,7 @@
         });
       }
 
-      // ฟังก์ชันสำหรับแสดง Pay Slip
+     
       // ฟังก์ชันสำหรับแสดง Pay Slip
       function showPaySlip(paySlipUrl, index) {
         const modalImage = document.querySelector(`#paySlipImage${index}`);

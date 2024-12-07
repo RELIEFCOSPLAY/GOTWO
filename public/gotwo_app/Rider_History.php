@@ -204,9 +204,9 @@ try {
 
             // กรองข้อมูลตามสถานะ
             if (filterValue === 'confirm') {
-                filteredData = demo_data.filter(item => item.status_rider == 3 || item.status_rider == 1); // Confirm
+                filteredData = demo_data.filter(item => item.status_rider == 1 ); // Confirm
             } else if (filterValue === 'reject') {
-                filteredData = demo_data.filter(item => item.status_rider == 4 || item.status_rider == 0); // Reject
+                filteredData = demo_data.filter(item => item.status_rider == 3 ); // Reject
             }
 
             console.log('Filtered data:', filteredData);

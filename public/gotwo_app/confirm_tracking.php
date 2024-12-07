@@ -363,7 +363,6 @@ try {
 
 
 
-
             function viewSlip(imagePath, id) {
                 selectedId = id; // กำหนดค่า selectedId
                 const slipImage = document.getElementById('slipImage');

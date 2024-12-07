@@ -8,7 +8,7 @@ try {
     $targetDir = "C:/xampp/htdocs/gotwo/uploads/";
     if (!is_dir($targetDir)) {
         mkdir($targetDir, 0777, true); // สร้างโฟลเดอร์หากไม่มี
-    }
+    } 
 
     // ตรวจสอบว่าเป็นคำขอ POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
