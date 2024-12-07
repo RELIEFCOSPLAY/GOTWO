@@ -5,35 +5,58 @@ $password = "";
 $dbname = "data_test";
 
 try {
+    // เชื่อมต่อฐานข้อมูล
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //// Admin
-    $adminQuery = $conn->prepare("SELECT name FROM table_admin ");
+
+    // ดึงข้อมูล Admin
+    $adminQuery = $conn->prepare("SELECT name FROM table_admin LIMIT 1");
     $adminQuery->execute();
     $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
-    // Query ดึงข้อมูลทั้งหมด
+    $adminData = $adminData ?: ['name' => 'Unknown']; // ถ้าไม่มี Admin ให้ตั้งค่า Unknown
+
+    // ดึงข้อมูล Status Post
     $sql = "
-    SELECT   s.status_post_id AS id, r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
-           r.gender AS rider_gender, r.img_profile AS rider_img_profile,
-           c.name AS customer_name, c.email AS customer_email, c.tel AS customer_tel, 
-           c.gender AS customer_gender, c.img_profile AS customer_img_profile,
-           p.pick_up, p.at_drop, p.date, s.pay , s.image
-    FROM status_post s
-    JOIN table_rider r ON s.rider_id = r.regis_rider_id
-    JOIN table_customer c ON s.customer_id = c.regis_customer_id
-    JOIN post p ON s.post_id = p.post_id
-    WHERE s.status = 2
-    ORDER BY p.date DESC
-";
+        SELECT 
+            s.status_post_id AS id, 
+            r.name AS rider_name, 
+            r.email AS rider_email, 
+            r.tel AS rider_tel, 
+            r.gender AS rider_gender, 
+            r.img_profile AS rider_img_profile,
+            c.name AS customer_name, 
+            c.email AS customer_email, 
+            c.tel AS customer_tel, 
+            c.gender AS customer_gender, 
+            c.img_profile AS customer_img_profile,
+            p.pick_up, 
+            p.at_drop, 
+            p.date, 
+            s.pay, 
+            s.image
+        FROM status_post s
+        JOIN table_rider r ON s.rider_id = r.regis_rider_id
+        JOIN table_customer c ON s.customer_id = c.regis_customer_id
+        JOIN post p ON s.post_id = p.post_id
+        WHERE s.status = 2
+        ORDER BY p.date DESC
+    ";
 
     $query = $conn->prepare($sql);
     $query->execute();
-    $data = $query->fetchAll(PDO::FETCH_ASSOC); // ดึงข้อมูลทั้งหมด
+    $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    // เพิ่ม Path สำหรับไฟล์ภาพ
+    foreach ($data as &$item) {
+        if (!empty($item['image'])) {
+            $item['image'] = "uploads/" . $item['image']; // เพิ่ม Path uploads/
+        }
+    }
 
     // ส่งข้อมูลไปยัง JavaScript
     echo "<script>const demo_data = " . json_encode($data) . ";</script>";
 } catch (PDOException $e) {
-    echo "<script>console.error('Database error: " . $e->getMessage() . "');</script>";
+    echo "<script>console.error('Database error: " . addslashes($e->getMessage()) . "');</script>";
 }
 ?>
 
@@ -239,9 +262,14 @@ try {
 
         <!-- ////////////////////////////////////// -->
         <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                displayTableData(demo_data);
+            });
+
             function displayTableData(data) {
                 let tableBody = '';
-                let selectedId = ''; 
+                const baseUrl = "http://localhost/gotwo/";
+
 
                 data.forEach((item, index) => {
                     // ตรวจสอบสถานะและกำหนดข้อความแสดงผล
@@ -250,9 +278,8 @@ try {
                         '<span style="color: green; font-weight: bold;">Verified</span>' :
                         '<span style="color: orange; font-weight: bold;">Under Review</span>';
                     console.log('Demo Data:', demo_data);
-                    const baseUrl = "http://localhost/"; 
-                    const fullImageUrl = baseUrl + item.image; 
 
+                    const fullImageUrl = baseUrl + item.image;
 
                     // เพิ่มแถวข้อมูลในตาราง
                     tableBody += `
@@ -262,7 +289,7 @@ try {
             <td>${item.pick_up}</td>
             <td>${item.at_drop}</td>
             <td>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slipModal" onclick="event.stopPropagation(); view_slip(${index})">View Slip</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#slipModal" onclick="event.stopPropagation(); viewSlip('${item.image}', ${item.id})">View Slip</button>
             </td>
             <td>${statusText}</td>
         </tr>`;
@@ -272,6 +299,7 @@ try {
                 document.querySelector('#dataTableBody').innerHTML = tableBody;
             }
 
+            let selectedId = null; // กำหนดตัวแปร selectedId เป็นตัวแปร global
 
 
 
@@ -328,75 +356,59 @@ try {
                 document.querySelector('#madal_display').innerHTML = show_modal;
             }
 
-            document.addEventListener('DOMContentLoaded', () => {
-                displayTableData(demo_data);
-            });
-
-            function view_slip(index) {
-                const item = demo_data[index]; 
-                selectedId = item.id; // ตั้งค่า ID ที่เลือก
-                const slipImage = document.getElementById('slipImage');
-                const errorText = document.getElementById('errorText');
-                const successButton = document.getElementById('successButton');
 
 
-                console.log("Selected Item:", item); // Debug เพื่อตรวจสอบข้อมูล
-                console.log("Selected pay:", item.pay);
+           
+function viewSlip(imagePath, id) {
+    selectedId = id; // กำหนดค่า selectedId
+    const slipImage = document.getElementById('slipImage');
+    const errorText = document.getElementById('errorText');
+    const baseUrl = "http://localhost/gotwo/";
 
-                if (item && item.image && item.image.trim() !== "") {
-                    slipImage.src = item.image;
-                    slipImage.style.display = "block";
-                    errorText.style.display = "none";
-                } else {
-                    slipImage.style.display = "none";
-                    errorText.style.display = "block";
-                }
+    if (typeof imagePath === "string" && imagePath.trim() !== "") {
+        const fullImageUrl = baseUrl + imagePath.trim();
+        slipImage.src = fullImageUrl;
+        slipImage.style.display = "block";
+        errorText.style.display = "none";
+    } else {
+        slipImage.style.display = "none";
+        errorText.style.display = "block";
+    }
 
-                // ซ่อนหรือแสดงปุ่ม "Successfully"
-                if (successButton) {
-                    if (item.pay === 2) {
-                        successButton.style.display = "none";
-                    } else {
-                        successButton.style.display = "block";
-                    }
-                } else {
-                    console.error("Success Button not found in DOM");
-                }
-            }
+    const modal = new bootstrap.Modal(document.getElementById('slipModal'));
+    modal.show();
+}
+
 
 
             // ฟังก์ชันสำหรับอัปเดตสถานะ
-            function updatePay() {
-                if (!selectedId) {
-                    alert("No item selected.");
-                    return;
-                }
-                fetch('/public/gotwo_app/confirm_payment_cus.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            id: selectedId,
-                            pay: 2
-                        }),
-                    })
-
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.success) {
-                            alert('Pay updated successfully!');
-                            location.reload();
-                        } else {
-                            alert('Failed to update Pay: ' + data.message);
-                        }
-                      
-
-
-                    })
-
+        
+function updatePay() {
+    if (!selectedId) {
+        alert("No item selected.");
+        return;
+    }
+    fetch('/public/gotwo_app/confirm_payment_cus.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: selectedId,
+            pay: 2,
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                alert('Pay updated successfully!');
+                location.reload();
+            } else {
+                alert('Failed to update Pay: ' + data.message);
             }
-
+        })
+        .catch((error) => console.error('Error:', error));
+}
 
             // ฟังก์ชันสำหรับจัดฟอร์แมตวันที่
             function formatDate(dateString) {
