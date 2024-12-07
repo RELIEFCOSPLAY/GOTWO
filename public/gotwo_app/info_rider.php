@@ -281,6 +281,7 @@ try {
 
 
 
+
             </form>
         </div>
         <script src="/public/js/gotwo_js/nav_animation.js"></script>
@@ -412,19 +413,12 @@ try {
                     return;
                 }
 
-                console.log("Rider ID:", riderId);
-                console.log("Status:", status);
-
-                // กรณี Reject (status === 3)
                 if (status === 3) {
                     const reasonInput = await Swal.fire({
                         title: 'Reject Rider',
                         text: 'Please provide a reason for rejection:',
                         input: 'textarea',
                         inputPlaceholder: 'Enter your reason here...',
-                        inputAttributes: {
-                            'aria-label': 'Reason for rejection'
-                        },
                         showCancelButton: true,
                         confirmButtonText: 'Submit',
                         cancelButtonText: 'Cancel',
@@ -441,42 +435,69 @@ try {
                         return;
                     }
 
-                    console.log("Reason:", reason);
+                    Swal.fire({
+                        title: 'Please wait...',
+                        text: 'Processing...',
+                        allowOutsideClick: false,
+                        didOpen: () => Swal.showLoading(),
+                    });
 
-                    // ส่งค่าไปยัง Backend
-                    const API_URL = 'update_statusridercc.php';
                     try {
-                        const response = await fetch(API_URL, {
+                        const response = await fetch('update_statusridercc.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
                                 regis_rider_id: riderId,
-                                status: status, // status = 3
-                                reason: reason, // เพิ่ม reason
+                                status,
+                                reason
                             }),
                         });
+                        function updateTable(data) {
+    let show_data = '';
 
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
+    // วนลูปข้อมูลและสร้าง HTML สำหรับตาราง
+    data.forEach((read) => {
+        const statusClass = read.status_rider == 1 ? 'text-success' : 'text-danger';
+        const statusText = read.status_rider == 1 ? 'Confirm' : 'Reject';
 
+        const riderId = read.regis_rider_id ? read.regis_rider_id : 'unknown';
+
+        show_data += `
+        <tr onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${riderId}');">
+            <td scope="row">
+                <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
+                ${read.name || 'Unknown Name'}
+            </td>
+            <td>${read.email || 'No Email'}</td>
+            <td>${read.tel || 'No Tel'}</td>
+            <td class="${statusClass}">${statusText}</td>
+        </tr>`;
+    });
+
+    // อัปเดต DOM
+    const tableBody = document.querySelector('#dataTableBody');
+    tableBody.innerHTML = show_data;
+
+    console.log('Table updated:', show_data);
+}
+
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                         const data = await response.json();
-                        console.log("Response:", data);
 
                         if (data.success) {
                             Swal.fire('Success', data.message, 'success').then(() => {
-                                location.reload();
+                                // เปลี่ยนเส้นทางไปหน้าอื่น
+                                window.location.href = 'Rider_Request.php'; // แก้ไข URL ให้ตรงกับหน้าที่ต้องการ
                             });
                         } else {
                             Swal.fire('Error', data.message || 'Failed to update status.', 'error');
                         }
                     } catch (error) {
-                        console.error('Error:', error);
-                        Swal.fire('Error', 'Failed to update status.', 'error');
+                        Swal.fire('Error', error.message || 'Failed to update status.', 'error');
                     }
-                } else if (status === 1) { // กรณี Confirm (status === 1)
+                } else if (status === 1) {
                     const confirmation = await Swal.fire({
                         title: 'Confirm Action',
                         text: 'Are you sure you want to confirm this action?',
@@ -484,7 +505,6 @@ try {
                         showCancelButton: true,
                         confirmButtonText: 'Yes, Confirm it!',
                         cancelButtonText: 'Cancel',
-                        reverseButtons: true,
                     });
 
                     if (!confirmation.isConfirmed) {
@@ -492,37 +512,38 @@ try {
                         return;
                     }
 
-                    const API_URL = 'update_statusridercc.php';
+                    Swal.fire({
+                        title: 'Please wait...',
+                        text: 'Processing...',
+                        allowOutsideClick: false,
+                        didOpen: () => Swal.showLoading(),
+                    });
 
                     try {
-                        const response = await fetch(API_URL, {
+                        const response = await fetch('update_statusridercc.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
                                 regis_rider_id: riderId,
-                                status: status, // status = 1
+                                status
                             }),
                         });
 
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                         const data = await response.json();
-                        console.log("Response:", data);
 
                         if (data.success) {
                             Swal.fire('Success', data.message, 'success').then(() => {
-                                location.reload();
+                                // เปลี่ยนเส้นทางไปหน้าอื่น
+                                window.location.href = 'Rider_Request.php'; // แก้ไข URL ให้ตรงกับหน้าที่ต้องการ
                             });
                         } else {
                             Swal.fire('Error', data.message || 'Failed to update status.', 'error');
                         }
                     } catch (error) {
-                        console.error('Error:', error);
-                        Swal.fire('Error', 'Failed to update status.', 'error');
+                        Swal.fire('Error', error.message || 'Failed to update status.', 'error');
                     }
                 }
             }

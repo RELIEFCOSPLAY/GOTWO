@@ -9,6 +9,7 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -130,8 +131,7 @@ try {
                         <div class="row align-items-center">
                             <!-- Profile Image -->
                             <div class="col-md-4 text-center">
-                                <img src="<?= htmlspecialchars($riderData['img_profile'] ?? '/public/img/unnamed.jpg') ?>"
-                                    alt="Profile" class="img-thumbnail" style="width: 150px; height: 150px;">
+                                <img id="profileImage" src="" alt="Profile" class="img-thumbnail" style="width: 150px; height: 150px;">
                             </div>
                             <!-- Account Details -->
                             <div class="col-md-8">
@@ -145,6 +145,10 @@ try {
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email" readonly>
                                         </div>
+                                        <!-- <div class="col-md-6">
+                                            <label for="img_id_card" class="form-label">img_id_card</label>
+                                            <input type="img_id_card" class="form-control" id="img_id_card" readonly>
+                                        </div> -->
                                         <div class="col-md-6">
                                             <label for="birthdate" class="form-label">Expiration Date</label>
                                             <input type="text" class="form-control" id="birthdate" readonly>
@@ -168,29 +172,57 @@ try {
                         </div>
                     </div>
 
+                    <style>
+                        .form-section img {
+                            width: 100px;
+                            /* ปรับขนาดความกว้าง */
+                            height: 100px;
+                            /* ปรับขนาดความสูง */
+                            object-fit: cover;
+                            /* ปรับขนาดภาพให้เหมาะสมในกรอบ */
+                            border-radius: 8px;
+                            /* เพิ่มขอบมน */
+                            margin: 10px;
+                            /* เว้นระยะห่าง */
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                            /* เพิ่มเงา */
+                        }
+
+                        .document-container {
+                            display: flex;
+                            flex-wrap: wrap;
+                            /* ทำให้ภาพเรียงต่อกันเมื่อหน้าจอแคบ */
+                            justify-content: center;
+                            /* จัดให้อยู่กลาง */
+                            gap: 15px;
+                            /* เพิ่มช่องว่างระหว่างภาพ */
+                        }
+
+                        .document-card {
+                            text-align: center;
+                            max-width: 150px;
+                        }
+
+                        .document-title {
+                            font-size: 14px;
+                            margin-top: 5px;
+                            color: rgb(26, 28, 67);
+                            font-weight: 500;
+                        }
+                    </style>
 
                     <!-- Document -->
                     <div class="form-section mb-3">
                         <h5>Document</h5>
                         <div class="border-top border mb-2" style="border-width: 4px; color:rgb(26, 28, 67);"></div>
-                        <div class="col">
-                            <div class="row">
-                                <div class="column">
-                                    <div class="col-md-6 mb-3">
-                                        <div class="card w-150 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title">ID Card</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Driver's license</h5>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="document-container">
+                            <div class="document-card">
+                                <img id="idcardImage" src="" alt="ID Card" class="img-thumbnail">
+                                <div class="document-title">ID Card</div>
+                            </div>
+                            <div class="document-card">
+                                <img id="imgdriverlicense" src="" alt="Driver License" class="img-thumbnail">
+                                <div class="document-title">Driver License</div>
                             </div>
                         </div>
                     </div>
@@ -199,96 +231,113 @@ try {
                     <div class="form-section mt-3">
                         <h5>Document Car</h5>
                         <div class="border-top border mb-2" style="border-width: 4px; color:rgb(26, 28, 67);"></div>
-                        <div class="col">
-                            <div class="row">
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Act</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Car Picture</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Car registration</h5>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="document-container">
+                            <div class="document-card">
+                                <img id="imgact" src="" alt="ACT" class="img-thumbnail">
+                                <div class="document-title">ACT</div>
+                            </div>
+                            <div class="document-card">
+                                <img id="imgcarpicture" src="" alt="Car Picture" class="img-thumbnail">
+                                <div class="document-title">Car Picture</div>
+                            </div>
+                            <div class="document-card">
+                                <img id="imgcarregistration" src="" alt="Car Registration" class="img-thumbnail">
+                                <div class="document-title">Car Registration</div>
                             </div>
                         </div>
                     </div>
 
+
             </div>
             <!-- Modal -->
             <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="imageModalLabel">Document Preview</h5>
+                            <h5 class="modal-title" id="imageModalLabel">Image Title</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center">
-                            <img id="modalImage" src="" alt="Document Image" class="img-fluid">
+                            <img id="idcard" src="https://via.placeholder.com/150" alt="Image" class="img-fluid">
                         </div>
                     </div>
                 </div>
             </div>
+
+
+        
+
 
             </form>
         </div>
         <script src="/public/js/gotwo_js/nav_animation.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
         <?php
-        $riderId = $_GET['regis_rider_id']; // ดึงค่า regis_rider_id จาก URL
-
-        // ตรวจสอบว่ามีการเชื่อมต่อฐานข้อมูลสำเร็จ
-        if (!$conn) {
-            die("Database connection failed");
+        // ฟังก์ชันสำหรับตรวจสอบไฟล์และคืนค่า URL
+        function getImageUrl($fileName, $targetDir, $baseUrl, $default = "default_placeholder.png")
+        {
+            return isset($fileName) && file_exists($targetDir . basename($fileName))
+                ? $baseUrl . basename($fileName)
+                : $baseUrl . $default;
         }
-        $sql = "SELECT * FROM `table_rider` WHERE regis_rider_id = :riderId";
-        $query = $conn->prepare($sql);
-        $query->bindParam(':riderId', $riderId, PDO::PARAM_INT);
-        $query->execute();
-        $fetch = $query->fetch(PDO::FETCH_ASSOC);
-        $riderData = json_encode($fetch, JSON_UNESCAPED_UNICODE);
 
 
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // ดึงค่า regis_rider_id จาก URL
+            $riderId = $_GET['regis_rider_id'] ?? null;
+            if (!$riderId) {
+                throw new Exception("Rider ID is missing.");
+            }
+
+            // Query ข้อมูลจาก table_rider
+            $sql = "SELECT * FROM `table_rider` WHERE regis_rider_id = :riderId";
+            $query = $conn->prepare($sql);
+            $query->bindParam(':riderId', $riderId, PDO::PARAM_INT);
+            $query->execute();
+            $fetch = $query->fetch(PDO::FETCH_ASSOC);
+
+            if (!$fetch) {
+                throw new Exception("Rider not found.");
+            }
+
+            // Path และ Base URL
+            $targetDir = "C:/xampp/htdocs/gotwo/uploads/";
+            $baseUrl = "http://localhost/gotwo/uploads/";
+
+            // ดึงข้อมูลรูปภาพ
+            $idCardImage = getImageUrl($fetch['img_id_card'], $targetDir, $baseUrl);
+            $driverLicenseImage = getImageUrl($fetch['img_driver_license'], $targetDir, $baseUrl);
+            $actImage = getImageUrl($fetch['img_act'], $targetDir, $baseUrl);
+            $carImage = getImageUrl($fetch['img_car_picture'], $targetDir, $baseUrl);
+            $registrationImage = getImageUrl($fetch['img_car_registration'], $targetDir, $baseUrl);
+
+            // แปลงข้อมูลเป็น JSON
+            $riderData = json_encode($fetch, JSON_UNESCAPED_UNICODE);
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
         ?>
+
+
+
+
+
         <script>
-            // ============================img========================================
-            function showImage(imagePath) {
-                // Set the modal image source to the clicked image
-                document.getElementById('modalImage').src = imagePath;
+           
+            function showImage(imageUrl, title) {
+                document.getElementById('modalImage').src = imageUrl || '/public/img/default_placeholder.jpg';
+                document.getElementById('imageModalLabel').textContent = title || 'Document';
             }
 
-            // =======================update status==================================
-            async function updateStatus(riderId, status) {
-                try {
-                    const response = await axios.post('status_req.php', {
-                        regis_rider_id: riderId,
-                        status: status
-                    });
 
-                    if (response.data.success) {
-                        alert(response.data.message);
-                        location.reload();
-                    } else {
-                        alert(response.data.message || 'Failed to update status.');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Failed to update status.');
-                }
-            }
+
             //===============================================================================================================
             let riderIdGlobal; // ตัวแปรโกลบอลสำหรับเก็บ regis_rider_id
 
@@ -302,15 +351,25 @@ try {
                 document.getElementById('birthdate').value = riderData.expiration_date || 'Not Available';
                 document.getElementById('phoneNumber').value = riderData.tel || 'Not Available';
                 document.getElementById('gender').value = riderData.gender || 'Not Available';
+                // document.getElementById('img_id_card').value = riderData.img_id_card || 'Not Available';
                 document.getElementById('confirmButton').value = riderData.regis_rider_id || 'Not Available';
                 document.getElementById('rejectButton').value = riderData.regis_rider_id || 'Not Available';
+
+                profileImage.src = riderData.img_profile || 'https://via.placeholder.com/150';
+                idcardImage.src = riderData.img_id_card || 'https://via.placeholder.com/150';
+                imgdriverlicense.src = riderData.img_driver_license || 'https://via.placeholder.com/150';
+                imgact.src = riderData.img_act || 'https://via.placeholder.com/150';
+                imgcarpicture.src = riderData.img_car_picture || 'https://via.placeholder.com/150';
+                imgcarregistration.src = riderData.img_car_registration || 'https://via.placeholder.com/150';
 
                 // เก็บ regis_rider_id ไว้ในตัวแปรโกลบอล
                 riderIdGlobal = riderData.regis_rider_id || null;
             });
 
             //===============================================================================================================
+          
 
+   
         </script>
 </body>
 

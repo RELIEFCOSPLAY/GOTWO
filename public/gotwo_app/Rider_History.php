@@ -31,7 +31,7 @@ try {
 <body>
 
     <div class="wrapper">
-    <aside id="sidebar">
+        <aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-grid-fill"></i>
@@ -182,8 +182,8 @@ try {
 
     <!-- ------------------------------------------------- -->
     <?php
-    // ดึงข้อมูลจากฐานข้อมูล Rider ที่ status_rider = 3(confirm) และ 4 (reject)
-    $sql = "SELECT regis_rider_id, name, email, tel, img_profile, status_rider FROM table_rider WHERE status_rider IN (3, 4)";
+    // ดึงข้อมูลจากฐานข้อมูล Rider ที่ status_rider = 1(confirm) และ 3 (reject)
+    $sql = "SELECT regis_rider_id, name, email, tel, img_profile, status_rider FROM table_rider WHERE status_rider IN (1, 3)";
     $query = $conn->prepare($sql);
     $query->execute();
     $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -204,9 +204,9 @@ try {
 
             // กรองข้อมูลตามสถานะ
             if (filterValue === 'confirm') {
-                filteredData = demo_data.filter(item => item.status_rider == 1 ); // Confirm
+                filteredData = demo_data.filter(item => item.status_rider == 1); // Confirm
             } else if (filterValue === 'reject') {
-                filteredData = demo_data.filter(item => item.status_rider == 3 ); // Reject
+                filteredData = demo_data.filter(item => item.status_rider == 3); // Reject
             }
 
             console.log('Filtered data:', filteredData);
@@ -215,45 +215,36 @@ try {
             updateTable(filteredData);
         }
 
+
         // ฟังก์ชันอัปเดตตาราง
         function updateTable(data) {
-            let show_data = '';
+    let show_data = '';
 
-            // วนลูปข้อมูลและสร้าง HTML สำหรับตาราง
-            data.forEach((read) => {
-                const statusClass = (read.status_rider == 3 || read.status_rider == 1) ? 'text-success' : 'text-danger';
-                const statusText = (read.status_rider == 3 || read.status_rider == 1) ? 'Confirm' : 'Reject';
+    // วนลูปข้อมูลและสร้าง HTML สำหรับตาราง
+    data.forEach((read) => {
+        const statusClass = read.status_rider == 1 ? 'text-success' : 'text-danger';
+        const statusText = read.status_rider == 1 ? 'Confirm' : 'Reject';
 
-                show_data += `
-                <tr onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${read.regis_rider_id || 'unknown'}');">
-                    <td scope="row">
-                        <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
-                        ${read.name || 'Unknown Name'}
-                    </td>
-                    <td>${read.email || 'No Email'}</td>
-                    <td>${read.tel || 'No Tel'}</td>
-                    <td class="${statusClass}">${statusText}</td>
-                </tr>`;
-            });
+        const riderId = read.regis_rider_id ? read.regis_rider_id : 'unknown';
 
-            // อัปเดต DOM
-            const tableBody = document.querySelector('#dataTableBody');
-            tableBody.innerHTML = show_data;
+        show_data += `
+        <tr onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${riderId}');">
+            <td scope="row">
+                <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
+                ${read.name || 'Unknown Name'}
+            </td>
+            <td>${read.email || 'No Email'}</td>
+            <td>${read.tel || 'No Tel'}</td>
+            <td class="${statusClass}">${statusText}</td>
+        </tr>`;
+    });
 
-            console.log('Table updated:', show_data);
-        }
+    // อัปเดต DOM
+    const tableBody = document.querySelector('#dataTableBody');
+    tableBody.innerHTML = show_data;
 
-        // ฟังก์ชันเปลี่ยนหน้า
-        function redirectToPage(url) {
-            if (url && url.includes('regis_rider_id')) {
-                console.log("Redirecting to:", url); // Log URL
-                window.location.href = url;
-            } else {
-                console.error("Invalid URL or regis_rider_id not provided.");
-                Swal.fire("Error", "Invalid URL or regis_rider_id not provided.", "error");
-            }
-        }
-
+    console.log('Table updated:', show_data);
+}
 
         // เรียกใช้ฟังก์ชันอัปเดตตารางครั้งแรก (โหลดข้อมูลทั้งหมด)
         updateTable(demo_data);
