@@ -333,7 +333,7 @@ try {
             });
 
             function view_slip(index) {
-                const item = demo_data[index];
+                const item = demo_data[index]; 
                 selectedId = item.id; // ตั้งค่า ID ที่เลือก
                 const slipImage = document.getElementById('slipImage');
                 const errorText = document.getElementById('errorText');
