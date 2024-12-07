@@ -279,13 +279,15 @@ try {
                         '<span style="color: orange; font-weight: bold;">Under Review</span>';
                     console.log('Demo Data:', demo_data);
 
+                    const riderImgUrl = baseUrl + item.rider_img_profile;
+                    const customerImgUrl = baseUrl + item.customer_img_profile;
                     const fullImageUrl = baseUrl + item.image;
 
                     // เพิ่มแถวข้อมูลในตาราง
                     tableBody += `
         <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
-            <td><img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
-            <td><img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
+            <td><img src="${riderImgUrl}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
+            <td><img src="${customerImgUrl}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
             <td>${item.pick_up}</td>
             <td>${item.at_drop}</td>
             <td>
@@ -302,16 +304,19 @@ try {
             let selectedId = null; // กำหนดตัวแปร selectedId เป็นตัวแปร global
 
 
-
             function view_modal(index) {
-                const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
-                const formattedDate = formatDate(item.date); // เรียกใช้ฟังก์ชันจัดฟอร์แมตวันที่
-                const show_modal = `
+    const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
+    const baseUrl = "http://localhost/gotwo/"; // กำหนด Base URL
+    const riderImgUrl = baseUrl + item.rider_img_profile;
+    const customerImgUrl = baseUrl + item.customer_img_profile;
+    const formattedDate = formatDate(item.date); // เรียกใช้ฟังก์ชันจัดฟอร์แมตวันที่
+
+    const show_modal = `
         <div class="popup center container">
             <div class="popup center container">
             <div class="d-flex flex-row align-items-center">
     <div class="me-3">
-        <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
+        <img src="${riderImgUrl}" class="rounded-circle" width="150" height="150">
     </div>
     <div class="mt-3">
         <div class="d-flex flex-row align-items-center">
@@ -328,7 +333,7 @@ try {
 <hr>
 <div class="d-flex flex-row align-items-center">
     <div class="me-3">
-        <img src="${item.customer_img_profile}" class="rounded-circle" width="150" height="150">
+        <img src="${customerImgUrl}" class="rounded-circle" width="150" height="150">
     </div>
     <div class="mt-3">
         <div class="d-flex flex-row align-items-center">
@@ -352,63 +357,63 @@ try {
                 </div>
             </div>
         </div>
-        `;
-                document.querySelector('#madal_display').innerHTML = show_modal;
-            }
-
-
-
-           
-function viewSlip(imagePath, id) {
-    selectedId = id; // กำหนดค่า selectedId
-    const slipImage = document.getElementById('slipImage');
-    const errorText = document.getElementById('errorText');
-    const baseUrl = "http://localhost/gotwo/";
-
-    if (typeof imagePath === "string" && imagePath.trim() !== "") {
-        const fullImageUrl = baseUrl + imagePath.trim();
-        slipImage.src = fullImageUrl;
-        slipImage.style.display = "block";
-        errorText.style.display = "none";
-    } else {
-        slipImage.style.display = "none";
-        errorText.style.display = "block";
-    }
-
-    const modal = new bootstrap.Modal(document.getElementById('slipModal'));
-    modal.show();
+    `;
+    document.querySelector('#madal_display').innerHTML = show_modal;
 }
+
+
+
+
+            function viewSlip(imagePath, id) {
+                selectedId = id; // กำหนดค่า selectedId
+                const slipImage = document.getElementById('slipImage');
+                const errorText = document.getElementById('errorText');
+                const baseUrl = "http://localhost/gotwo/";
+
+                if (typeof imagePath === "string" && imagePath.trim() !== "") {
+                    const fullImageUrl = baseUrl + imagePath.trim();
+                    slipImage.src = fullImageUrl;
+                    slipImage.style.display = "block";
+                    errorText.style.display = "none";
+                } else {
+                    slipImage.style.display = "none";
+                    errorText.style.display = "block";
+                }
+
+                const modal = new bootstrap.Modal(document.getElementById('slipModal'));
+                modal.show();
+            }
 
 
 
             // ฟังก์ชันสำหรับอัปเดตสถานะ
-        
-function updatePay() {
-    if (!selectedId) {
-        alert("No item selected.");
-        return;
-    }
-    fetch('/public/gotwo_app/confirm_payment_cus.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            id: selectedId,
-            pay: 2,
-        }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.success) {
-                alert('Pay updated successfully!');
-                location.reload();
-            } else {
-                alert('Failed to update Pay: ' + data.message);
+
+            function updatePay() {
+                if (!selectedId) {
+                    alert("No item selected.");
+                    return;
+                }
+                fetch('/public/gotwo_app/confirm_payment_cus.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: selectedId,
+                            pay: 2,
+                        }),
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            alert('Pay updated successfully!');
+                            location.reload();
+                        } else {
+                            alert('Failed to update Pay: ' + data.message);
+                        }
+                    })
+                    .catch((error) => console.error('Error:', error));
             }
-        })
-        .catch((error) => console.error('Error:', error));
-}
 
             // ฟังก์ชันสำหรับจัดฟอร์แมตวันที่
             function formatDate(dateString) {
