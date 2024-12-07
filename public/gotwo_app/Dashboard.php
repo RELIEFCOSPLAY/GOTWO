@@ -169,7 +169,7 @@ try {
                                     <p><?= $status ?></p>
                                 </button></a>
 
-                            <a href="/public/gotwo_app/req_tracking.php"><button type="request"
+                            <a href="/public/gotwo_app/pending_tracking.php"><button type="request"
                                     class="btn butt rounded btn-lg"><i class="bi bi-list-ul"
                                         style="color: #F0A007;"></i>Request<br>
                                     <!-- ------------------------------------------------- -->

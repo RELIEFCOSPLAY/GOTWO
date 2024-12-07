@@ -7,6 +7,10 @@ $dbname = "data_test";
 try {
     $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+       //// Admin
+       $adminQuery = $conn->prepare("SELECT name FROM table_admin ");
+       $adminQuery->execute();
+       $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
@@ -49,7 +53,7 @@ try {
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
                     <span class="mx-4 fw-bold">
-                        <?= $adminData ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                        <?= isset($adminData['name']) ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
                     </span>
                 </div>
             </a>
@@ -218,17 +222,17 @@ try {
 
         // ฟังก์ชันอัปเดตตาราง
         function updateTable(data) {
-    let show_data = '';
+            let show_data = '';
 
-    // วนลูปข้อมูลและสร้าง HTML สำหรับตาราง
-    data.forEach((read) => {
-        const statusClass = read.status_rider == 1 ? 'text-success' : 'text-danger';
-        const statusText = read.status_rider == 1 ? 'Confirm' : 'Reject';
+            // วนลูปข้อมูลและสร้าง HTML สำหรับตาราง
+            data.forEach((read) => {
+                const statusClass = read.status_rider == 1 ? 'text-success' : 'text-danger';
+                const statusText = read.status_rider == 1 ? 'Confirm' : 'Reject';
 
-        const riderId = read.regis_rider_id ? read.regis_rider_id : 'unknown';
+                const riderId = read.regis_rider_id ? read.regis_rider_id : 'unknown';
 
-        show_data += `
-        <tr onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${riderId}');">
+                show_data += `
+     <tr onclick="redirectToPage('/public/gotwo_app/view_info_rider.php?regis_rider_id=${riderId}');">
             <td scope="row">
                 <img src="${read.img_profile || '/public/img/unnamed.jpg'}" class="img_style mx-2">
                 ${read.name || 'Unknown Name'}
@@ -237,14 +241,26 @@ try {
             <td>${read.tel || 'No Tel'}</td>
             <td class="${statusClass}">${statusText}</td>
         </tr>`;
-    });
+            });
 
-    // อัปเดต DOM
-    const tableBody = document.querySelector('#dataTableBody');
-    tableBody.innerHTML = show_data;
+            // อัปเดต DOM
+            const tableBody = document.querySelector('#dataTableBody');
+            tableBody.innerHTML = show_data;
 
-    console.log('Table updated:', show_data);
-}
+            console.log('Table updated:', show_data);
+        }
+
+        // ฟังก์ชันเปลี่ยนหน้า
+        function redirectToPage(url) {
+            if (url && url.includes('regis_rider_id')) {
+                console.log("Redirecting to:", url); // Log URL
+                window.location.href = url;
+            } else {
+                console.error("Invalid URL or regis_rider_id not provided.");
+                Swal.fire("Error", "Invalid URL or regis_rider_id not provided.", "error");
+            }
+        }
+
 
         // เรียกใช้ฟังก์ชันอัปเดตตารางครั้งแรก (โหลดข้อมูลทั้งหมด)
         updateTable(demo_data);

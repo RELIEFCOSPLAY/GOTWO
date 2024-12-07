@@ -7,6 +7,9 @@ $dbname = "data_test";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $adminQuery = $conn->prepare("SELECT name FROM table_admin ");
+    $adminQuery->execute();
+    $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
@@ -51,7 +54,7 @@ try {
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
                     <span class="mx-4 fw-bold">
-                        <?= $adminData ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                        <?= isset($adminData['name']) ? htmlspecialchars($adminData['name']) : 'Unknown'; ?> 
                     </span>
                 </div>
             </a>
@@ -130,8 +133,7 @@ try {
                         <div class="row align-items-center">
                             <!-- Profile Image -->
                             <div class="col-md-4 text-center">
-                                <img src=""
-                                    alt="Profile" class="img-thumbnail" style="width: 150px; height: 150px;">
+                                <img id="profileImage" src="" alt="Profile" class="img-thumbnail" style="width: 150px; height: 150px;">
                             </div>
                             <!-- Account Details -->
                             <div class="col-md-8">
@@ -145,10 +147,10 @@ try {
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email" readonly>
                                         </div>
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <label for="birthdate" class="form-label">Expiration Date</label>
                                             <input type="text" class="form-control" id="birthdate" readonly>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -169,66 +171,66 @@ try {
                     </div>
 
 
+                    <style>
+                        .form-section img {
+                            width: 500px;
+                            /* ปรับขนาดความกว้าง */
+                            height: 300px;
+                            /* ปรับขนาดความสูง */
+                            object-fit: cover;
+                            /* ปรับขนาดภาพให้เหมาะสมในกรอบ */
+                            border-radius: 8px;
+                            /* เพิ่มขอบมน */
+                            margin: 10px;
+                            /* เว้นระยะห่าง */
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                            /* เพิ่มเงา */
+                        }
+
+                        .document-container {
+                            display: flex;
+                            flex-wrap: wrap;
+                            /* ทำให้ภาพเรียงต่อกันเมื่อหน้าจอแคบ */
+                            justify-content: center;
+                            /* จัดให้อยู่กลาง */
+                            gap: 15px;
+                            /* เพิ่มช่องว่างระหว่างภาพ */
+                        }
+
+                        .document-card {
+                            text-align: center;
+                            max-width: 500px;
+                        }
+
+                        .document-title {
+                            font-size: 14px;
+                            margin-top: 5px;
+                            color: rgb(26, 28, 67);
+                            font-weight: 500;
+                        }
+                    </style>
+
                     <!-- Document -->
                     <div class="form-section mb-3">
                         <h5>Document</h5>
                         <div class="border-top border mb-2" style="border-width: 4px; color:rgb(26, 28, 67);"></div>
-                        <div class="col">
-                            <div class="row">
-                                <div class="column">
-                                    <div class="col-md-6 mb-3">
-                                        <div class="card w-150 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title">ID Card</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Driver's license</h5>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="document-container">
+                            <div class="document-card">
+                                <img id="idcardImage" src="" alt="ID Card" class="img-thumbnail">
+                                <div class="document-title">ID Card</div>
                             </div>
+                            <!-- <div class="document-card">
+                                <img id="imgdriverlicense" src="" alt="Driver License" class="img-thumbnail">
+                                <div class="document-title">Driver License</div>
+                            </div> -->
                         </div>
                     </div>
 
-                    <!-- Document Car -->
-                    <div class="form-section mt-3">
-                        <h5>Document Car</h5>
-                        <div class="border-top border mb-2" style="border-width: 4px; color:rgb(26, 28, 67);"></div>
-                        <div class="col">
-                            <div class="row">
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Act</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Car Picture</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('/public/img/unnamed.jpg')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Car registration</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <!-- <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -240,7 +242,7 @@ try {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             </form>
         </div>
         <script src="/public/js/gotwo_js/nav_animation.js"></script>
@@ -296,14 +298,13 @@ try {
                 // กำหนดค่าไปยัง input ที่มี id ตรงกัน
                 document.getElementById('name').value = customerData.name || 'Not Available';
                 document.getElementById('email').value = customerData.email || 'Not Available';
-                document.getElementById('birthdate').value = customerData.expiration_date || 'Not Available';
+                // document.getElementById('birthdate').value = customerData.expiration_date || 'Not Available';
                 document.getElementById('phoneNumber').value = customerData.tel || 'Not Available';
                 document.getElementById('gender').value = customerData.gender || 'Not Available';
+
+                profileImage.src = customerData.img_profile || 'https://via.placeholder.com/150';
+                idcardImage.src = customerData.img_id_card || 'https://via.placeholder.com/150';
             });
-
-
-
-            
         </script>
 </body>
 

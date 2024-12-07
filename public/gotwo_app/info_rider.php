@@ -7,6 +7,10 @@ $dbname = "data_test";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+       //// Admin
+       $adminQuery = $conn->prepare("SELECT name FROM table_admin ");
+       $adminQuery->execute();
+       $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
     exit();
@@ -52,7 +56,7 @@ try {
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
                     <span class="mx-4 fw-bold">
-                        <?= $adminData ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
+                        <?= isset($adminData['name']) ? htmlspecialchars($adminData['name']) : 'Unknown'; ?>
                     </span>
                 </div>
             </a>
