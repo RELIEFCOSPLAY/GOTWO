@@ -1,16 +1,17 @@
 <?php
-$severname = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "data_test";
 
 try {
-    $conn = new PDO("mysql:host=$severname;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //// Admin
     $adminQuery = $conn->prepare("SELECT name FROM table_admin ");
     $adminQuery->execute();
     $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
+
     // Query ดึงข้อมูลทั้งหมด
     $sql = "
         SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
@@ -22,23 +23,13 @@ try {
         JOIN table_rider r ON s.rider_id = r.regis_rider_id
         JOIN table_customer c ON s.customer_id = c.regis_customer_id
         JOIN post p ON s.post_id = p.post_id
-        WHERE s.status = 0
+        WHERE s.status = 1
         ORDER BY p.date DESC
-    ";
+    "; 
     $query = $conn->prepare($sql);
     $query->execute();
     $data = $query->fetchAll(PDO::FETCH_ASSOC); // ดึงข้อมูลทั้งหมด
-    foreach ($data as &$item) {
-        $item['rider_img_profile'] = !empty($item['rider_img_profile']) 
-            ? "/gotwo/uploads/" . $item['rider_img_profile'] 
-            : '/gotwo/images/default-rider.jpg';
-    
-        $item['customer_img_profile'] = !empty($item['customer_img_profile']) 
-            ? "/gotwo/uploads/" . $item['customer_img_profile'] 
-            : '/gotwo/images/default-customer.jpg';
-    }
-    
-    
+
     // ส่งข้อมูลไปยัง JavaScript
     echo "<script>const demo_data = " . json_encode($data) . ";</script>";
 } catch (PDOException $e) {
@@ -48,12 +39,11 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Travel Tracking Details_pending</title>
+    <title>Travel Tracking Details_success</title>
     <script src="/public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -61,7 +51,6 @@ try {
     <link rel="stylesheet" href="/public/css/css_gotwo/tracking_nav_animation .css" />
     <link rel="stylesheet" href="/public/css/css_gotwo/sidebar.css" />
 </head>
-
 <body>
     <div class="wrapper">
         <aside id="sidebar">
@@ -137,11 +126,11 @@ try {
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="/public/gotwo_app/profile.php" class="sidebar-link">
-                        <i class="bi bi-person-circle"></i>
-                        <span>Profile</span>
-                    </a>
-                </li>
+            <a href="/public/gotwo_app/profile.php" class="sidebar-link">
+                <i class="bi bi-person-circle"></i>
+                <span>Profile</span>
+            </a>
+        </li>
 
             </ul>
             <div class="sidebar-footer">
@@ -158,7 +147,7 @@ try {
                 <div class="ms-4 mt-3">
                     <h1>Travel Tracking Details</h1>
                     <div class="nav_animation">
-                        <ul> 
+                        <ul>
                             <li class="Pending_nav_animation"><a
                                     href="/public/gotwo_app/pending_tracking.php">Pending</a></li>
                             <!-- <li class="Request_nav_animation"><a href="/public/gotwo_app/req_tracking.php">Request</a>
@@ -194,7 +183,6 @@ try {
                             </tr>
                         </thead>
                         <tbody id="dataTableBody">
-
                         </tbody>
                     </table>
                 </div>
@@ -209,6 +197,7 @@ try {
                             <div class="modal-body" id="madal_display">
                                 <!-- Content will be dynamically added here -->
                             </div>
+                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
@@ -217,48 +206,41 @@ try {
                 </div>
             </div>
         </div>
-        <script src="/public/js/gotwo_js/tracking_nav_animation.js"></script>
+        <script src="/public/js/gotwo_js/success_tracking_nav_animation.js"></script>
         <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
+        <!-- ////////////////////////////////////// -->
         <script>
-       function displayTableData(data) {
-    let tableBody = '';
-    data.forEach((item, index) => {
-        tableBody += `
-        <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
-            <td>
-                <img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50" alt="Rider Profile">
-                ${item.rider_name || 'Unknown'}
-            </td>
-            <td>
-                <img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50" alt="Customer Profile">
-                ${item.customer_name || 'Unknown'}
-            </td>
-            <td>${item.pick_up || 'Not Specified'}</td>
-            <td>${item.at_drop || 'Not Specified'}</td>
-        </tr>`;
-    });
-    document.querySelector('#dataTableBody').innerHTML = tableBody;
-}
+    function displayTableData(data) {
+        let tableBody = '';
+        data.forEach((item, index) => {
+            tableBody += `
+            <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
+                <td><img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
+                <td><img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
+                <td>${item.pick_up}</td>
+                <td>${item.at_drop}</td>
+            </tr>`;
+        });
+        document.querySelector('#dataTableBody').innerHTML = tableBody;
+    }
 
-
-
-            function view_modal(index) {
-                const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
-                const formattedDate = formatDate(item.date); // เรียกใช้ฟังก์ชันจัดฟอร์แมตวันที่
-                const show_modal = `
+    function view_modal(index) {
+        const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
+        const formattedDate = formatDate(item.date); // เรียกใช้ฟังก์ชันจัดฟอร์แมตวันที่
+        const show_modal = `
         <div class="popup center container">
+       <div class="popup center container">
             <div class="d-flex flex-row align-items-center">
     <div class="me-3">
-      <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
-
+        <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
     </div>
     <div class="mt-3">
         <div class="d-flex flex-row align-items-center">
             <i class="bi bi-person-fill"></i>
             <p class="ms-2 align-content-center fw-bold">Rider</p>
         </div>
-         <p>Date: ${formattedDate}</p>
+        <p>Date: ${formattedDate}</p>
         <p>Name: ${item.rider_name}</p>
         <p>Email: ${item.rider_email}</p>
         <p>Tel: ${item.rider_tel}</p>
@@ -275,7 +257,7 @@ try {
             <i class="bi bi-person-fill"></i>
             <p class="ms-2 align-content-center fw-bold">Customer</p>
         </div>
-         <p>Date: ${formattedDate}</p>
+        <p>Date: ${formattedDate}</p>
         <p>Name: ${item.customer_name}</p>
         <p>Email: ${item.customer_email}</p>
         <p>Tel: ${item.customer_tel}</p>
@@ -294,19 +276,14 @@ try {
             </div>
         </div>
         `;
-                document.querySelector('#madal_display').innerHTML = show_modal;
-            }
-            document.addEventListener('DOMContentLoaded', () => {
-    if (!demo_data || demo_data.length === 0) {
-        console.error("No data available in demo_data");
-        document.querySelector('#dataTableBody').innerHTML = '<tr><td colspan="4">No data available</td></tr>';
-    } else {
-        displayTableData(demo_data);
+        document.querySelector('#madal_display').innerHTML = show_modal;
     }
-});
 
-              // ฟังก์ชันสำหรับจัดฟอร์แมตวันที่
-              function formatDate(dateString) {
+    document.addEventListener('DOMContentLoaded', () => {
+        displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
+    });
+      // ฟังก์ชันสำหรับจัดฟอร์แมตวันที่
+      function formatDate(dateString) {
                 if (!dateString) return 'Not Available'; // ถ้าไม่มีข้อมูลวันที่
                 const date = new Date(dateString);
                 const day = String(date.getDate()).padStart(2, '0');
@@ -314,7 +291,7 @@ try {
                 const year = date.getFullYear();
                 return `${day}/${month}/${year}`;
             }
-        </script>
+</script>
 
 
 </body>

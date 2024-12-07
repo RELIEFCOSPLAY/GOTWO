@@ -491,3 +491,9 @@ FILES: []
 Error: Invalid request method.
 POST: {"status_post_id":"54","pay":"5"}
 FILES: {"img_qr_admin":{"name":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","full_path":"DALL\u00b7E 2024-09-12 03.14.24 - A detailed illustration of a Shima Enaga bird, also known as the Japanese long-tailed tit, perched on a branch. The bird has a fluffy white body with .webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpA523.tmp","error":0,"size":267046}}
+POST: {"status_post_id":"54","pay":"5"}
+FILES: {"img_qr_admin":{"name":"6a672622-ac32-4d5e-b15d-2176dedd30f0.jpg","full_path":"6a672622-ac32-4d5e-b15d-2176dedd30f0.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php8F25.tmp","error":0,"size":60770}}
+POST: {"status_post_id":"54","pay":"6"}
+FILES: {"img_qr_admin":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpA6C0.tmp","error":0,"size":432150}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php8F02.tmp","error":0,"size":171516}}
