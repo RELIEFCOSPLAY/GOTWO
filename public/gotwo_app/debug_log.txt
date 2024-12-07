@@ -499,3 +499,5 @@ POST: {"status_post_id":"59","pay":"5"}
 FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php8F02.tmp","error":0,"size":171516}}
 POST: {"status_post_id":"59","pay":"5"}
 FILES: {"img_qr_admin":{"name":"7e11eef3-dccd-4b4a-921b-af8fdda2ff2a.jpg","full_path":"7e11eef3-dccd-4b4a-921b-af8fdda2ff2a.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php17D3.tmp","error":0,"size":60912}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"10.jpg","full_path":"10.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpE11C.tmp","error":0,"size":166865}}

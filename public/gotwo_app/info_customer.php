@@ -130,7 +130,7 @@ try {
                         <div class="row align-items-center">
                             <!-- Profile Image -->
                             <div class="col-md-4 text-center">
-                                <img src="<?= htmlspecialchars($customerData['img_profile'] ?? '/public/img/unnamed.jpg') ?>"
+                                <img src=""
                                     alt="Profile" class="img-thumbnail" style="width: 150px; height: 150px;">
                             </div>
                             <!-- Account Details -->

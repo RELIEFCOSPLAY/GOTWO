@@ -131,8 +131,7 @@ try {
                         <div class="row align-items-center">
                             <!-- Profile Image -->
                             <div class="col-md-4 text-center">
-                                <img src="<?= htmlspecialchars($riderData['img_profile'] ?? '/public/img/unnamed.jpg') ?>"
-                                    alt="Profile" class="img-thumbnail" style="width: 150px; height: 150px;">
+                                <img id="profileImage" src="" alt="Profile" class="img-thumbnail" style="width: 150px; height: 150px;">
                             </div>
                             <!-- Account Details -->
                             <div class="col-md-8">
@@ -146,6 +145,10 @@ try {
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email" readonly>
                                         </div>
+                                        <!-- <div class="col-md-6">
+                                            <label for="img_id_card" class="form-label">img_id_card</label>
+                                            <input type="img_id_card" class="form-control" id="img_id_card" readonly>
+                                        </div> -->
                                         <div class="col-md-6">
                                             <label for="birthdate" class="form-label">Expiration Date</label>
                                             <input type="text" class="form-control" id="birthdate" readonly>
@@ -169,33 +172,57 @@ try {
                         </div>
                     </div>
 
+                    <style>
+                        .form-section img {
+                            width: 100px;
+                            /* ปรับขนาดความกว้าง */
+                            height: 100px;
+                            /* ปรับขนาดความสูง */
+                            object-fit: cover;
+                            /* ปรับขนาดภาพให้เหมาะสมในกรอบ */
+                            border-radius: 8px;
+                            /* เพิ่มขอบมน */
+                            margin: 10px;
+                            /* เว้นระยะห่าง */
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                            /* เพิ่มเงา */
+                        }
+
+                        .document-container {
+                            display: flex;
+                            flex-wrap: wrap;
+                            /* ทำให้ภาพเรียงต่อกันเมื่อหน้าจอแคบ */
+                            justify-content: center;
+                            /* จัดให้อยู่กลาง */
+                            gap: 15px;
+                            /* เพิ่มช่องว่างระหว่างภาพ */
+                        }
+
+                        .document-card {
+                            text-align: center;
+                            max-width: 150px;
+                        }
+
+                        .document-title {
+                            font-size: 14px;
+                            margin-top: 5px;
+                            color: rgb(26, 28, 67);
+                            font-weight: 500;
+                        }
+                    </style>
 
                     <!-- Document -->
                     <div class="form-section mb-3">
                         <h5>Document</h5>
                         <div class="border-top border mb-2" style="border-width: 4px; color:rgb(26, 28, 67);"></div>
-                        <div class="col">
-                            <div class="row">
-                                <div class="column">
-                                    <div class="col-md-6 mb-3">
-                                        <div class="card w-150 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
-                                            onclick="showImage('<?= htmlspecialchars($riderData['img_id_card'] ?? '/public/img/default_placeholder.jpg') ?>', 'ID Card')">
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title">ID Card</h5>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="card w-150 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
-                                        onclick="showImage('<?= htmlspecialchars($riderData['img_driver_license'] ?? '/public/img/default_placeholder.jpg') ?>', 'Driver License')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Driver's License</h5>
-                                        </div>
-                                    </div>
-
-                                </div>
+                        <div class="document-container">
+                            <div class="document-card">
+                                <img id="idcardImage" src="" alt="ID Card" class="img-thumbnail">
+                                <div class="document-title">ID Card</div>
+                            </div>
+                            <div class="document-card">
+                                <img id="imgdriverlicense" src="" alt="Driver License" class="img-thumbnail">
+                                <div class="document-title">Driver License</div>
                             </div>
                         </div>
                     </div>
@@ -204,53 +231,34 @@ try {
                     <div class="form-section mt-3">
                         <h5>Document Car</h5>
                         <div class="border-top border mb-2" style="border-width: 4px; color:rgb(26, 28, 67);"></div>
-                        <div class="col">
-                            <div class="row">
-                                <div class="column">
-
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
-                                    
-                                        onclick="showImage('<?= htmlspecialchars($riderData['img_act'] ?? '/public/img/default_placeholder.jpg') ?>', 'Act')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Act</h5>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
-                                        onclick="showImage('<?= htmlspecialchars($riderData['img_car_picture'] ?? '/public/img/default_placeholder.jpg') ?>', 'Car Picture')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Car Picture</h5>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="column">
-                                    <div class="card w-75 h-100" data-bs-toggle="modal" data-bs-target="#imageModal"
-                                        onclick="showImage('<?= htmlspecialchars($riderData['img_car_registration'] ?? '/public/img/default_placeholder.jpg') ?>', 'Car Registration')">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title">Car Registration</h5>
-                                        </div>
-                                    </div>
-
-                                </div>
+                        <div class="document-container">
+                            <div class="document-card">
+                                <img id="imgact" src="" alt="ACT" class="img-thumbnail">
+                                <div class="document-title">ACT</div>
+                            </div>
+                            <div class="document-card">
+                                <img id="imgcarpicture" src="" alt="Car Picture" class="img-thumbnail">
+                                <div class="document-title">Car Picture</div>
+                            </div>
+                            <div class="document-card">
+                                <img id="imgcarregistration" src="" alt="Car Registration" class="img-thumbnail">
+                                <div class="document-title">Car Registration</div>
                             </div>
                         </div>
                     </div>
 
+
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true"
-                data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="imageModalLabel">Document</h5>
+                            <h5 class="modal-title" id="imageModalLabel">Image Title</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center">
-                            <img id="modalImage" src="" alt="Document" class="img-fluid">
+                            <img id="idcard" src="https://via.placeholder.com/150" alt="Image" class="img-fluid">
                         </div>
                     </div>
                 </div>
@@ -380,8 +388,16 @@ try {
                 document.getElementById('birthdate').value = riderData.expiration_date || 'Not Available';
                 document.getElementById('phoneNumber').value = riderData.tel || 'Not Available';
                 document.getElementById('gender').value = riderData.gender || 'Not Available';
+                // document.getElementById('img_id_card').value = riderData.img_id_card || 'Not Available';
                 document.getElementById('confirmButton').value = riderData.regis_rider_id || 'Not Available';
                 document.getElementById('rejectButton').value = riderData.regis_rider_id || 'Not Available';
+
+                profileImage.src = riderData.img_profile || 'https://via.placeholder.com/150';
+                idcardImage.src = riderData.img_id_card || 'https://via.placeholder.com/150';
+                imgdriverlicense.src = riderData.img_driver_license || 'https://via.placeholder.com/150';
+                imgact.src = riderData.img_act || 'https://via.placeholder.com/150';
+                imgcarpicture.src = riderData.img_car_picture || 'https://via.placeholder.com/150';
+                imgcarregistration.src = riderData.img_car_registration || 'https://via.placeholder.com/150';
 
                 // เก็บ regis_rider_id ไว้ในตัวแปรโกลบอล
                 riderIdGlobal = riderData.regis_rider_id || null;
