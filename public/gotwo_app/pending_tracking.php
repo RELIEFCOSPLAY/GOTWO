@@ -206,7 +206,7 @@ try {
                 </div>
             </div>
         </div>
-        <script src="/public/js/gotwo_js/success_tracking_nav_animation.js"></script>
+        <script src="/public/js/gotwo_js/tracking_nav_animation.js"></script>  
         <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
         <!-- ////////////////////////////////////// -->

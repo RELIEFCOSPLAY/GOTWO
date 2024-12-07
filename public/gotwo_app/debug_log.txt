@@ -497,3 +497,5 @@ POST: {"status_post_id":"54","pay":"6"}
 FILES: {"img_qr_admin":{"name":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","full_path":"DALL\u00b7E 2024-09-12 03.09.36 - A beautiful illustration of birds native to northern Japan, featuring elegant birds in flight with detailed feathers. The background is inspired by th.webp","type":"image\/webp","tmp_name":"C:\\xampp\\tmp\\phpA6C0.tmp","error":0,"size":432150}}
 POST: {"status_post_id":"59","pay":"5"}
 FILES: {"img_qr_admin":{"name":"1.png","full_path":"1.png","type":"image\/png","tmp_name":"C:\\xampp\\tmp\\php8F02.tmp","error":0,"size":171516}}
+POST: {"status_post_id":"59","pay":"5"}
+FILES: {"img_qr_admin":{"name":"7e11eef3-dccd-4b4a-921b-af8fdda2ff2a.jpg","full_path":"7e11eef3-dccd-4b4a-921b-af8fdda2ff2a.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php17D3.tmp","error":0,"size":60912}}
