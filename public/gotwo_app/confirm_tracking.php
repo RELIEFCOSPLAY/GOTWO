@@ -296,7 +296,7 @@ try {
         <p>Tel: ${item.rider_tel}</p>
         <p>Gender: ${item.rider_gender}</p>
     </div>
-</div>
+</div> 
 <hr>
 <div class="d-flex flex-row align-items-center">
     <div class="me-3">

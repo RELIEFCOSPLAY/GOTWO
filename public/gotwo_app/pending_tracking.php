@@ -28,7 +28,17 @@ try {
     $query = $conn->prepare($sql);
     $query->execute();
     $data = $query->fetchAll(PDO::FETCH_ASSOC); // ดึงข้อมูลทั้งหมด
-
+    foreach ($data as &$item) {
+        $item['rider_img_profile'] = !empty($item['rider_img_profile']) 
+            ? "/gotwo/uploads/" . $item['rider_img_profile'] 
+            : '/gotwo/images/default-rider.jpg';
+    
+        $item['customer_img_profile'] = !empty($item['customer_img_profile']) 
+            ? "/gotwo/uploads/" . $item['customer_img_profile'] 
+            : '/gotwo/images/default-customer.jpg';
+    }
+    
+    
     // ส่งข้อมูลไปยัง JavaScript
     echo "<script>const demo_data = " . json_encode($data) . ";</script>";
 } catch (PDOException $e) {
@@ -148,7 +158,7 @@ try {
                 <div class="ms-4 mt-3">
                     <h1>Travel Tracking Details</h1>
                     <div class="nav_animation">
-                        <ul>
+                        <ul> 
                             <li class="Pending_nav_animation"><a
                                     href="/public/gotwo_app/pending_tracking.php">Pending</a></li>
                             <!-- <li class="Request_nav_animation"><a href="/public/gotwo_app/req_tracking.php">Request</a>
@@ -211,19 +221,27 @@ try {
         <script src="/public/js/gotwo_js/searchfuction.js"></script>
 
         <script>
-            function displayTableData(data) {
-                let tableBody = '';
-                data.forEach((item, index) => {
-                    tableBody += `
-            <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
-                <td><img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50"> ${item.rider_name}</td>
-                <td><img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50"> ${item.customer_name}</td>
-                <td>${item.pick_up}</td>
-                <td>${item.at_drop}</td>
-            </tr>`;
-                });
-                document.querySelector('#dataTableBody').innerHTML = tableBody;
-            }
+       function displayTableData(data) {
+    let tableBody = '';
+    data.forEach((item, index) => {
+        tableBody += `
+        <tr data-bs-toggle="modal" data-bs-target="#exampleModal_rider" onclick="view_modal(${index})">
+            <td>
+                <img src="${item.rider_img_profile}" class="rounded-circle" width="50" height="50" alt="Rider Profile">
+                ${item.rider_name || 'Unknown'}
+            </td>
+            <td>
+                <img src="${item.customer_img_profile}" class="rounded-circle" width="50" height="50" alt="Customer Profile">
+                ${item.customer_name || 'Unknown'}
+            </td>
+            <td>${item.pick_up || 'Not Specified'}</td>
+            <td>${item.at_drop || 'Not Specified'}</td>
+        </tr>`;
+    });
+    document.querySelector('#dataTableBody').innerHTML = tableBody;
+}
+
+
 
             function view_modal(index) {
                 const item = demo_data[index]; // ใช้ข้อมูลจากแถวที่เลือก
@@ -232,7 +250,8 @@ try {
         <div class="popup center container">
             <div class="d-flex flex-row align-items-center">
     <div class="me-3">
-        <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
+      <img src="${item.rider_img_profile}" class="rounded-circle" width="150" height="150">
+
     </div>
     <div class="mt-3">
         <div class="d-flex flex-row align-items-center">
@@ -277,10 +296,15 @@ try {
         `;
                 document.querySelector('#madal_display').innerHTML = show_modal;
             }
-
             document.addEventListener('DOMContentLoaded', () => {
-                displayTableData(demo_data); // เรียกฟังก์ชันแสดงตาราง
-            });
+    if (!demo_data || demo_data.length === 0) {
+        console.error("No data available in demo_data");
+        document.querySelector('#dataTableBody').innerHTML = '<tr><td colspan="4">No data available</td></tr>';
+    } else {
+        displayTableData(demo_data);
+    }
+});
+
               // ฟังก์ชันสำหรับจัดฟอร์แมตวันที่
               function formatDate(dateString) {
                 if (!dateString) return 'Not Available'; // ถ้าไม่มีข้อมูลวันที่

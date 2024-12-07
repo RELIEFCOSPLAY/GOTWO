@@ -25,7 +25,7 @@ try {
         JOIN post p ON s.post_id = p.post_id
         WHERE s.status = 4
         ORDER BY p.date DESC
-    ";
+    "; 
     $query = $conn->prepare($sql);
     $query->execute();
     $data = $query->fetchAll(PDO::FETCH_ASSOC); // ดึงข้อมูลทั้งหมด

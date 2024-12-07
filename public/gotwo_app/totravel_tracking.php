@@ -12,7 +12,7 @@ try {
     $adminQuery->execute();
     $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
 
-    // Query ดึงข้อมูลทั้งหมด
+    // Query ดึงข้อมูลทั้งหมด 
     $sql = "
         SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
                r.gender AS rider_gender, r.img_profile AS rider_img_profile,

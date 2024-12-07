@@ -10,7 +10,7 @@ try {
     //// Admin
     $adminQuery = $conn->prepare("SELECT name FROM table_admin ");
     $adminQuery->execute();
-    $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC);
+    $adminData = $adminQuery->fetch(PDO::FETCH_ASSOC); 
     // Query ดึงข้อมูลทั้งหมด
     $sql = "
         SELECT r.name AS rider_name, r.email AS rider_email, r.tel AS rider_tel, 
